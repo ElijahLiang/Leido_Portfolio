@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Leido's Portfolio</title>
+  <link rel="stylesheet" href="02.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="hero">
+    <div class="slide-left">
+      <span class="scrolling-text">🚀🪐🌕🌑☄️🛸 Welcome to Welcome to</span>
+    </div>
+    <div class="slide-right">
+      <span class="scrolling-texto">🛸  Leido'PlayGround✦ </span>
+    </div>
+    <div class="topbar">
+      <button onclick="myFunction2()"> .𖥔 ݁ ˖🛸Game Design.✦ </button>
+      <button onclick="myFunction3()"> 𖥔 ݁ ˖🪐Digital Media Art✦ </button>
+      <button onclick="myFunction4()"> 𖥔 ݁ ˖🌕🌑Product Design✦ </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 设计宣言：静止居中 -->
+    <section class="manifesto-static">
+      <article class="manifesto-card reveal" aria-label="Design Manifesto">
+        <div class="manifesto-beam" aria-hidden="true"></div>
+
+        <div class="manifesto-label" data-reveal>DESIGN MANIFESTO · TORCH OF LIGHT</div>
+
+        <h1 class="manifesto-heading" style="--in-delay: .05s" data-reveal>
+          I have always believed—<br>
+          <strong>The meaning of life lies in how people illuminate one another</strong>.<br>
+          Design, technology, and art are the torches that carry that light forward.
+        </h1>
+
+        <p class="manifesto-lede" style="--in-delay: .15s" data-reveal>
+          Since childhood, I have been deeply moved by the inequalities of the world—by how many gentle souls endure pain, and how fragility and resilience coexist within life itself. I began to wonder: how might design and technology help the unseen be equally seen, and the unheard be gently understood?
+        </p>
+
+        <div class="manifesto-section" data-reveal>
+          <blockquote class="manifesto-quote">
+            <p>Five years ago, I shifted from business to design. That year, under the lanterns of Nanjing's Confucius Temple, I made a wish:<br><strong>"To become a designer who can bring happiness to others."</strong></p>
+          </blockquote>
+        </div>
+
+        <div class="manifesto-section manifesto-small" data-reveal>
+          After five years of practice, I've realized that <strong>happiness cannot be given—it can only be empowered.</strong> True design is about creating spaces, tools, and systems through which individuals can rediscover their innate strength.
+        </div>
+
+        <div class="manifesto-end-cap" data-reveal>
+          <span class="manifesto-torch" aria-hidden="true"></span>
+          I hope my design allows every form of life—<br>
+          human or non-human—<br>
+          to be <strong>gently seen</strong> and <strong>kindly treated</strong> in this world.
+        </div>
+      </article>
+    </section>
+
+    <!-- 作品展示：每行一个，横向滚动 -->
+    <section class="works-section">
+      <a href="ai-agent-game.html" class="work-row slide-right delay-1">
+        <span class="scrolling-text">🤖 Ai Agent Chat Game🤖</span>
+      </a>
+      <a href="digital-creature.html" class="work-row slide-left delay-2">
+        <span class="scrolling-text">👾 Creative Coding👾</span>
+      </a>
+      <a href="sustainable-design.html" class="work-row slide-right delay-3">
+        <span class="scrolling-text">♻️ Sustainable Design♻️</span>
+      </a>
+      
+    </section>
+
+    <!-- 底部：左侧个人介绍（静止） + 右侧噪音文字（滚动） -->
+    <section class="bottom-section">
+      <!-- 左侧：个人介绍静止 -->
+      <div class="intro-static">
+        <h2 class="intro-title">About Me</h2>
+        <img src="index image/selfie.png" alt="宇航员手持星光的插画肖像" class="intro-photo" />
+        <p class="intro-text">
+          Email：<a href="mailto:erioleiono@gmail.com">erioleiono@gmail.com</a><br />
+          WeChat：Leidododo<br />
+          Instagram：<a href="https://www.instagram.com/leido_liang" target="_blank" rel="noopener noreferrer">@leido_liang</a>
+        </p>
+      </div>
+
+      <!-- 右侧：噪音文字，每行滚动 -->
+      <div class="noise-section">
+        <div class="noise-row slide-left delay-1">
+          <span class="scrolling-text">✦ Try to make the world a better place ✦</span>
+        </div>
+        <div class="noise-row slide-right delay-2">
+          <span class="scrolling-text">🛸 Exploring the boundaries of AI and game 🪐</span>
+        </div>
+        <div class="noise-row slide-left delay-3">
+          <span class="scrolling-text">👽 Trying to give technique emotional value  👽</span>
+        </div>
+        <div class="noise-row slide-right delay-4">
+          <span class="scrolling-text">── ── ── ── ── ── ── ── ── ── ──</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <button onclick="myFunction()">Click me to escape💨escape💨escape💨</button>
+  <script>
+    function myFunction() {
+      alert("Bye！Earth！🌍Bye！Human！🔥")
+    }
+    function myFunction2() {
+      window.location.href = "ai-agent-game.html";
+    }
+    function myFunction3() {
+      window.location.href = "digital-creature.html";
+    }
+    function myFunction4() {
+      window.location.href = "sustainable-design.html";
+    }
+
+    // 设计宣言渐显效果
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: .15 });
+
+    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+  </script>
+</body>
+
+</html>

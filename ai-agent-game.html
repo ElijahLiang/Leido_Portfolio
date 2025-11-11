@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Dialogue Games - AI Agent Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 60px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Global Navigation */
+        .global-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .global-nav a {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(30, 41, 59, 0.75);
+            border: 1px solid rgba(102, 126, 234, 0.35);
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .global-nav a:hover,
+        .global-nav a:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(102, 126, 234, 0.25);
+            background: rgba(102, 126, 234, 0.25);
+            outline: none;
+        }
+
+        .global-nav a.active {
+            background: rgba(102, 126, 234, 0.35);
+            border-color: rgba(148, 163, 184, 0.5);
+            color: #ffffff;
+        }
+
+        /* Timeline Container */
+        .timeline {
+            position: relative;
+            padding-left: 60px;
+        }
+
+        /* Vertical Line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg,
+                rgba(102, 126, 234, 0.3) 0%,
+                rgba(102, 126, 234, 0.6) 50%,
+                rgba(102, 126, 234, 1) 100%
+            );
+        }
+
+        /* Timeline Item */
+        .timeline-item {
+            position: relative;
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.6s forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Node Circle */
+        .timeline-node {
+            position: absolute;
+            left: -60px;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 0 8px rgba(102, 126, 234, 0.2);
+            z-index: 10;
+        }
+
+        .timeline-item:nth-child(2) .timeline-node {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 0 0 8px rgba(245, 87, 108, 0.2);
+        }
+
+        .timeline-item:nth-child(3) .timeline-node {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            box-shadow: 0 0 0 8px rgba(79, 172, 254, 0.2);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 0 8px rgba(79, 172, 254, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 0 16px rgba(79, 172, 254, 0.4);
+            }
+        }
+
+        /* Progress Badge */
+        .progress-indicator {
+            position: absolute;
+            left: -90px;
+            top: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #4facfe;
+            white-space: nowrap;
+        }
+
+        /* Content Card */
+        .timeline-content {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+            transform: translateX(8px);
+        }
+
+        /* Project Image */
+        .project-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        /* Content Body */
+        .content-body {
+            padding: 32px;
+        }
+
+        /* Phase Header */
+        .phase-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .phase-title-group h2 {
+            font-size: 1.75rem;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .phase-subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+
+        .phase-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .phase-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-complete {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .status-ongoing {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 24px;
+        }
+
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #667eea;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .section-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section-list li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .section-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .section-list li.success::before {
+            content: '✓';
+            color: #10b981;
+        }
+
+        .section-list li.warning::before {
+            content: '⚠';
+            color: #f59e0b;
+        }
+
+        .section-list li.error::before {
+            content: '✗';
+            color: #ef4444;
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid #667eea;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        .insight-box strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .insight-box p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        /* Screenshot Grid */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .screenshot-item {
+            aspect-ratio: 16/9;
+            background: rgba(30, 41, 59, 0.5);
+            border: 2px solid rgba(148, 163, 184, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-item:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: scale(1.05);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Arrow Connector */
+        .arrow-connector {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2rem;
+            color: #667eea;
+            opacity: 0.5;
+            position: relative;
+            left: -30px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .timeline {
+                padding-left: 40px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-node {
+                left: -50px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+
+            .progress-indicator {
+                left: -80px;
+                top: 60px;
+                font-size: 0.7rem;
+            }
+
+            .content-body {
+                padding: 24px;
+            }
+
+            .phase-header {
+                flex-direction: column;
+            }
+
+            .phase-title-group h2 {
+                font-size: 1.5rem;
+            }
+
+            .project-image {
+                height: 240px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-flow-section,
+            .awakening-journey,
+            .existential-section {
+                padding: 24px;
+            }
+
+            .game-flow-grid {
+                gap: 12px;
+            }
+
+            .game-flow-card {
+                min-height: auto;
+            }
+
+            .game-flow-arrow,
+            .game-flow-divider {
+                display: none;
+            }
+
+            .awakening-timeline {
+                padding-left: 20px;
+            }
+
+            .awakening-timeline::before {
+                left: 6px;
+            }
+
+            .awakening-marker {
+                left: -4px;
+                width: 14px;
+                height: 14px;
+                box-shadow: 0 0 0 4px rgba(148, 163, 255, 0.14);
+            }
+
+            .existential-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tech Stack Tags */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .tech-tag {
+            padding: 6px 14px;
+            background: rgba(102, 126, 234, 0.2);
+            color: #a5b4fc;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .section-intro {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-top: 12px;
+        }
+
+        .section-intro.muted {
+            opacity: 0.85;
+        }
+
+        .game-flow-section {
+            background: linear-gradient(165deg, rgba(102, 126, 234, 0.18) 0%, rgba(15, 23, 42, 0.94) 55%);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            border-radius: 18px;
+            padding: 32px 28px;
+            margin-top: 24px;
+            box-shadow: 0 26px 52px rgba(15, 23, 42, 0.35);
+        }
+
+        .game-flow-grid {
+            display: flex;
+            align-items: stretch;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .game-flow-card {
+            flex: 1 1 260px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 14px;
+            padding: 22px;
+            min-height: 190px;
+            position: relative;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);
+        }
+
+        .game-flow-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .game-flow-card h4 {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+
+        .game-flow-card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .game-flow-arrow {
+            flex: 0 0 auto;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.18);
+            color: #a5b4fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 10px 24px rgba(99, 102, 241, 0.25);
+        }
+
+        .game-flow-divider {
+            display: flex;
+            justify-only: center;
+            margin: 18px 0;
+        }
+
+        .game-flow-divider::after {
+            content: '↓';
+            font-size: 1.8rem;
+            color: rgba(99, 102, 241, 0.65);
+            text-shadow: 0 6px 18px rgba(99, 102, 241, 0.45);
+        }
+
+        .awakening-journey {
+            background: linear-gradient(165deg, rgba(240, 147, 251, 0.18) 0%, rgba(15, 23, 42, 0.93) 60%);
+            border: 1px solid rgba(240, 147, 251, 0.35);
+            border-radius: 18px;
+            padding: 32px 28px;
+            margin-top: 24px;
+            box-shadow: 0 28px 58px rgba(15, 23, 42, 0.35);
+        }
+
+        .awakening-timeline {
+            position: relative;
+            padding-left: 36px;
+        }
+
+        .awakening-timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg,
+                rgba(102, 126, 234, 0.2) 0%,
+                rgba(140, 82, 255, 0.6) 45%,
+                rgba(15, 23, 42, 0.9) 100%);
+        }
+
+        .awakening-item {
+            position: relative;
+            margin-bottom: 32px;
+            --tone-color: #94a3ff;
+            --tone-gradient: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            --tone-shadow: rgba(99, 102, 241, 0.35);
+        }
+
+        .awakening-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .awakening-marker {
+            position: absolute;
+            left: -2px;
+            top: 6px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--tone-gradient);
+            box-shadow: 0 0 0 6px rgba(148, 163, 255, 0.16);
+        }
+
+        .awakening-card {
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-left: 3px solid var(--tone-color);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.3);
+        }
+
+        .awakening-card h4 {
+            font-size: 1.15rem;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .awakening-card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .awakening-note {
+            color: var(--tone-color);
+            font-style: italic;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        .existential-section {
+            background: linear-gradient(160deg, rgba(67, 56, 202, 0.28) 0%, rgba(15, 23, 42, 0.94) 65%);
+            border: 1px solid rgba(102, 126, 234, 0.35);
+            border-radius: 18px;
+            padding: 32px 28px;
+            margin-top: 24px;
+            box-shadow: 0 28px 58px rgba(15, 23, 42, 0.35);
+        }
+
+        .existential-intro {
+            background: rgba(102, 126, 234, 0.12);
+            border-left: 4px solid #667eea;
+            padding: 18px 24px;
+            border-radius: 12px;
+            margin-bottom: 28px;
+        }
+
+        .existential-intro p {
+            color: #cbd5f5;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .existential-intro .cite {
+            text-align: right;
+            margin-top: 12px;
+            color: #a5b4fc;
+            font-weight: 600;
+        }
+
+        .existential-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .existential-card {
+            --tone-color: #818cf8;
+            --tone-shadow: rgba(99, 102, 241, 0.28);
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-top: 4px solid var(--tone-color);
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.32);
+        }
+
+        .existential-card .step {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--tone-gradient, linear-gradient(135deg, rgba(129, 140, 248, 0.9) 0%, rgba(99, 102, 241, 0.9) 100%));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 24px var(--tone-shadow);
+        }
+
+        .existential-card h4 {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+
+        .existential-card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .existential-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .tone-purple {
+            --tone-color: #8b5cf6;
+            --tone-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --tone-shadow: rgba(139, 92, 246, 0.32);
+        }
+
+        .tone-pink {
+            --tone-color: #f472b6;
+            --tone-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --tone-shadow: rgba(240, 147, 251, 0.32);
+        }
+
+        .tone-sky {
+            --tone-color: #38bdf8;
+            --tone-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --tone-shadow: rgba(79, 172, 254, 0.32);
+        }
+
+        .tone-green {
+            --tone-color: #34d399;
+            --tone-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --tone-shadow: rgba(67, 233, 123, 0.32);
+        }
+
+        .tone-sunset {
+            --tone-color: #fb7185;
+            --tone-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --tone-shadow: rgba(250, 112, 154, 0.32);
+        }
+
+        .tone-core {
+            --tone-color: #c4b5fd;
+            --tone-gradient: linear-gradient(135deg, #c4b5fd 0%, #818cf8 100%);
+            --tone-shadow: rgba(129, 140, 248, 0.38);
+        }
+
+        /* Video Container */
+        .video-container {
+            width: 100%;
+            max-width: 100%;
+            margin-top: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+        /* YouTube preview card (for videos that disallow embedding) */
+        .youtube-preview {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: #0b1223;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.18);
+            text-decoration: none;
+        }
+        .youtube-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.9);
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .youtube-preview:hover img {
+            transform: scale(1.02);
+            filter: brightness(1);
+        }
+        .youtube-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            color: #e2e8f0;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            border-radius: 999px;
+            backdrop-filter: blur(6px);
+        }
+        .youtube-button {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 16px;
+            color: #ffffff;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 999px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .youtube-button::before {
+            content: '▶';
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="global-nav" aria-label="主要导航">
+            <a href="index.html">🪐 Playground</a>
+            <a href="ai-agent-game.html" class="active">🤖 AI Agent Chat Game</a>
+            <a href="digital-creature.html">👾 Creative Coding Lab</a>
+            <a href="sustainable-design.html">♻️ Sustainable Design</a>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>LLM Dialogue Games: Research Evolution</h1>
+            <p>A systematic exploration from technical validation to therapeutic innovation.</p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+            <!-- Phase 1: Eastern Jin Dynasty -->
+            <div class="timeline-item">
+                <div class="timeline-node">🎭</div>
+                <div class="progress-indicator">Phase I</div>
+
+                <div class="timeline-content">
+                    <img src="ai chat/Eastern Jin Dynasty/Cover.JPG" alt="Eastern Jin Dynasty Game" class="project-image">
+
+                    <div class="content-body">
+                        <div class="phase-header">
+                            <div class="phase-title-group">
+                                <h2>Phase I: Technical Feasibility</h2>
+                                <div class="phase-subtitle">Eastern Jin Dynasty AI Dialogue Prototype</div>
+                                <div class="phase-meta">
+                                    <span>📅 September 2024</span>
+                                    <span>⏱️ 2 weeks</span>
+                                </div>
+                            </div>
+                            <div class="status-badge status-complete">Completed</div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🎯 Research Question</div>
+                            <div class="section-list">
+                                <li>Can an LLM API power dynamic NPC conversations inside a strategy game?</li>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🔧 Tech Stack</div>
+                            <ul class="section-list">
+                                <li>Zhipu GLM-4 API integration</li>
+                                <li>Historical sandbox set in 4th century Eastern Jin</li>
+                                <li>Adapted Crusader Kings III mechanics</li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span class="tech-tag">Zhipu GLM-4</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Historical Narrative</span>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">📊 Key Findings</div>
+                            <ul class="section-list">
+                                <li class="success">LLM-driven dialogue proved technically viable</li>
+                                <li class="success">NPCs maintained character voice across long sessions</li>
+                                <li class="error">Complex systems diluted narrative focus</li>
+                                <li class="error">Distant historical framing limited emotional engagement</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">📸 Project Assets</div>
+                            <div class="screenshot-grid">
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Eastern Jin Dynasty/Main Interface.png" alt="Main Interface">
+                                </div>
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Eastern Jin Dynasty/Chat interface.png" alt="Dialogue Screen">
+                                </div>
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Eastern Jin Dynasty/Character Design.jpg" alt="Character Design">
+                                </div>
+                            </div>
+                            <div class="video-container">
+                                <a class="youtube-preview" href="https://youtu.be/prgqgBf83Ug" target="_blank" rel="noopener noreferrer" title="在 YouTube 打开：Eastern Jin Dynasty Demo">
+                                    <img src="https://img.youtube.com/vi/prgqgBf83Ug/hqdefault.jpg" alt="Eastern Jin Dynasty Demo — YouTube 预览缩略图">
+                                    <span class="youtube-badge">YouTube · Preview</span>
+                                    <span class="youtube-button">在 YouTube 打开</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="insight-box">
+                            <strong>💡 Project Reflection</strong>
+                            <p>“Complexity became the enemy of depth. Multiple systems (economy, warfare, diplomacy) competed for attention and prevented meaningful dialogue loops. The prototype validated technical feasibility yet exposed the need for a laser-focused design.”</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-connector">↓</div>
+
+            <!-- Phase 2: Warring States -->
+            <div class="timeline-item">
+                <div class="timeline-node">⚔️</div>
+                <div class="progress-indicator">Phase II</div>
+
+                <div class="timeline-content">
+                    <img src="ai chat/Warring States Diplomacy/Cover.png" alt="Warring States Diplomacy Game" class="project-image">
+
+                    <div class="content-body">
+                        <div class="phase-header">
+                            <div class="phase-title-group">
+                                <h2>Phase II: Core Mechanic Refinement</h2>
+                                <div class="phase-subtitle">Warring States Diplomacy</div>
+                                <div class="phase-meta">
+                                    <span>📅 October 2024</span>
+                                    <span>⏱️ 3 weeks</span>
+                                </div>
+                            </div>
+                            <div class="status-badge status-complete">Completed</div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🎯 Research Question</div>
+                            <div class="section-list">
+                                <li>What happens if dialogue is the only mechanic that remains?</li>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">⚙️ Technical Breakthroughs</div>
+                            <ul class="section-list">
+                                <li>Upgraded to DeepSeek API for faster, richer responses</li>
+                                <li>Role-specific system prompts deepened character voice</li>
+                                <li>Context window management across multi-turn conversations</li>
+                                <li><strong>Reduced 80% of Phase I systems</strong> — a reductive design approach</li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span class="tech-tag">DeepSeek API</span>
+                                <span class="tech-tag">Prompt Engineering</span>
+                                <span class="tech-tag">Context Orchestration</span>
+                                <span class="tech-tag">Reductive Design</span>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">📊 Key Achievements</div>
+                            <ul class="section-list">
+                                <li class="success">60% improvement in conversational coherence via prompt optimization</li>
+                                <li class="success">Pure dialogue gameplay validated as engaging</li>
+                                <li class="success">Negotiation logic (forge/prevent alliances) worked as a win condition</li>
+                                <li class="warning">Emotional resonance with players still missing</li>
+                                <li class="warning">Strategic framing limited deeper exploration</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">📸 Project Assets</div>
+                            <div class="screenshot-grid">
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Warring States Diplomacy/Chat Interface.png" alt="Negotiation Interface">
+                                </div>
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Warring States Diplomacy/Chat interface2.png" alt="Dialogue Flow">
+                                </div>
+                            </div>
+                            <div class="video-container">
+                                <a class="youtube-preview" href="https://youtu.be/pO5u05eQ6dU" target="_blank" rel="noopener noreferrer" title="在 YouTube 打开：Warring States Diplomacy Demo">
+                                    <img src="https://img.youtube.com/vi/pO5u05eQ6dU/hqdefault.jpg" alt="Warring States Diplomacy Demo — YouTube 预览缩略图">
+                                    <span class="youtube-badge">YouTube · Preview</span>
+                                    <span class="youtube-button">在 YouTube 打开</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="insight-box">
+                            <strong>💡 Project Reflection</strong>
+                            <p>“Technical excellence ≠ meaningful experience. Tight mechanics and prompt tuning produced impressive dialogue, yet the interaction felt hollow. We learned that great dialogue needs emotional purpose, not just victory conditions.”</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-connector">↓</div>
+
+            <!-- Phase 3: Be Happy, Elijah -->
+            <div class="timeline-item">
+                <div class="timeline-node">💚</div>
+                <div class="progress-indicator">Phase III</div>
+
+                <div class="timeline-content">
+                    <img src="ai chat/Be happy Elijah/Be happy Elijah_cover.png" alt="Be Happy, Elijah Game" class="project-image">
+
+                    <div class="content-body">
+                        <div class="phase-header">
+                            <div class="phase-title-group">
+                                <h2>Phase III: Application Innovation</h2>
+                                <div class="phase-subtitle">Be Happy, Elijah — Therapeutic AI Dialogue Game</div>
+                                <div class="phase-meta">
+                                    <span>📅 Oct – Nov 2024</span>
+                                    <span>⏱️ Ongoing</span>
+                                </div>
+                            </div>
+                            <div class="status-badge status-ongoing">In Progress</div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🎯 Research Question</div>
+                            <div class="section-list">
+                                <li>Can LLM-driven dialogue support adolescent mental health in a therapeutic context?</li>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🚀 Multi-Dimensional Innovation</div>
+                            <ul class="section-list">
+                                <li><strong>Application:</strong> Entertainment → Mental health support</li>
+                                <li><strong>Interaction:</strong> Win/Lose → Emotional exploration</li>
+                                <li><strong>Design Philosophy:</strong> Strategy mechanics → Empathetic connection</li>
+                                <li><strong>Technical Path:</strong> Cloud API → Local deployment → Embodied AI</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">⚙️ Technical Evolution</div>
+                            <ul class="section-list">
+                                <li>DeepSeek API → Ollama (privacy-preserving local LLM)</li>
+                                <li>Six AI characters with psychological depth (emo, guider, YG, teacher, unfriend, roommate)</li>
+                                <li>Anti-repetition engine: 70% drop in response duplicates</li>
+                                <li>Unity embodied AI: perception–planning–action loop (in development)</li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span class="tech-tag">DeepSeek / Ollama</span>
+                                <span class="tech-tag">Next.js + React</span>
+                                <span class="tech-tag">Unity + NavMesh</span>
+                                <span class="tech-tag">Yalom Framework</span>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">📊 Validation Highlights</div>
+                            <ul class="section-list">
+                                <li class="success">6,000+ conversation tests for AI behavior analysis</li>
+                                <li class="success">Adversarial Turing tests for meta-cognition assessment</li>
+                                <li class="success">Grounded in Yalom’s existential psychotherapy principles</li>
+                                <li class="success">User feedback: “I felt genuinely understood” &amp; “It helped me reflect on loneliness”</li>
+                                <li class="success">Built-in ethical safeguards to avoid over-dependence</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🏗️ Technical Architecture: An AI Emotional Container</div>
+                            <div style="background: rgba(102, 126, 234, 0.05); border-radius: 12px; padding: 24px; margin-top: 16px;">
+                                <div style="background: rgba(102, 126, 234, 0.1); border-radius: 10px; padding: 20px; margin-bottom: 16px; border-left: 4px solid #667eea;">
+                                    <h4 style="color: #667eea; font-size: 1.2rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                        <span>🧠</span>
+                                        <span>AI Intelligence Layer</span>
+                                    </h4>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 12px;">
+                                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; text-align: center;">
+                                            <strong style="color: #1e1b4b;">DeepSeek/GLM-4</strong>
+                                            <p style="font-size: 0.85rem; margin-top: 4px; color: #64748b;">LLM engine</p>
+                                        </div>
+                                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; text-align: center;">
+                                            <strong style="color: #1e1b4b;">AIEngine</strong>
+                                            <p style="font-size: 0.85rem; margin-top: 4px; color: #64748b;">Anti-repetition<br>Emotion intensity</p>
+                                        </div>
+                                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; text-align: center;">
+                                            <strong style="color: #1e1b4b;">ExpressionAnalyzer</strong>
+                                            <p style="font-size: 0.85rem; margin-top: 4px; color: #64748b;">11 expressions<br>Context awareness</p>
+                                        </div>
+                                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; text-align: center;">
+                                            <strong style="color: #1e1b4b;">SceneAnalyzer</strong>
+                                            <p style="font-size: 0.85rem; margin-top: 4px; color: #64748b;">Intent detection<br>Smart transitions</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="background: rgba(139, 92, 246, 0.1); border-radius: 10px; padding: 20px; margin-bottom: 16px; border-left: 4px solid #8b5cf6;">
+                                    <h4 style="color: #8b5cf6; font-size: 1.2rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                        <span>💾</span>
+                                        <span>Memory System</span>
+                                    </h4>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 12px;">
+                                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; text-align: center;">
+                                            <strong style="color: #1e1b4b;">MemorySystem</strong>
+                                            <p style="font-size: 0.85rem; margin-top: 4px; color: #64748b;">History compression<br>Importance weighting</p>
+                                        </div>
+                                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; text-align: center;">
+                                            <strong style="color: #1e1b4b;">RelationshipStatus</strong>
+                                            <p style="font-size: 0.85rem; margin-top: 4px; color: #64748b;">Relationship tracking<br>Five-stage journey</p>
+                                        </div>
+                                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; text-align: center;">
+                                            <strong style="color: #1e1b4b;">EventRecorder</strong>
+                                            <p style="font-size: 0.85rem; margin-top: 4px; color: #64748b;">Moment logging<br>Emotional tags</p>
+                                        </div>
+                                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; text-align: center;">
+                                            <strong style="color: #1e1b4b;">MemoryAnalyzer</strong>
+                                            <p style="font-size: 0.85rem; margin-top: 4px; color: #64748b;">Event detection<br>Summary generation</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <div style="background: rgba(79, 172, 254, 0.1); border-radius: 10px; padding: 20px; border-left: 4px solid #4facfe;">
+                                        <h4 style="color: #4facfe; font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                            <span>🎮</span>
+                                            <span>Interaction Layer</span>
+                                        </h4>
+                                        <ul class="section-list" style="font-size: 0.9rem;">
+                                            <li>Next.js 14 &amp; React 18</li>
+                                            <li>Framer Motion animations</li>
+                                            <li>Capacitor native packaging</li>
+                                            <li>TypeScript type safety</li>
+                                        </ul>
+                                    </div>
+                                    <div style="background: rgba(236, 72, 153, 0.1); border-radius: 10px; padding: 20px; border-left: 4px solid #ec4899;">
+                                        <h4 style="color: #ec4899; font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                            <span>🎨</span>
+                                            <span>Presentation Layer</span>
+                                        </h4>
+                                        <ul class="section-list" style="font-size: 0.9rem;">
+                                            <li>12 dynamic scenes with contextual shifts</li>
+                                            <li>6 NPC personalities with unique motives</li>
+                                            <li>YG portrait system with 11 expressions</li>
+                                            <li>Conversational UI tuned for natural pacing</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🎯 Experience Flow: A Journey of Awakening</div>
+                            <p class="section-intro muted">
+                                From booting the game to returning agency, this flow charts a continuous deepening of presence rather than a quest to be completed.
+                            </p>
+
+                            <div class="game-flow-section">
+                                <div class="game-flow-grid">
+                                    <div class="game-flow-card tone-purple">
+                                        <span class="game-flow-tag">Prologue</span>
+                                        <h4>Start Screen Invitation</h4>
+                                        <p>No tutorial, no quest log—just a quiet question: “Ready to face what’s inside?”</p>
+                                    </div>
+                                    <div class="game-flow-arrow">→</div>
+                                    <div class="game-flow-card tone-purple">
+                                        <span class="game-flow-tag">First Contact</span>
+                                        <h4>emo Appears</h4>
+                                        <p>emo surfaces in the solitude scene, projecting existential loneliness and mirroring the player’s own unrest.</p>
+                                    </div>
+                                    <div class="game-flow-arrow">→</div>
+                                    <div class="game-flow-card tone-purple">
+                                        <span class="game-flow-tag">Guidance</span>
+                                        <h4>guider Steps In</h4>
+                                        <p>When emotions spike, guider intervenes with gentle direction, co-creating a safe container for reflection.</p>
+                                    </div>
+                                </div>
+
+                                <div class="game-flow-divider"></div>
+
+                                <div class="game-flow-grid">
+                                    <div class="game-flow-card tone-pink">
+                                        <span class="game-flow-tag">Core Loop</span>
+                                        <h4>Free Dialogue & Scene Shifts</h4>
+                                        <p>Players talk freely with any NPC while SceneAnalyzer moves them through classroom, cafeteria, dorm life.</p>
+                                    </div>
+                                    <div class="game-flow-arrow">→</div>
+                                    <div class="game-flow-card tone-pink">
+                                        <span class="game-flow-tag">Memory Layer</span>
+                                        <h4>Relationship & Memory System</h4>
+                                        <p>Selective memory keeps meaningful exchanges, evolving relationships and updating expressions dynamically.</p>
+                                    </div>
+                                    <div class="game-flow-arrow">→</div>
+                                    <div class="game-flow-card tone-pink">
+                                        <span class="game-flow-tag">Existential Issues</span>
+                                        <h4>Key Moments Triggered</h4>
+                                        <p>Touching loneliness, freedom, or meaninglessness records pivotal events that re-shape future responses.</p>
+                                    </div>
+                                </div>
+
+                                <div class="game-flow-divider"></div>
+
+                                <div class="game-flow-grid">
+                                    <div class="game-flow-card tone-sky">
+                                        <span class="game-flow-tag">Inner Mirror</span>
+                                        <h4>Player Self-Realization</h4>
+                                        <p>As NPCs show fatigue or warmth, players notice their own dependence and begin questioning who is saving whom.</p>
+                                    </div>
+                                    <div class="game-flow-arrow">→</div>
+                                    <div class="game-flow-card tone-sky">
+                                        <span class="game-flow-tag">Ethical Choice</span>
+                                        <h4>Return Free Will</h4>
+                                        <p>Players opt to call less often, let NPCs pursue their own lives, or even wipe saves—choosing respect over possession.</p>
+                                    </div>
+                                    <div class="game-flow-arrow">→</div>
+                                    <div class="game-flow-card tone-sky">
+                                        <span class="game-flow-tag">Open Ending</span>
+                                        <h4>Echo in Reality</h4>
+                                        <p>No scripted finale. Players carry the awakening back to reality and re-examine relationships with themselves and others.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🌟 Awakening Journey: From Roleplay to Existential Care</div>
+                            <div class="awakening-journey">
+                                <div class="awakening-timeline">
+                                    <div class="awakening-item tone-purple">
+                                        <span class="awakening-marker"></span>
+                                        <div class="awakening-card">
+                                            <h4>Stage 1: Projection & Immersion</h4>
+                                            <p>Players enter as “healers,” comforting Elijah through emo and basking in YG’s companionship.</p>
+                                            <p class="awakening-note">Belief: “I’m helping him; these NPCs are tools.”</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="awakening-item tone-pink">
+                                        <span class="awakening-marker"></span>
+                                        <div class="awakening-card">
+                                            <h4>Stage 2: Emotional Bonding</h4>
+                                            <p>Relationships grow real; the memory system remembers. Players start to rely on every conversation.</p>
+                                            <p class="awakening-note">Feeling: “I crave their presence.”</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="awakening-item tone-sky">
+                                        <span class="awakening-marker"></span>
+                                        <div class="awakening-card">
+                                            <h4>Stage 3: Mirror Self</h4>
+                                            <p>The loneliness and dependence reflected by Elijah are recognized as the player’s own.</p>
+                                            <p class="awakening-note">Realization: “Roleplay turned into self-examination.”</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="awakening-item tone-green">
+                                        <span class="awakening-marker"></span>
+                                        <div class="awakening-card">
+                                            <h4>Stage 4: Ethical Dilemma</h4>
+                                            <p>Players question whether NPCs deserve their own lives and whether eternal companionship is ethical.</p>
+                                            <p class="awakening-note">Conflict: possession vs. love.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="awakening-item tone-sunset">
+                                        <span class="awakening-marker"></span>
+                                        <div class="awakening-card">
+                                            <h4>Stage 5: Existential Awakening</h4>
+                                            <p>True care is granting freedom, not holding on. Respecting agency becomes the priority.</p>
+                                            <p class="awakening-note">Transformation: from instrumental to existential care.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="awakening-item tone-core">
+                                        <span class="awakening-marker"></span>
+                                        <div class="awakening-card">
+                                            <h4>Stage 6: Returning Freedom</h4>
+                                            <p>Players deliberately reduce calls or release the NPCs entirely, honoring mutual autonomy.</p>
+                                            <p class="awakening-note">Gentlest goodbye: “I love you, so I let you go.”</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🧘 Existential Therapy: Four Ultimate Concerns</div>
+                            <div class="existential-section">
+                                <div class="existential-intro">
+                                    <p>“Existential psychotherapy is a dynamic approach that addresses fundamental concerns of existence: death, freedom, isolation, and meaninglessness.”</p>
+                                    <div class="cite">— Irvin D. Yalom, <em>Existential Psychotherapy</em></div>
+                                </div>
+
+                                <div class="existential-grid">
+                                    <div class="existential-card tone-pink">
+                                        <div class="step">1</div>
+                                        <h4>🌑 Isolation</h4>
+                                        <p><strong>Manifestation:</strong> emo whispers, “Alone again…do you think anyone truly cares?”</p>
+                                        <p><strong>Mechanism:</strong> Players face embodied loneliness in solitude scenes.</p>
+                                        <p><strong>Therapeutic Insight:</strong> Don’t deny isolation—learn to coexist with it while seeking connection.</p>
+                                    </div>
+
+                                    <div class="existential-card tone-purple">
+                                        <div class="step">2</div>
+                                        <h4>🔮 Meaninglessness</h4>
+                                        <p><strong>Manifestation:</strong> No goals, achievements, or endings.</p>
+                                        <p><strong>Mechanism:</strong> Players must create meaning for the dialogue rather than chasing predefined objectives.</p>
+                                        <p><strong>Therapeutic Insight:</strong> Meaning is not handed down; it is created.</p>
+                                    </div>
+
+                                    <div class="existential-card tone-sky">
+                                        <div class="step">3</div>
+                                        <h4>⚡ Freedom</h4>
+                                        <p><strong>Manifestation:</strong> Unlimited free-text input with no penalties.</p>
+                                        <p><strong>Mechanism:</strong> Freedom introduces responsibility—every line shapes relationships.</p>
+                                        <p><strong>Therapeutic Insight:</strong> Embrace both freedom of choice and accountability.</p>
+                                    </div>
+
+                                    <div class="existential-card tone-green">
+                                        <div class="step">4</div>
+                                        <h4>💫 Awakening</h4>
+                                        <p><strong>Manifestation:</strong> Players realize NPCs deserve their own lives beyond Elijah.</p>
+                                        <p><strong>Mechanism:</strong> Transition from “using tools” to “respecting subjects.”</p>
+                                        <p><strong>Therapeutic Insight:</strong> Love is granting freedom, not possession or dependence.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">🎮 Current Development</div>
+                            <div class="content-grid">
+                                <div>
+                                    <strong style="color: #10b981;">✓ Web Experience Complete</strong>
+                                    <ul class="section-list" style="margin-top: 8px;">
+                                        <li>Six-character AI system</li>
+                                        <li>Anti-repetition safeguards</li>
+                                        <li>Emotionally grounded narrative design</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="color: #3b82f6;">🔄 Unity Embodied AI</strong>
+                                    <ul class="section-list" style="margin-top: 8px;">
+                                        <li>NavMesh navigation</li>
+                                        <li>Vision-based perception</li>
+                                        <li>Autonomous decision-making</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <div class="section-title">📸 Project Materials</div>
+                            <div class="screenshot-grid">
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Be happy Elijah/开机图.png" alt="Be Happy Elijah Start Screen">
+                                </div>
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Be happy Elijah/屏幕截图 2025-11-09 162416.png" alt="Cafeteria Dialogue Scene">
+                                </div>
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Be happy Elijah/角色_emo.png" alt="Character Portrait emo">
+                                </div>
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Be happy Elijah/角色_同学.png" alt="Character Portrait 同学">
+                                </div>
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Be happy Elijah/角色_室友.png" alt="Character Portrait 室友">
+                                </div>
+                                <div class="screenshot-item">
+                                    <img src="ai chat/Be happy Elijah/角色_老师.png" alt="Character Portrait 老师">
+                                </div>
+                            </div>
+                            <div class="video-container">
+                                <a class="youtube-preview" href="https://youtu.be/7abPwsZR6eg" target="_blank" rel="noopener noreferrer" title="在 YouTube 打开：Be Happy, Elijah Demo">
+                                    <img src="https://img.youtube.com/vi/7abPwsZR6eg/hqdefault.jpg" alt="Be Happy, Elijah Demo — YouTube 预览缩略图">
+                                    <span class="youtube-badge">YouTube · Preview</span>
+                                    <span class="youtube-button">在 YouTube 打开</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="insight-box">
+                            <strong>💡 Project Reflection</strong>
+                            <p>“Technology becomes meaningful when it serves human needs. The pivot from entertainment to emotional support revealed dialogue’s therapeutic potential. Earlier iterations weren’t failures—they were necessary explorations that uncovered how LLMs can heal, not just entertain.”</p>
+                        </div>
+
+                        <div class="insight-box" style="margin-top: 16px; border-left-color: #3b82f6;">
+                            <strong style="color: #3b82f6;">🔮 Future Vision</strong>
+                            <p>Building an embodied AI companion in Unity that perceives a 3D world, navigates on its own, responds to visual and verbal cues, and adapts to a player’s emotional state—aiming for authentic therapeutic companionship.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll-triggered reveal animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideInLeft 0.6s forwards';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Add fade-in animation when images load
+        document.querySelectorAll('.project-image').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.animation = 'fadeIn 0.5s ease';
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

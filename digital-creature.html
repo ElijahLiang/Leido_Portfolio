@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creative Coding Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      line-height: 1.6;
+    }
+
+    .global-nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .global-nav a {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(24, 24, 30, 0.8);
+      border: 1px solid rgba(102, 126, 234, 0.35);
+      color: #e2e8f0;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .global-nav a:hover,
+    .global-nav a:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(102, 126, 234, 0.25);
+      background: rgba(102, 126, 234, 0.25);
+      outline: none;
+    }
+
+    .global-nav a.active {
+      background: rgba(102, 126, 234, 0.4);
+      border-color: rgba(148, 163, 184, 0.55);
+      color: #ffffff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 100px;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      color: #888;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .projects-grid {
+      display: grid;
+      gap: 120px;
+    }
+
+    .project {
+      display: flex;
+      flex-direction: column;
+      gap: 45px;
+    }
+
+    .project-media {
+      width: 100%;
+    }
+
+    .project-canvas {
+      position: relative;
+      background: #1a1a1a;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      aspect-ratio: 21 / 10;
+    }
+
+    .project-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #000;
+    }
+    /* YouTube preview card (for videos that disallow embedding) */
+    .youtube-preview {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(102, 126, 234, 0.25);
+      background: #0b1223;
+      box-shadow: 0 12px 36px rgba(102, 126, 234, 0.18);
+      text-decoration: none;
+    }
+    .youtube-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.92);
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .youtube-preview:hover img {
+      transform: scale(1.02);
+      filter: brightness(1);
+    }
+    .youtube-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      color: #e2e8f0;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+    }
+    .youtube-button {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px 16px;
+      color: #ffffff;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .youtube-button::before {
+      content: '▶';
+      display: inline-block;
+      font-size: 0.9rem;
+    }
+
+    .project-content {
+      background: linear-gradient(135deg, rgba(20, 20, 26, 0.85) 0%, rgba(35, 35, 46, 0.85) 100%);
+      border: 1px solid rgba(102, 126, 234, 0.15);
+      border-radius: 20px;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      backdrop-filter: blur(12px);
+    }
+
+    .project-heading {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .canvas-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      color: #666;
+      padding: 40px;
+    }
+
+    .canvas-placeholder-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .canvas-placeholder-text {
+      font-size: 1.1rem;
+      text-align: center;
+      max-width: 420px;
+    }
+
+    .canvas-tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4facfe;
+      border: 1px solid rgba(79, 172, 254, 0.3);
+    }
+
+    .project-title {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .project-subtitle {
+      font-size: 1.1rem;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .tech-tag {
+      padding: 8px 16px;
+      background: rgba(102, 126, 234, 0.15);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #a5b4fc;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #667eea;
+      margin-bottom: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+      border-radius: 2px;
+    }
+
+    .section-content {
+      color: #ccc;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .section-content p {
+      margin-bottom: 12px;
+    }
+
+    .algorithm-box {
+      background: rgba(30, 30, 30, 0.6);
+      border-left: 4px solid #667eea;
+      padding: 24px;
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+
+    .algorithm-box h4 {
+      color: #667eea;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .algorithm-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .algorithm-list li {
+      padding: 8px 0 8px 24px;
+      position: relative;
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+
+    .algorithm-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #667eea;
+      font-weight: bold;
+    }
+
+    .code-block {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      margin: 0;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e5e5e5;
+      white-space: pre-wrap;
+    }
+
+    .code-comment {
+      color: #6a9955;
+    }
+
+    .code-keyword {
+      color: #569cd6;
+    }
+
+    .code-function {
+      color: #dcdcaa;
+    }
+
+    .code-string {
+      color: #ce9178;
+    }
+
+    .color-palette {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .color-swatch {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.1);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .inspiration-quote {
+      background: rgba(102, 126, 234, 0.05);
+      border-left: 4px solid #667eea;
+      padding: 20px 24px;
+      border-radius: 8px;
+      font-style: italic;
+      color: #aaa;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      .project {
+        gap: 35px;
+      }
+
+      .project-content {
+        padding: 36px;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+      }
+
+      .project-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 60px 20px;
+      }
+
+      .project-content {
+        padding: 28px;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .project-title {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="global-nav" aria-label="主要导航">
+      <a href="index.html">🪐 Playground</a>
+      <a href="ai-agent-game.html">🤖 AI Agent Chat Game</a>
+      <a href="digital-creature.html" class="active">👾 Creative Coding Lab</a>
+      <a href="sustainable-design.html">♻️ Sustainable Design</a>
+    </nav>
+    <div class="header">
+      <h1>Digital Creature · Creative Coding Lab</h1>
+      <p>A Processing-based audio-visual playground: from starfield particles to breath-driven Mondrian posters, capturing the algorithmic poetry behind every iteration.</p>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project">
+        <div class="project-media">
+          <div class="project-canvas">
+            <div class="canvas-tag">Audio-Reactive</div>
+            <a class="youtube-preview" href="https://youtu.be/tIS4zPs7lV0" target="_blank" rel="noopener noreferrer" title="在 YouTube 打开：Colorless Light">
+              <img src="https://img.youtube.com/vi/tIS4zPs7lV0/hqdefault.jpg" alt="Colorless Light — YouTube 预览缩略图">
+              <span class="youtube-badge">YouTube · Preview</span>
+              <span class="youtube-button">在 YouTube 打开</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-content">
+          <div class="project-heading">
+            <h2 class="project-title">Colorless Light</h2>
+          <div class="project-subtitle">Colorless Light - Vocal-Driven Audio Visualization</div>
+          </div>
+
+          <div class="project-meta">
+            <div class="meta-item">
+              <span>🎨</span>
+              <span>Generative Art</span>
+            </div>
+            <div class="meta-item">
+              <span>🎵</span>
+              <span>Audio Visualization</span>
+            </div>
+            <div class="meta-item">
+              <span>⚡</span>
+              <span>Real-time</span>
+            </div>
+          </div>
+
+          <div class="tech-stack">
+            <span class="tech-tag">Processing 4.x</span>
+            <span class="tech-tag">Sound FFT 512 bins</span>
+            <span class="tech-tag">P2D Renderer</span>
+            <span class="tech-tag">Custom Bloom</span>
+          </div>
+
+          <div class="content-section">
+            <div class="section-title">Design Inspiration</div>
+            <div class="section-content">
+              <p>Inspired by the live set of <em>Colorless Light</em>, the installation turns vocal crescendos into a swirling nebula. A 512-point <code>FFT</code> isolates the mid-frequency band between 500 Hz and 4 kHz, compares it with low and high background energy, and drives the particle field via the vocal-to-backtrack ratio.</p>
+              <div class="inspiration-quote">
+                "Sound energy becomes a visible galaxy. Stronger choruses summon more comet visitors and blaze a brighter core."
+              </div>
+            </div>
+          </div>
+
+          <div class="content-section">
+            <div class="section-title">Core Algorithms</div>
+            <div class="section-content">
+              <div class="algorithm-box">
+                <h4>1. Vocal Chorus Detection</h4>
+                <ul class="algorithm-list">
+                  <li>512-point FFT evaluates vocal energy between 500-4000 Hz versus low/high background energy</li>
+                  <li>Weighted score blends <code>vocalRatio</code>, <code>vocalBoost</code>, and <code>volumeFactor</code></li>
+                  <li>When <code>chorusScore &gt; 0.6</code> and <code>vocalRatio &gt; 1.2</code>, the chorus state is latched for 60 frames</li>
+                </ul>
+              </div>
+
+              <div class="algorithm-box">
+                <h4>2. Particle & Core Dynamics</h4>
+                <ul class="algorithm-list">
+                  <li><strong>Center pull</strong>: <code>CENTER_PULL</code> plus logarithmic distance creates the vortex core</li>
+                  <li><strong>Ripple system</strong>: Beats spawn <code>Ripple</code> particles that radiate circular pulses</li>
+                  <li><strong>Comet visitor</strong>: Chorus phases inject <code>Comet</code> entities with elongated tails</li>
+                  <li><strong>Dynamic population</strong>: Quiet baseline of 600, chorus peaks at 2000+, adapting to <code>CHORUS_LEVEL</code></li>
+                </ul>
+              </div>
+
+              <div class="algorithm-box">
+                <h4>3. Bloom Post-Processing</h4>
+                <ul class="algorithm-list">
+                  <li>Threshold pass extracts highlights with <code>luminance &gt; 0.72</code></li>
+                  <li>8-tap Gaussian blur with independent horizontal and vertical <code>blurRadius</code></li>
+                  <li>Custom composite shader adds the bloom layer to the base render</li>
+                </ul>
+              </div>
+
+              <div class="code-block">
+<pre><span class="code-comment">// Colorless Light: chorus detection snippet (Final.pde)</span>
+<span class="code-keyword">if</span> (fft != <span class="code-keyword">null</span>) {
+  fft.<span class="code-function">analyze</span>(spectrum);
+
+  <span class="code-keyword">int</span> vocalStart = (<span class="code-keyword">int</span>)(<span class="code-string">500</span> / freqPerBin);
+  <span class="code-keyword">int</span> vocalEnd   = (<span class="code-keyword">int</span>)(<span class="code-string">4000</span> / freqPerBin);
+
+  vocalEnergy = <span class="code-string">0</span>;
+  <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = vocalStart; i &lt; vocalEnd; i++) {
+    vocalEnergy += spectrum[i];
+  }
+  vocalAvg = <span class="code-function">lerp</span>(vocalAvg, vocalEnergy, <span class="code-string">0.01</span>);
+
+  backingEnergy = <span class="code-string">0</span>;
+  <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-string">0</span>; i &lt; vocalStart; i++) backingEnergy += spectrum[i];
+  <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = vocalEnd; i &lt; spectrum.length / <span class="code-string">2</span>; i++) backingEnergy += spectrum[i];
+  backingAvg = <span class="code-function">lerp</span>(backingAvg, backingEnergy, <span class="code-string">0.01</span>);
+
+  vocalRatio = backingAvg &gt; <span class="code-string">0.001</span> ? vocalEnergy / <span class="code-function">max</span>(backingAvg, <span class="code-string">0.001</span>) : <span class="code-string">0</span>;
+
+  <span class="code-keyword">float</span> chorusScore = <span class="code-string">0.5</span> * vocalBoost + <span class="code-string">0.3</span> * volumeFactor
+                       + <span class="code-string">0.2</span> * <span class="code-function">constrain</span>(vocalRatio - <span class="code-string">1.0</span>, <span class="code-string">0</span>, <span class="code-string">1</span>);
+
+  <span class="code-keyword">if</span> (chorusScore &gt; <span class="code-string">0.6</span> && vocalRatio &gt; <span class="code-string">1.2</span>) {
+    chorusHoldFrames = CHORUS_HOLD;
+  }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-media">
+          <div class="project-canvas">
+            <div class="canvas-tag">Breath Interactive</div>
+            <a class="youtube-preview" href="https://youtu.be/fcNKNJJWSSI" target="_blank" rel="noopener noreferrer" title="在 YouTube 打开：Mondrian Generator">
+              <img src="https://img.youtube.com/vi/fcNKNJJWSSI/hqdefault.jpg" alt="Mondrian Generator — YouTube 预览缩略图">
+              <span class="youtube-badge">YouTube · Preview</span>
+              <span class="youtube-button">在 YouTube 打开</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-content">
+          <div class="project-heading">
+            <h2 class="project-title">Mondrian Generator</h2>
+          <div class="project-subtitle">Mondrian Generator - Breath-Responsive Composition</div>
+          </div>
+
+          <div class="project-meta">
+            <div class="meta-item">
+              <span>🎨</span>
+              <span>Generative Design</span>
+            </div>
+            <div class="meta-item">
+              <span>🎤</span>
+              <span>Breath Interaction</span>
+            </div>
+            <div class="meta-item">
+              <span>📐</span>
+              <span>Golden Ratio</span>
+            </div>
+          </div>
+
+          <div class="tech-stack">
+            <span class="tech-tag">Processing 4.x</span>
+            <span class="tech-tag">Sound Amplitude</span>
+            <span class="tech-tag">Generative Composition</span>
+            <span class="tech-tag">De Stijl Palette</span>
+          </div>
+
+          <div class="content-section">
+            <div class="section-title">Design Inspiration</div>
+            <div class="section-content">
+              <p>Inside the AudioPress sketch, breath becomes both input and tempo. The system watches a 20-frame rolling microphone average; whenever the amplitude surpasses 1.2x the mean, it emits a set of classic ratio rectangles accompanied by wind particles.</p>
+              <div class="color-palette">
+                <div class="color-swatch" style="background: rgb(220, 42, 42)" title="Mondrian Red"></div>
+                <div class="color-swatch" style="background: rgb(255, 215, 0)" title="Mondrian Yellow"></div>
+                <div class="color-swatch" style="background: rgb(20, 85, 155)" title="Mondrian Blue"></div>
+                <div class="color-swatch" style="background: rgb(245, 240, 230)" title="Mondrian Cream"></div>
+              </div>
+              <div class="inspiration-quote">
+                "Breath turns into rectangles and primary colors, translating unconscious rhythms into Mondrian order."
+              </div>
+            </div>
+          </div>
+
+          <div class="content-section">
+            <div class="section-title">Core Algorithms</div>
+            <div class="section-content">
+              <div class="algorithm-box">
+                <h4>1. Breath Detection</h4>
+                <ul class="algorithm-list">
+                  <li>Sample amplitude in real time and maintain a 20-frame history queue</li>
+                  <li>Breathing triggers when current level &gt; <code>breathThreshold</code> and &gt; rolling average x 1.2</li>
+                  <li>Breath strength maps to <code>0.2 - 2.0</code> with gentle decay</li>
+                </ul>
+              </div>
+
+              <div class="algorithm-box">
+                <h4>2. Composition & Color</h4>
+                <ul class="algorithm-list">
+                  <li>Golden ratio <code>φ</code> plus rule-of-thirds anchors form <code>compositionNodes</code></li>
+                  <li>80% chance to spawn golden rectangles, 20% to introduce squares or slim strips</li>
+                  <li>Authentic Mondrian palette: red, yellow, blue, off-white, cream, and restrained black</li>
+                </ul>
+              </div>
+
+              <div class="algorithm-box">
+                <h4>3. Dynamic Expression</h4>
+                <ul class="algorithm-list">
+                  <li>Fresh blocks inherit damping and snap toward a 20 px grid for classic layouts</li>
+                  <li>Breathing simultaneously spawns <code>WindParticle</code> trails to visualize airflow</li>
+                  <li>Keyboard shortcuts: <code>S</code> save poster, <code>M</code> restart mic, <code>R</code> reset composition</li>
+                </ul>
+              </div>
+
+              <div class="code-block">
+<pre><span class="code-comment">// Breath-driven block generation (AudioPress.pde)</span>
+<span class="code-keyword">void</span> <span class="code-function">generateClassicBreathBlocks</span>() {
+  <span class="code-keyword">int</span> numBlocks = (<span class="code-keyword">int</span>)(breathStrength * <span class="code-string">3</span>);
+
+  <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-string">0</span>; i &lt; numBlocks; i++) {
+    <span class="code-keyword">float</span> x = <span class="code-function">random</span>(width);
+    <span class="code-keyword">float</span> y = <span class="code-function">random</span>(height);
+
+    x = <span class="code-function">constrain</span>(x, width * <span class="code-string">0.05</span>, width * <span class="code-string">0.95</span>);
+    y = <span class="code-function">constrain</span>(y, height * <span class="code-string">0.05</span>, height * <span class="code-string">0.95</span>);
+
+    <span class="code-keyword">float</span> maxBlockSize = <span class="code-function">min</span>(width, height) / <span class="code-string">4.0</span>;
+    <span class="code-keyword">float</span> randomSize = <span class="code-function">random</span>(<span class="code-string">25</span>, maxBlockSize);
+    <span class="code-keyword">float</span> baseSize = <span class="code-function">map</span>(breathStrength, <span class="code-string">0</span>, <span class="code-string">2.5</span>,
+                                  randomSize * <span class="code-string">0.5</span>, randomSize);
+
+    color c = <span class="code-function">getClassicMondrianColor</span>();
+    ColoredBlock block = <span class="code-keyword">new</span> ColoredBlock(x, y, baseSize, baseSize / goldenRatio, c, <span class="code-string">0</span>);
+
+    <span class="code-keyword">float</span> blowForce = <span class="code-function">map</span>(breathStrength, <span class="code-string">0</span>, <span class="code-string">2.5</span>, <span class="code-string">0.2</span>, <span class="code-string">2.0</span>);
+    block.velocity.<span class="code-function">add</span>(<span class="code-function">random</span>(-blowForce * <span class="code-string">0.3</span>, blowForce * <span class="code-string">0.3</span>),
+                         <span class="code-function">random</span>(blowForce * <span class="code-string">0.1</span>, blowForce * <span class="code-string">0.8</span>));
+
+    blocks.<span class="code-function">add</span>(block);
+  }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
