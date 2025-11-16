@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+a<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,95 +12,181 @@
 <body>
   <header class="hero">
     <div class="slide-left">
-      <span class="scrolling-text">🚀🪐🌕🌑☄️🛸 Welcome to Welcome to</span>
+      <span class="scrolling-text">🛸 Welcome to Welcome to</span>
     </div>
     <div class="slide-right">
       <span class="scrolling-texto">🛸  Leido'PlayGround✦ </span>
     </div>
     <div class="topbar">
-      <button onclick="myFunction2()"> .𖥔 ݁ ˖🛸Game Design.✦ </button>
-      <button onclick="myFunction3()"> 𖥔 ݁ ˖🪐Digital Media Art✦ </button>
-      <button onclick="myFunction4()"> 𖥔 ݁ ˖🌕🌑Product Design✦ </button>
+      <button type="button" data-planet="game" onclick="activatePlanet('game')"> .𖥔 ݁ ˖🛸Game Design.✦ </button>
+      <button type="button" data-planet="digital" onclick="activatePlanet('digital')"> 𖥔 ݁ ˖🪐Digital Media Art✦ </button>
+      <button type="button" data-planet="product" onclick="activatePlanet('product')"> 𖥔 ݁ ˖🌕🌑Product Design✦ </button>
     </div>
   </header>
 
   <main class="container">
-    <!-- 设计宣言：静止居中 -->
-    <section class="manifesto-static">
-      <article class="manifesto-card reveal" aria-label="Design Manifesto">
+    <!-- 星球入口 -->
+    <section class="works-section">
+      <div class="planet-orbit" id="planetOrbit" aria-hidden="true">
+        <a href="ai-agent-game.html" class="planet planet-game" data-planet="game" aria-label="Game Design">🪐</a>
+        <a href="digital-creature.html" class="planet planet-digital" data-planet="digital" aria-label="Digital Media Art">🌕</a>
+        <a href="sustainable-design.html" class="planet planet-product" data-planet="product" aria-label="Product Design">🌏</a>
+      </div>
+      <p class="planet-hint" id="planetHint" aria-live="polite" aria-hidden="true">Tap the buttons above to reveal the portal</p>
+    </section>
+
+    <section class="embodied-preview" aria-label="Embodied Intelligence teaser">
+      <div class="embodied-card">
+        <p class="embodied-label">🧠 White-box testing · New</p>
+        <h2>Embodied Intelligence Project (In Development)</h2>
+        <p class="embodied-desc">
+          Inside the Unity sandbox, the embodied agent already runs the Explore → Report → Dialogue loop with live visual narration and NavMesh anti-stuck safeguards.
+        </p>
+        <ul class="embodied-list">
+          <li>Autonomous patrols that log discoveries and visited paths</li>
+          <li>Contextual conversations grounded in scene memory</li>
+          <li>Full stack: DialogueSystem → LLMBrain → YangguangAI</li>
+        </ul>
+        <a class="embodied-link" href="embodied-intelligence.html">View architecture & test video →</a>
+      </div>
+    </section>
+
+    <!-- 设计宣言区 -->
+    <section class="manifesto-section">
+      <h2 class="section-title-main">Design Manifesto · Torch of Light</h2>
+      <article class="manifesto-card manifesto-card-full reveal" aria-label="Design Manifesto">
         <div class="manifesto-beam" aria-hidden="true"></div>
 
-        <div class="manifesto-label" data-reveal>DESIGN MANIFESTO · TORCH OF LIGHT</div>
+        <div class="manifesto-content" data-reveal>
+          <h3 class="manifesto-heading">The meaning of life is how we illuminate one another.</h3>
+          
+          <p class="manifesto-lede">
+            Design, technology, and art are the torches I carry to reach people who have been overlooked and to meet them with warmth.
+          </p>
 
-        <h1 class="manifesto-heading" style="--in-delay: .05s" data-reveal>
-          I have always believed—<br>
-          <strong>The meaning of life lies in how people illuminate one another</strong>.<br>
-          Design, technology, and art are the torches that carry that light forward.
-        </h1>
-
-        <p class="manifesto-lede" style="--in-delay: .15s" data-reveal>
-          Since childhood, I have been deeply moved by the inequalities of the world—by how many gentle souls endure pain, and how fragility and resilience coexist within life itself. I began to wonder: how might design and technology help the unseen be equally seen, and the unheard be gently understood?
-        </p>
-
-        <div class="manifesto-section" data-reveal>
           <blockquote class="manifesto-quote">
-            <p>Five years ago, I shifted from business to design. That year, under the lanterns of Nanjing's Confucius Temple, I made a wish:<br><strong>"To become a designer who can bring happiness to others."</strong></p>
+            <p>"Five years ago, under the lanterns of Nanjing's Confucius Temple, I made a wish: <strong>become a designer who can bring happiness to others.</strong>"</p>
+            <cite>— Night in Qinhuai, 2019</cite>
           </blockquote>
-        </div>
 
-        <div class="manifesto-section manifesto-small" data-reveal>
-          After five years of practice, I've realized that <strong>happiness cannot be given—it can only be empowered.</strong> True design is about creating spaces, tools, and systems through which individuals can rediscover their innate strength.
-        </div>
+          <div class="manifesto-text">
+            <p>Since childhood I have been moved by how many gentle souls carry pain, how fragility and resilience coexist. I keep asking: <strong>how can design help the unseen be equally seen, and the unheard be gently understood?</strong></p>
+            
+            <p>Five years of practice taught me this: <strong>happiness cannot be given—it can only be empowered.</strong> My work builds spaces, tools, and systems that let people rediscover their own strength.</p>
+          </div>
 
-        <div class="manifesto-end-cap" data-reveal>
-          <span class="manifesto-torch" aria-hidden="true"></span>
-          I hope my design allows every form of life—<br>
-          human or non-human—<br>
-          to be <strong>gently seen</strong> and <strong>kindly treated</strong> in this world.
+          <div class="manifesto-footer">
+            <span class="manifesto-torch" aria-hidden="true"></span>
+            <p>I hope every life—human or non-human—finds a space within my work to feel <strong>gently seen</strong>, <strong>kindly treated</strong>, and free to glow.</p>
+          </div>
         </div>
       </article>
     </section>
 
-    <!-- 作品展示：每行一个，横向滚动 -->
-    <section class="works-section">
-      <a href="ai-agent-game.html" class="work-row slide-right delay-1">
-        <span class="scrolling-text">🤖 Ai Agent Chat Game🤖</span>
-      </a>
-      <a href="digital-creature.html" class="work-row slide-left delay-2">
-        <span class="scrolling-text">👾 Creative Coding👾</span>
-      </a>
-      <a href="sustainable-design.html" class="work-row slide-right delay-3">
-        <span class="scrolling-text">♻️ Sustainable Design♻️</span>
-      </a>
-      
-    </section>
-
-    <!-- 底部：左侧个人介绍（静止） + 右侧噪音文字（滚动） -->
-    <section class="bottom-section">
-      <!-- 左侧：个人介绍静止 -->
-      <div class="intro-static">
-        <h2 class="intro-title">About Me</h2>
-        <img src="index image/selfie.png" alt="宇航员手持星光的插画肖像" class="intro-photo" />
-        <p class="intro-text">
-          Email：<a href="mailto:erioleiono@gmail.com">erioleiono@gmail.com</a><br />
-          WeChat：Leidododo<br />
-          Instagram：<a href="https://www.instagram.com/leido_liang" target="_blank" rel="noopener noreferrer">@leido_liang</a>
-        </p>
+    <!-- 工作流程 -->
+    <section class="workflow-section">
+      <div class="workflow-header">
+        <h2 class="workflow-title">Workflow · Human + AI Co-Development</h2>
+        <p class="workflow-subtitle">IDEA → Co-Design with AI → Ship Real Love</p>
       </div>
 
-      <!-- 右侧：噪音文字，每行滚动 -->
-      <div class="noise-section">
-        <div class="noise-row slide-left delay-1">
-          <span class="scrolling-text">✦ Try to make the world a better place ✦</span>
-        </div>
-        <div class="noise-row slide-right delay-2">
-          <span class="scrolling-text">🛸 Exploring the boundaries of AI and game 🪐</span>
-        </div>
-        <div class="noise-row slide-left delay-3">
-          <span class="scrolling-text">👽 Trying to give technique emotional value  👽</span>
-        </div>
-        <div class="noise-row slide-right delay-4">
-          <span class="scrolling-text">── ── ── ── ── ── ── ── ── ── ──</span>
+      <div class="workflow-timeline">
+        <article class="workflow-step">
+          <div class="workflow-node">✨</div>
+          <div class="workflow-content">
+            <h3>IDEA EMERGES</h3>
+            <p>Fragmented emotions or insights spark a seed concept.</p>
+            <div class="workflow-output muted">Output: core vision & emotional anchor</div>
+          </div>
+        </article>
+
+        <article class="workflow-step">
+          <div class="workflow-node">💬</div>
+          <div class="workflow-content">
+            <h3>ChatGPT — Concept Partner</h3>
+            <p>Conversational prompts expand metaphors, map scenes, and lay out the emotional spine.</p>
+            <div class="workflow-output">Output: first-draft development doc</div>
+          </div>
+        </article>
+
+        <article class="workflow-step">
+          <div class="workflow-node">🧠</div>
+          <div class="workflow-content">
+            <h3>Claude — Technical Refiner</h3>
+            <p>Claude stress-tests the architecture, fills logic gaps, and annotates constraints.</p>
+            <div class="workflow-output">Output: polished technical spec</div>
+          </div>
+        </article>
+
+        <article class="workflow-step">
+          <div class="workflow-node">🛠️</div>
+          <div class="workflow-content">
+            <h3>Cursor — Code & Task Orchestrator</h3>
+            <p>Cursor structures tasks, generates flowcharts, and scaffolds the prototype repo.</p>
+            <div class="workflow-output">Output: prototype codebase</div>
+          </div>
+        </article>
+
+        <article class="workflow-step">
+          <div class="workflow-node">🤝</div>
+          <div class="workflow-content">
+            <h3>Human + AI Co-Development</h3>
+            <p>Pair with AI to iterate: I reshape systems and experience, AI handles code refactors.</p>
+            <div class="workflow-output">Output: runnable demo</div>
+          </div>
+        </article>
+
+        <article class="workflow-step">
+          <div class="workflow-node">🧪</div>
+          <div class="workflow-content">
+            <h3>Real User Testing</h3>
+            <p>Invite players to live sessions, capture transcripts, emotional markers, and friction logs.</p>
+            <div class="workflow-output">Output: high-sensitivity feedback logs</div>
+          </div>
+        </article>
+
+        <article class="workflow-step">
+          <div class="workflow-node">♻️</div>
+          <div class="workflow-content">
+            <h3>Iterate → Debug → Improve</h3>
+            <p>Ship revisions, fix edge cases, polish copy, and relaunch—until the experience feels alive.</p>
+            <div class="workflow-output">Output: ever-evolving experience build</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 底部：About Me -->
+    <section class="bottom-section">
+      <div class="intro-container">
+        <h2 class="intro-title">About Me</h2>
+        <div class="intro-grid">
+          <div class="intro-photo-stack">
+            <div class="intro-photo-wrapper">
+              <img src="index image/selfie.png" alt="宇航员手持星光的插画肖像" class="intro-photo" />
+            </div>
+            <p class="intro-text">
+              Email：<a href="mailto:erioleiono@gmail.com">erioleiono@gmail.com</a><br />
+              WeChat：Leidododo<br />
+              Instagram：<a href="https://www.instagram.com/leido_liang" target="_blank" rel="noopener noreferrer">@leido_liang</a>
+            </p>
+          </div>
+          <div class="intro-noise-panel">
+            <div class="noise-section">
+              <div class="noise-row slide-left delay-1">
+                <span class="scrolling-text">✦ Try to make the world a better place ✦</span>
+              </div>
+              <div class="noise-row slide-right delay-2">
+                <span class="scrolling-text">🛸 Exploring the boundaries of AI and game 🪐</span>
+              </div>
+              <div class="noise-row slide-left delay-3">
+                <span class="scrolling-text">👽 Trying to give technique emotional value  👽</span>
+              </div>
+              <div class="noise-row slide-right delay-4">
+                <span class="scrolling-text">── ── ── ── ── ── ── ── ── ── ──</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -111,14 +197,53 @@
     function myFunction() {
       alert("Bye！Earth！🌍Bye！Human！🔥")
     }
-    function myFunction2() {
-      window.location.href = "ai-agent-game.html";
-    }
-    function myFunction3() {
-      window.location.href = "digital-creature.html";
-    }
-    function myFunction4() {
-      window.location.href = "sustainable-design.html";
+    const planetOrbit = document.getElementById('planetOrbit');
+    const planetHint = document.getElementById('planetHint');
+    const planetButtons = document.querySelectorAll('.topbar button[data-planet]');
+    const planetLinks = document.querySelectorAll('.planet');
+
+    planetButtons.forEach(button => button.setAttribute('aria-pressed', 'false'));
+
+    function activatePlanet(key) {
+      if (!planetOrbit || !planetLinks.length) return;
+
+      if (!planetOrbit.classList.contains('revealed')) {
+        planetOrbit.classList.add('revealed');
+        planetOrbit.setAttribute('aria-hidden', 'false');
+        if (planetHint) {
+          planetHint.textContent = 'Choose a planet to enter its universe';
+          planetHint.setAttribute('aria-hidden', 'false');
+        }
+      }
+
+      planetButtons.forEach(button => {
+        const isActive = button.dataset.planet === key;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      planetLinks.forEach(planet => {
+        const isActive = planet.dataset.planet === key;
+        planet.classList.toggle('active', isActive);
+        planet.classList.toggle('visible', isActive);
+      });
+
+      if (planetHint) {
+        const hintCopy = {
+          game: '🪐 Game Design ready—click to explore',
+          digital: '🌕 Digital Media Art glowing—click to dive in',
+          product: '🌏 Product Design awaiting your visit'
+        };
+        planetHint.textContent = hintCopy[key] || 'Choose a planet to enter its universe';
+        planetHint.setAttribute('aria-hidden', 'false');
+      }
+
+      const activePlanet = Array.from(planetLinks).find(planet => planet.dataset.planet === key);
+      if (activePlanet) {
+        activePlanet.classList.add('visible');
+        activePlanet.classList.add('planet-pulse');
+        setTimeout(() => activePlanet.classList.remove('planet-pulse'), 1200);
+      }
     }
 
     // 设计宣言渐显效果
