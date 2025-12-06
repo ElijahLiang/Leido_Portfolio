@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creative Coding Lab</title>
+  <title>Creative Coding</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -401,6 +401,33 @@
       margin-top: 16px;
     }
 
+    .shadertoy-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+      border: 1px solid rgba(102, 126, 234, 0.4);
+      border-radius: 12px;
+      color: #a5b4fc;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .shadertoy-link:hover {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.25), rgba(118, 75, 162, 0.25));
+      border-color: rgba(102, 126, 234, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+    }
+
+    .shadertoy-icon {
+      font-size: 1.2rem;
+    }
+
     @media (max-width: 1024px) {
       .project {
         gap: 35px;
@@ -448,19 +475,200 @@
       <a href="sustainable-design.html">♻️ Sustainable Design</a>
     </nav>
     <div class="header">
-      <h1>Digital Creature · Creative Coding Lab</h1>
-      <p>A Processing-based audio-visual playground: from starfield particles to breath-driven Mondrian posters, capturing the algorithmic poetry behind every iteration.</p>
+      <h1>Creative Coding</h1>
+      <p>From Processing sketches to GLSL shaders — audio-reactive particles, breath-driven compositions, orbital mechanics, and event horizons. Capturing the algorithmic poetry behind every iteration.</p>
     </div>
 
     <div class="projects-grid">
+      <!-- Saturn Shader -->
+      <div class="project">
+        <div class="project-media">
+          <div class="project-canvas">
+            <div class="canvas-tag">GLSL Shader</div>
+            <a class="youtube-preview" href="https://youtu.be/y2LnREOkP_Y" target="_blank" rel="noopener noreferrer" title="Open on YouTube: Saturn Shader">
+              <img src="https://img.youtube.com/vi/y2LnREOkP_Y/hqdefault.jpg" alt="Saturn Shader — YouTube preview">
+              <span class="youtube-badge">YouTube · Preview</span>
+              <span class="youtube-button">Watch on YouTube</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-content">
+          <div class="project-heading">
+            <h2 class="project-title">Saturn</h2>
+            <div class="project-subtitle">Procedural Gas Giant with Ring System</div>
+          </div>
+
+          <div class="project-meta">
+            <div class="meta-item">
+              <span>🪐</span>
+              <span>Procedural Planet</span>
+            </div>
+            <div class="meta-item">
+              <span>💎</span>
+              <span>GLSL Shader</span>
+            </div>
+            <div class="meta-item">
+              <span>🌌</span>
+              <span>Real-time Rendering</span>
+            </div>
+          </div>
+
+          <div class="tech-stack">
+            <span class="tech-tag">GLSL</span>
+            <span class="tech-tag">Shadertoy</span>
+            <span class="tech-tag">Ray Marching</span>
+            <span class="tech-tag">Procedural Noise</span>
+          </div>
+
+          <div class="content-section">
+            <div class="section-title">Design Inspiration</div>
+            <div class="section-content">
+              <p>A real-time procedural rendering of Saturn, the ringed gas giant. The shader simulates the planet's iconic banded atmosphere with swirling storm systems, surrounded by its majestic ring system complete with Cassini Division gaps and subtle ice particle scattering.</p>
+              <div class="inspiration-quote">
+                "Mathematics becomes cosmic beauty — every band, every ring gap, every shadow is computed in real-time from pure noise functions."
+              </div>
+            </div>
+          </div>
+
+          <div class="content-section">
+            <div class="section-title">Core Techniques</div>
+            <div class="section-content">
+              <div class="algorithm-box">
+                <h4>1. Atmospheric Banding</h4>
+                <ul class="algorithm-list">
+                  <li>Layered FBM noise creates the characteristic horizontal cloud bands</li>
+                  <li>Latitude-based color gradient from pale gold to deep ochre</li>
+                  <li>Animated turbulence simulates storm cell movement</li>
+                </ul>
+              </div>
+
+              <div class="algorithm-box">
+                <h4>2. Ring System</h4>
+                <ul class="algorithm-list">
+                  <li>Distance-based ring density with procedural gaps (Cassini Division)</li>
+                  <li>Ice particle simulation via high-frequency noise</li>
+                  <li>Self-shadowing from planet onto rings and rings onto planet</li>
+                </ul>
+              </div>
+
+              <div class="algorithm-box">
+                <h4>3. Lighting & Atmosphere</h4>
+                <ul class="algorithm-list">
+                  <li>Physically-based scattering for limb darkening</li>
+                  <li>Fresnel rim lighting at the planet's edge</li>
+                  <li>Soft shadow computation through ring opacity</li>
+                </ul>
+              </div>
+
+              <a href="https://www.shadertoy.com/view/3cGcDR" target="_blank" rel="noopener noreferrer" class="shadertoy-link">
+                <span class="shadertoy-icon">🎨</span>
+                <span>View on Shadertoy →</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Horizon Shader -->
+      <div class="project">
+        <div class="project-media">
+          <div class="project-canvas">
+            <div class="canvas-tag">GLSL Shader</div>
+            <a class="youtube-preview" href="https://youtu.be/Azt45EPrElQ" target="_blank" rel="noopener noreferrer" title="Open on YouTube: Event Horizon">
+              <img src="https://img.youtube.com/vi/Azt45EPrElQ/hqdefault.jpg" alt="Event Horizon — YouTube preview">
+              <span class="youtube-badge">YouTube · Preview</span>
+              <span class="youtube-button">Watch on YouTube</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-content">
+          <div class="project-heading">
+            <h2 class="project-title">Event Horizon</h2>
+            <div class="project-subtitle">Black Hole Gravitational Lensing Simulation</div>
+          </div>
+
+          <div class="project-meta">
+            <div class="meta-item">
+              <span>🕳️</span>
+              <span>Black Hole</span>
+            </div>
+            <div class="meta-item">
+              <span>💎</span>
+              <span>GLSL Shader</span>
+            </div>
+            <div class="meta-item">
+              <span>🔬</span>
+              <span>Physics Simulation</span>
+            </div>
+          </div>
+
+          <div class="tech-stack">
+            <span class="tech-tag">GLSL</span>
+            <span class="tech-tag">Shadertoy</span>
+            <span class="tech-tag">Gravitational Lensing</span>
+            <span class="tech-tag">Relativistic Rendering</span>
+          </div>
+
+          <div class="content-section">
+            <div class="section-title">Design Inspiration</div>
+            <div class="section-content">
+              <p>A real-time visualization of a black hole's event horizon, simulating the extreme gravitational lensing that bends light around the singularity. The accretion disk glows with relativistic Doppler shifting, while background stars stretch into Einstein rings as they pass behind the cosmic abyss.</p>
+              <div class="inspiration-quote">
+                "Where physics meets art — the point of no return rendered in real-time, bending starlight into impossible geometries."
+              </div>
+            </div>
+          </div>
+
+          <div class="content-section">
+            <div class="section-title">Core Techniques</div>
+            <div class="section-content">
+              <div class="algorithm-box">
+                <h4>1. Gravitational Lensing</h4>
+                <ul class="algorithm-list">
+                  <li>Ray deflection computed using Schwarzschild metric approximation</li>
+                  <li>Photon sphere rendering at 1.5x Schwarzschild radius</li>
+                  <li>Einstein ring distortion of background star field</li>
+                </ul>
+              </div>
+
+              <div class="algorithm-box">
+                <h4>2. Accretion Disk</h4>
+                <ul class="algorithm-list">
+                  <li>Thin disk model with Keplerian orbital velocity</li>
+                  <li>Doppler beaming: approaching side brighter, receding side dimmer</li>
+                  <li>Thermal gradient from inner edge (white-hot) to outer edge (red)</li>
+                </ul>
+              </div>
+
+              <div class="algorithm-box">
+                <h4>3. Relativistic Effects</h4>
+                <ul class="algorithm-list">
+                  <li>Frame dragging creates asymmetric disk appearance</li>
+                  <li>Gravitational redshift near the event horizon</li>
+                  <li>Light travel time creates the "top and bottom" disk illusion</li>
+                </ul>
+              </div>
+
+              <a href="https://www.shadertoy.com/view/WfGcDh" target="_blank" rel="noopener noreferrer" class="shadertoy-link">
+                <span class="shadertoy-icon">🎨</span>
+                <span>View on Shadertoy →</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colorless Light -->
       <div class="project">
         <div class="project-media">
           <div class="project-canvas">
             <div class="canvas-tag">Audio-Reactive</div>
-            <a class="youtube-preview" href="https://youtu.be/tIS4zPs7lV0" target="_blank" rel="noopener noreferrer" title="在 YouTube 打开：Colorless Light">
-              <img src="https://img.youtube.com/vi/tIS4zPs7lV0/hqdefault.jpg" alt="Colorless Light — YouTube 预览缩略图">
+            <a class="youtube-preview" href="https://youtu.be/tIS4zPs7lV0" target="_blank" rel="noopener noreferrer" title="Open on YouTube: Colorless Light">
+              <img src="https://img.youtube.com/vi/tIS4zPs7lV0/hqdefault.jpg" alt="Colorless Light — YouTube preview">
               <span class="youtube-badge">YouTube · Preview</span>
-              <span class="youtube-button">在 YouTube 打开</span>
+              <span class="youtube-button">Watch on YouTube</span>
             </a>
           </div>
         </div>
@@ -468,7 +676,7 @@
         <div class="project-content">
           <div class="project-heading">
             <h2 class="project-title">Colorless Light</h2>
-          <div class="project-subtitle">Colorless Light - Vocal-Driven Audio Visualization</div>
+            <div class="project-subtitle">Vocal-Driven Audio Visualization</div>
           </div>
 
           <div class="project-meta">
@@ -568,14 +776,15 @@
         </div>
       </div>
 
+      <!-- Mondrian Generator -->
       <div class="project">
         <div class="project-media">
           <div class="project-canvas">
             <div class="canvas-tag">Breath Interactive</div>
-            <a class="youtube-preview" href="https://youtu.be/fcNKNJJWSSI" target="_blank" rel="noopener noreferrer" title="在 YouTube 打开：Mondrian Generator">
-              <img src="https://img.youtube.com/vi/fcNKNJJWSSI/hqdefault.jpg" alt="Mondrian Generator — YouTube 预览缩略图">
+            <a class="youtube-preview" href="https://youtu.be/fcNKNJJWSSI" target="_blank" rel="noopener noreferrer" title="Open on YouTube: Mondrian Generator">
+              <img src="https://img.youtube.com/vi/fcNKNJJWSSI/hqdefault.jpg" alt="Mondrian Generator — YouTube preview">
               <span class="youtube-badge">YouTube · Preview</span>
-              <span class="youtube-button">在 YouTube 打开</span>
+              <span class="youtube-button">Watch on YouTube</span>
             </a>
           </div>
         </div>
@@ -583,7 +792,7 @@
         <div class="project-content">
           <div class="project-heading">
             <h2 class="project-title">Mondrian Generator</h2>
-          <div class="project-subtitle">Mondrian Generator - Breath-Responsive Composition</div>
+            <div class="project-subtitle">Breath-Responsive Composition</div>
           </div>
 
           <div class="project-meta">
