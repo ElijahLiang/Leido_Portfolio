@@ -335,126 +335,6 @@
       font-size: 0.95rem;
     }
 
-    /* ========== V2 Visual Architecture Diagram ========== */
-    .visual-arch {
-      background: linear-gradient(135deg, rgba(8, 47, 73, 0.5), rgba(15, 23, 42, 0.8));
-      border: 1px solid rgba(14, 165, 233, 0.3);
-      border-radius: 24px;
-      padding: 32px;
-      display: grid;
-      gap: 24px;
-    }
-
-    .visual-arch-title {
-      font-size: 1.1rem;
-      color: #7dd3fc;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .arch-layers {
-      display: grid;
-      gap: 20px;
-    }
-
-    .arch-layer {
-      background: rgba(15, 23, 42, 0.6);
-      border-radius: 20px;
-      padding: 20px 24px;
-      position: relative;
-    }
-
-    .arch-layer::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      border-radius: 4px 0 0 4px;
-    }
-
-    .arch-layer.runtime::before { background: linear-gradient(180deg, #818cf8, #6366f1); }
-    .arch-layer.network::before { background: linear-gradient(180deg, #38bdf8, #0ea5e9); }
-    .arch-layer.cloud::before { background: linear-gradient(180deg, #a78bfa, #8b5cf6); }
-
-    .layer-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .arch-layer.runtime .layer-label { color: #a5b4fc; }
-    .arch-layer.network .layer-label { color: #7dd3fc; }
-    .arch-layer.cloud .layer-label { color: #c4b5fd; }
-
-    .layer-label .layer-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    .arch-layer.runtime .layer-dot { background: #818cf8; }
-    .arch-layer.network .layer-dot { background: #38bdf8; }
-    .arch-layer.cloud .layer-dot { background: #a78bfa; }
-
-    .layer-modules {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .arch-module {
-      background: rgba(30, 41, 59, 0.7);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      border-radius: 16px;
-      padding: 16px 20px;
-      min-width: 140px;
-      flex: 1;
-      display: grid;
-      gap: 6px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .arch-module:hover {
-      border-color: rgba(99, 102, 241, 0.5);
-      transform: translateY(-2px);
-    }
-
-    .arch-module .module-icon {
-      font-size: 1.4rem;
-    }
-
-    .arch-module .module-name {
-      font-weight: 600;
-      color: #f8fafc;
-      font-size: 0.9rem;
-    }
-
-    .arch-module .module-role {
-      font-size: 0.75rem;
-      color: #94a3b8;
-    }
-
-    .arch-flow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px;
-      color: #64748b;
-      font-size: 0.85rem;
-    }
-
-    .arch-flow .flow-arrow {
-      font-size: 1.2rem;
-      color: #38bdf8;
-    }
-
     /* V1 Architecture Track (preserved) */
     .architecture-track {
       position: relative;
@@ -524,9 +404,25 @@
       color: #818cf8;
     }
 
-    /* Video Card */
+    /* Video Carousel */
     .video-wrapper {
       margin-top: 24px;
+    }
+
+    .video-carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      flex-shrink: 0;
     }
 
     .youtube-preview {
@@ -599,161 +495,88 @@
       font-size: 0.9rem;
     }
 
-    /* Evaluation Section */
-    .eval-section {
-      margin-bottom: 72px;
+    /* Carousel Navigation */
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
     }
 
-    .eval-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-    }
-
-    .eval-card {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      border-radius: 24px;
-      padding: 28px;
-    }
-
-    .eval-card h3 {
-      font-size: 1.1rem;
-      color: #f8fafc;
-      margin-bottom: 20px;
+    .carousel-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #e2e8f0;
+      font-size: 1.2rem;
+      cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(99, 102, 241, 0.3);
+      border-color: rgba(99, 102, 241, 0.7);
+      transform: scale(1.08);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .carousel-dots {
+      display: flex;
       gap: 10px;
     }
 
-    .eval-table {
-      width: 100%;
-      border-collapse: collapse;
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    .eval-table th,
-    .eval-table td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    .carousel-dot.active {
+      background: #6ee7b7;
+      box-shadow: 0 0 12px rgba(110, 231, 183, 0.5);
+      transform: scale(1.2);
     }
 
-    .eval-table th {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #64748b;
-      font-weight: 600;
+    .carousel-dot:hover:not(.active) {
+      background: rgba(148, 163, 184, 0.6);
     }
 
-    .eval-table td {
-      color: #cbd5e1;
-      font-size: 0.9rem;
-    }
-
-    .eval-table tr:last-child td {
-      border-bottom: none;
-      font-weight: 600;
-      color: #f8fafc;
-    }
-
-    /* Emergent Behaviors */
-    .behavior-list {
-      list-style: none;
-      display: grid;
-      gap: 16px;
-    }
-
-    .behavior-list li {
-      display: grid;
-      gap: 6px;
-      padding: 16px;
-      background: rgba(30, 41, 59, 0.4);
-      border-radius: 16px;
-    }
-
-    .behavior-list strong {
-      color: #a5b4fc;
-      font-size: 0.95rem;
-    }
-
-    .behavior-list span {
-      color: #94a3b8;
-      font-size: 0.85rem;
-      font-style: italic;
-    }
-
-    /* Core Cycle */
-    .flow-section {
-      margin-bottom: 72px;
-    }
-
-    .flowchart {
-      background: rgba(8, 47, 73, 0.4);
+    /* Architecture Image */
+    .arch-image-wrapper {
+      background: linear-gradient(135deg, rgba(8, 47, 73, 0.5), rgba(15, 23, 42, 0.8));
       border: 1px solid rgba(14, 165, 233, 0.3);
-      border-radius: 28px;
-      padding: 36px clamp(20px, 4vw, 48px);
+      border-radius: 24px;
+      padding: 24px;
+      overflow: hidden;
     }
 
-    .flow-grid {
-      display: grid;
-      gap: 28px;
-    }
-
-    .flow-step {
-      display: grid;
-      gap: 12px;
-      position: relative;
-      padding-left: 24px;
-    }
-
-    .flow-step::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 6px;
-      bottom: -22px;
-      width: 2px;
-      background: rgba(14, 165, 233, 0.4);
-    }
-
-    .flow-step:last-child::before {
-      display: none;
-    }
-
-    .flow-node {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
+    .arch-image-wrapper img {
+      width: 100%;
+      height: auto;
       border-radius: 16px;
-      background: rgba(14, 165, 233, 0.12);
-      border: 1px solid rgba(14, 165, 233, 0.4);
-      font-weight: 600;
+      display: block;
+    }
+
+    .arch-image-title {
+      font-size: 1.1rem;
       color: #7dd3fc;
-      width: fit-content;
-    }
-
-    .flow-desc {
-      color: #bfdbfe;
-    }
-
-    .flow-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: #38bdf8;
-    }
-
-    .loop-note {
-      margin-top: 24px;
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(59, 130, 246, 0.08);
-      border: 1px dashed rgba(59, 130, 246, 0.35);
-      color: #93c5fd;
-      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 16px;
     }
 
     /* Responsive */
@@ -888,104 +711,46 @@
                 </div>
               </div>
 
-              <!-- Visual Architecture Diagram -->
-              <div class="visual-arch">
-                <p class="visual-arch-title">System Architecture</p>
-
-                <div class="arch-layers">
-                  <!-- Unity Runtime Layer -->
-                  <div class="arch-layer runtime">
-                    <div class="layer-label">
-                      <span class="layer-dot"></span>
-                      Unity Runtime
-                    </div>
-                    <div class="layer-modules">
-                      <div class="arch-module">
-                        <span class="module-icon">📷</span>
-                        <span class="module-name">Camera</span>
-                        <span class="module-role">First-Person View</span>
-                      </div>
-                      <div class="arch-module">
-                        <span class="module-icon">👁️</span>
-                        <span class="module-name">RealVision</span>
-                        <span class="module-role">Image Capture</span>
-                      </div>
-                      <div class="arch-module">
-                        <span class="module-icon">🧠</span>
-                        <span class="module-name">LLMBrain</span>
-                        <span class="module-role">Decision Engine</span>
-                      </div>
-                      <div class="arch-module">
-                        <span class="module-icon">🚀</span>
-                        <span class="module-name">YangguangAI</span>
-                        <span class="module-role">Navigation</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="arch-flow">
-                    <span class="flow-arrow">↓</span>
-                    HTTP / WebSocket
-                    <span class="flow-arrow">↓</span>
-                  </div>
-
-                  <!-- Network Layer -->
-                  <div class="arch-layer network">
-                    <div class="layer-label">
-                      <span class="layer-dot"></span>
-                      Network Layer
-                    </div>
-                    <div class="layer-modules">
-                      <div class="arch-module">
-                        <span class="module-icon">🖼️</span>
-                        <span class="module-name">VLMClient</span>
-                        <span class="module-role">Qwen-VL API</span>
-                      </div>
-                      <div class="arch-module">
-                        <span class="module-icon">💬</span>
-                        <span class="module-name">ExternalLLM</span>
-                        <span class="module-role">DeepSeek API</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="arch-flow">
-                    <span class="flow-arrow">↓</span>
-                    REST API
-                    <span class="flow-arrow">↓</span>
-                  </div>
-
-                  <!-- Cloud Services -->
-                  <div class="arch-layer cloud">
-                    <div class="layer-label">
-                      <span class="layer-dot"></span>
-                      Cloud Services
-                    </div>
-                    <div class="layer-modules">
-                      <div class="arch-module">
-                        <span class="module-icon">☁️</span>
-                        <span class="module-name">Aliyun Qwen-VL-Plus</span>
-                        <span class="module-role">Vision-Language Model</span>
-                      </div>
-                      <div class="arch-module">
-                        <span class="module-icon">⚡</span>
-                        <span class="module-name">DeepSeek-V2</span>
-                        <span class="module-role">Large Language Model</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <!-- Architecture Diagram Image -->
+              <div class="arch-image-wrapper">
+                <p class="arch-image-title">System Architecture</p>
+                <img src="Embodied Ai/ai_data_flow_diagram_detailed.png" alt="AI Data Flow Diagram - Perception, Cognition, Action stages" />
               </div>
 
               <div class="video-wrapper">
-                <a class="youtube-preview" href="https://youtu.be/0WpcWLnyKGc" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V2 VLM Visual Cognition">
-                  <img src="https://img.youtube.com/vi/0WpcWLnyKGc/hqdefault.jpg" alt="V2 VLM Visual Cognition — YouTube preview" />
-                  <span class="youtube-badge">YouTube · V2 Demo</span>
-                  <span class="youtube-button">Watch Demo</span>
-                </a>
-                <div class="video-meta">
-                  <span>🎬 VLM visual cognition demo</span>
-                  <span>👁️ First-person camera → VLM → LLM → Action</span>
+                <div class="video-carousel" id="v2-carousel">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <a class="youtube-preview" href="https://youtu.be/0WpcWLnyKGc" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V2 VLM Visual Cognition">
+                        <img src="https://img.youtube.com/vi/0WpcWLnyKGc/hqdefault.jpg" alt="V2 VLM Visual Cognition — YouTube preview" />
+                        <span class="youtube-badge">YouTube · V2 Demo</span>
+                        <span class="youtube-button">Watch Demo</span>
+                      </a>
+                      <div class="video-meta">
+                        <span>🎬 VLM visual cognition demo</span>
+                        <span>👁️ First-person camera → VLM → LLM → Action</span>
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <a class="youtube-preview" href="https://youtu.be/dcj-9YucPV4" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V2 Extended Demo">
+                        <img src="https://img.youtube.com/vi/dcj-9YucPV4/hqdefault.jpg" alt="V2 Extended Demo — YouTube preview" />
+                        <span class="youtube-badge">YouTube · V2 Extended</span>
+                        <span class="youtube-button">Watch Demo</span>
+                      </a>
+                      <div class="video-meta">
+                        <span>🎬 Extended cognition demo</span>
+                        <span>🧠 Autonomous exploration & decision-making</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-nav">
+                    <button class="carousel-btn" onclick="slideCarousel('v2-carousel', -1)" aria-label="Previous slide">←</button>
+                    <div class="carousel-dots">
+                      <button class="carousel-dot active" onclick="goToSlide('v2-carousel', 0)" aria-label="Go to slide 1"></button>
+                      <button class="carousel-dot" onclick="goToSlide('v2-carousel', 1)" aria-label="Go to slide 2"></button>
+                    </div>
+                    <button class="carousel-btn" onclick="slideCarousel('v2-carousel', 1)" aria-label="Next slide">→</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1096,95 +861,73 @@
       </div>
     </section>
 
-    <!-- Evaluation -->
-    <section class="eval-section">
-      <div class="section-header">
-        <h2>Performance Evaluation</h2>
-        <p>Latency breakdown and cost analysis for a single Observe-Think-Act cycle.</p>
-      </div>
-      <div class="eval-grid">
-        <article class="eval-card">
-          <h3>⏱️ Latency Breakdown</h3>
-          <table class="eval-table">
-            <thead>
-              <tr><th>Stage</th><th>Typical Latency</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Image Capture & Encode</td><td>~60 ms</td></tr>
-              <tr><td>VLM API Call (Qwen-VL)</td><td>2–5 s</td></tr>
-              <tr><td>LLM API Call (DeepSeek)</td><td>1–3 s</td></tr>
-              <tr><td>Navigation Execution</td><td>~5 ms</td></tr>
-              <tr><td>Total Cycle Time</td><td>~3–8 s</td></tr>
-            </tbody>
-          </table>
-        </article>
-
-        <article class="eval-card">
-          <h3>💰 Hourly Cost per Agent</h3>
-          <table class="eval-table">
-            <thead>
-              <tr><th>Service</th><th>Calls/Min</th><th>Cost/Hour</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Qwen-VL-Plus</td><td>12</td><td>~$0.80</td></tr>
-              <tr><td>DeepSeek-V2</td><td>~7</td><td>~$0.06</td></tr>
-              <tr><td>Total</td><td>—</td><td>~$0.86</td></tr>
-            </tbody>
-          </table>
-        </article>
-
-        <article class="eval-card">
-          <h3>✨ Emergent Behaviors</h3>
-          <ul class="behavior-list">
-            <li>
-              <strong>Curiosity-Driven Exploration</strong>
-              <span>"I see a hill in the distance that I haven't explored yet."</span>
-            </li>
-            <li>
-              <strong>Memory-Informed Avoidance</strong>
-              <span>"I was just at that boulder."</span>
-            </li>
-            <li>
-              <strong>Adaptive Movement</strong>
-              <span>LLM infers environmental properties from VLM descriptions.</span>
-            </li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- Core Cognitive Cycle -->
-    <section class="flow-section">
-      <div class="section-header">
-        <h2>Core Cognitive Cycle</h2>
-        <p>The Observe-Think-Act loop that drives the agent's autonomous behavior.</p>
-      </div>
-      <div class="flowchart">
-        <div class="flow-grid">
-          <div class="flow-step">
-            <div class="flow-node">Observe (t=0s)</div>
-            <p class="flow-desc">YangguangRealVision captures a 512×512 screenshot and sends it to the Qwen-VL API.</p>
-            <div class="flow-tags"><span>Camera</span><span>VLM</span></div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-node">Think (t≈5s)</div>
-            <p class="flow-desc">LLMBrain receives the vision-based description, constructs a prompt, and queries DeepSeek.</p>
-            <div class="flow-tags"><span>Reason</span><span>Prompting</span></div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-node">Act (t≈8s)</div>
-            <p class="flow-desc">LLMBrain parses THOUGHT and ACTION from the response, commands YangguangAI to navigate.</p>
-            <div class="flow-tags"><span>NavMesh</span><span>Execution</span></div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-node">Report & Loop</div>
-            <p class="flow-desc">Agent reports discoveries, updates memory, and the cycle repeats autonomously.</p>
-            <div class="flow-tags"><span>Memory</span><span>Loop</span></div>
-          </div>
-        </div>
-        <div class="loop-note">The vision output loops back, forming a continuous observe → think → act cycle that drives emergent behavior.</div>
-      </div>
-    </section>
   </div>
+
+  <script>
+    // Carousel state management
+    const carouselStates = {};
+
+    function getCarouselState(carouselId) {
+      if (!carouselStates[carouselId]) {
+        carouselStates[carouselId] = { currentSlide: 0 };
+      }
+      return carouselStates[carouselId];
+    }
+
+    function slideCarousel(carouselId, direction) {
+      const carousel = document.getElementById(carouselId);
+      const track = carousel.querySelector('.carousel-track');
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+      const state = getCarouselState(carouselId);
+      
+      state.currentSlide += direction;
+      
+      if (state.currentSlide < 0) state.currentSlide = slides.length - 1;
+      if (state.currentSlide >= slides.length) state.currentSlide = 0;
+      
+      track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+    }
+
+    function goToSlide(carouselId, slideIndex) {
+      const carousel = document.getElementById(carouselId);
+      const track = carousel.querySelector('.carousel-track');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+      const state = getCarouselState(carouselId);
+      
+      state.currentSlide = slideIndex;
+      track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+    }
+
+    // Touch/swipe support
+    document.querySelectorAll('.video-carousel').forEach(carousel => {
+      let startX = 0;
+      let isDragging = false;
+
+      carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      carousel.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) {
+          slideCarousel(carousel.id, diff > 0 ? 1 : -1);
+        }
+        isDragging = false;
+      });
+    });
+  </script>
 </body>
 </html>
