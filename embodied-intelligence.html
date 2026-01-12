@@ -579,6 +579,136 @@
       margin-bottom: 16px;
     }
 
+    /* Image Gallery Carousel */
+    .image-gallery {
+      background: linear-gradient(135deg, rgba(8, 47, 73, 0.5), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 24px;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .gallery-title {
+      font-size: 1.1rem;
+      color: #7dd3fc;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .gallery-carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .gallery-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      padding: 0 4px;
+    }
+
+    .gallery-slide img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .gallery-slide-caption {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .gallery-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .gallery-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(14, 165, 233, 0.4);
+      color: #7dd3fc;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .gallery-btn:hover {
+      background: rgba(14, 165, 233, 0.3);
+      border-color: rgba(14, 165, 233, 0.7);
+      transform: scale(1.08);
+    }
+
+    .gallery-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .gallery-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .gallery-dot.active {
+      background: #7dd3fc;
+      box-shadow: 0 0 10px rgba(125, 211, 252, 0.5);
+      transform: scale(1.3);
+    }
+
+    .gallery-dot:hover:not(.active) {
+      background: rgba(148, 163, 184, 0.6);
+    }
+
+    .gallery-counter {
+      font-size: 0.8rem;
+      color: #64748b;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    /* V3 Specific Styles */
+    .evolution-item.v3 .evolution-marker {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2);
+      animation: pulse-amber 2s infinite;
+    }
+
+    @keyframes pulse-amber {
+      0%, 100% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2); }
+      50% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0.35); }
+    }
+
+    .evolution-item.v3 .evolution-content {
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+
+    .evolution-item.v3 .version-tag {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       body {
@@ -674,13 +804,112 @@
 
       <div class="evolution-timeline">
 
-        <!-- V2: VLM Visual Cognition (NOW FIRST) -->
+        <!-- V3: Embodied NPC with Avatar (LATEST) -->
+        <article class="evolution-item v3">
+          <div class="evolution-marker">V3</div>
+          <div class="evolution-content">
+            <div class="evolution-header">
+              <h3>
+                <span class="version-tag">Phase III · Current</span>
+                Embodied NPC · Interactive Avatar
+              </h3>
+              <span class="date-tag">January 2026</span>
+            </div>
+            <div class="evolution-body">
+              <p class="evolution-desc">
+                目前我又更新了一版具身NPC，这次他拥有了表情和行走动作和一个化身可以与玩家交互。
+                尽管现在模型和场景很粗糙，还有一些bug需要攻克，但已经迈出了一步。
+                在实现3D场景中的具身以及行走还有数据库的搭建比我想得困难得多。
+                但现在基本的要求已经具备，后续可以在一个新的场景中实现游戏的设计，为开放剧场游戏理论提供支撑。
+              </p>
+
+              <div class="feature-grid">
+                <div class="feature-item">
+                  <h4>New Features</h4>
+                  <p>表情系统 + 行走动画</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Avatar</h4>
+                  <p>可交互化身角色</p>
+                </div>
+                <div class="feature-item">
+                  <h4>State Machine</h4>
+                  <p>完整状态机实现</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Goal</h4>
+                  <p>开放剧场游戏理论</p>
+                </div>
+              </div>
+
+              <!-- Architecture Diagrams Gallery -->
+              <div class="image-gallery">
+                <p class="gallery-title">System Architecture Diagrams</p>
+                <div class="gallery-carousel" id="v3-gallery">
+                  <div class="gallery-track">
+                    <div class="gallery-slide">
+                      <img src="Embodied Ai/01_core_algorithm_flow.png" alt="Core Algorithm Flow" />
+                      <p class="gallery-slide-caption">Core Algorithm Flow - VLM → LLM → Action Pipeline</p>
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="Embodied Ai/02_system_architecture.png" alt="System Architecture" />
+                      <p class="gallery-slide-caption">System Architecture - 4-Layer Design</p>
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="Embodied Ai/03_autonomous_mode_dataflow.png" alt="Autonomous Mode Dataflow" />
+                      <p class="gallery-slide-caption">Autonomous Mode - Environmental Data Collection</p>
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="Embodied Ai/04_conversation_mode_dataflow.png" alt="Conversation Mode Dataflow" />
+                      <p class="gallery-slide-caption">Conversation Mode - User Interaction Pipeline</p>
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="Embodied Ai/05_core_components_ipo.png" alt="Core Components IPO" />
+                      <p class="gallery-slide-caption">Core Components - VLMClient & ExternalLLM</p>
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="Embodied Ai/06_state_machine.png" alt="State Machine" />
+                      <p class="gallery-slide-caption">State Machine - LLMBrain & YangguangAI States</p>
+                    </div>
+                  </div>
+                  <div class="gallery-nav">
+                    <button class="gallery-btn" onclick="slideGallery('v3-gallery', -1)" aria-label="Previous image">←</button>
+                    <div class="gallery-dots">
+                      <button class="gallery-dot active" onclick="goToGallerySlide('v3-gallery', 0)" aria-label="Image 1"></button>
+                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 1)" aria-label="Image 2"></button>
+                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 2)" aria-label="Image 3"></button>
+                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 3)" aria-label="Image 4"></button>
+                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 4)" aria-label="Image 5"></button>
+                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 5)" aria-label="Image 6"></button>
+                    </div>
+                    <span class="gallery-counter" id="v3-gallery-counter">1 / 6</span>
+                    <button class="gallery-btn" onclick="slideGallery('v3-gallery', 1)" aria-label="Next image">→</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="video-wrapper">
+                <a class="youtube-preview" href="https://youtu.be/mXX53qJNvp4" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V3 Embodied NPC Demo">
+                  <img src="https://img.youtube.com/vi/mXX53qJNvp4/hqdefault.jpg" alt="V3 Embodied NPC Demo — YouTube preview" />
+                  <span class="youtube-badge">YouTube · V3 Demo</span>
+                  <span class="youtube-button">Watch Demo</span>
+                </a>
+                <div class="video-meta">
+                  <span>🎬 Embodied NPC with avatar demo</span>
+                  <span>🎭 Expression + Walking + Player Interaction</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- V2: VLM Visual Cognition -->
         <article class="evolution-item v2">
           <div class="evolution-marker">V2</div>
           <div class="evolution-content">
             <div class="evolution-header">
               <h3>
-                <span class="version-tag">Phase II · Current</span>
+                <span class="version-tag">Phase II</span>
                 VLM Visual Cognition · True Perception
               </h3>
               <span class="date-tag">December 2025</span>
@@ -907,7 +1136,61 @@
       });
     }
 
-    // Touch/swipe support
+    // Gallery carousel functions
+    const galleryStates = {};
+
+    function getGalleryState(galleryId) {
+      if (!galleryStates[galleryId]) {
+        galleryStates[galleryId] = { currentSlide: 0 };
+      }
+      return galleryStates[galleryId];
+    }
+
+    function slideGallery(galleryId, direction) {
+      const gallery = document.getElementById(galleryId);
+      const track = gallery.querySelector('.gallery-track');
+      const slides = gallery.querySelectorAll('.gallery-slide');
+      const dots = gallery.querySelectorAll('.gallery-dot');
+      const counter = document.getElementById(galleryId + '-counter');
+      const state = getGalleryState(galleryId);
+      
+      state.currentSlide += direction;
+      
+      if (state.currentSlide < 0) state.currentSlide = slides.length - 1;
+      if (state.currentSlide >= slides.length) state.currentSlide = 0;
+      
+      track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+
+      if (counter) {
+        counter.textContent = `${state.currentSlide + 1} / ${slides.length}`;
+      }
+    }
+
+    function goToGallerySlide(galleryId, slideIndex) {
+      const gallery = document.getElementById(galleryId);
+      const track = gallery.querySelector('.gallery-track');
+      const slides = gallery.querySelectorAll('.gallery-slide');
+      const dots = gallery.querySelectorAll('.gallery-dot');
+      const counter = document.getElementById(galleryId + '-counter');
+      const state = getGalleryState(galleryId);
+      
+      state.currentSlide = slideIndex;
+      track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+
+      if (counter) {
+        counter.textContent = `${state.currentSlide + 1} / ${slides.length}`;
+      }
+    }
+
+    // Touch/swipe support for video carousels
     document.querySelectorAll('.video-carousel').forEach(carousel => {
       let startX = 0;
       let isDragging = false;
@@ -924,6 +1207,28 @@
         
         if (Math.abs(diff) > 50) {
           slideCarousel(carousel.id, diff > 0 ? 1 : -1);
+        }
+        isDragging = false;
+      });
+    });
+
+    // Touch/swipe support for gallery carousels
+    document.querySelectorAll('.gallery-carousel').forEach(gallery => {
+      let startX = 0;
+      let isDragging = false;
+
+      gallery.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      gallery.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) {
+          slideGallery(gallery.id, diff > 0 ? 1 : -1);
         }
         isDragging = false;
       });
