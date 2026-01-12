@@ -579,7 +579,7 @@
       margin-bottom: 16px;
     }
 
-    /* Image Gallery Carousel */
+    /* Image Gallery Carousel - matches arch-image-wrapper style */
     .image-gallery {
       background: linear-gradient(135deg, rgba(8, 47, 73, 0.5), rgba(15, 23, 42, 0.8));
       border: 1px solid rgba(14, 165, 233, 0.3);
@@ -599,25 +599,31 @@
       position: relative;
       overflow: hidden;
       border-radius: 16px;
+      max-height: 500px;
     }
 
     .gallery-track {
       display: flex;
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%;
     }
 
     .gallery-slide {
       min-width: 100%;
       flex-shrink: 0;
-      padding: 0 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .gallery-slide img {
-      width: 100%;
+      max-width: 100%;
+      max-height: 480px;
+      width: auto;
       height: auto;
-      border-radius: 12px;
+      border-radius: 16px;
       display: block;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      object-fit: contain;
     }
 
     .gallery-slide-caption {
@@ -632,17 +638,17 @@
       justify-content: center;
       align-items: center;
       gap: 12px;
-      margin-top: 20px;
+      margin-top: 16px;
     }
 
     .gallery-btn {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: rgba(30, 41, 59, 0.8);
       border: 1px solid rgba(14, 165, 233, 0.4);
       color: #7dd3fc;
-      font-size: 1.1rem;
+      font-size: 1rem;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -658,7 +664,7 @@
 
     .gallery-dots {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
 
     .gallery-dot {
@@ -674,7 +680,7 @@
     .gallery-dot.active {
       background: #7dd3fc;
       box-shadow: 0 0 10px rgba(125, 211, 252, 0.5);
-      transform: scale(1.3);
+      transform: scale(1.2);
     }
 
     .gallery-dot:hover:not(.active) {
@@ -682,10 +688,135 @@
     }
 
     .gallery-counter {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #64748b;
-      min-width: 50px;
+      min-width: 40px;
       text-align: center;
+    }
+
+    .gallery-image-title {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #7dd3fc;
+      font-weight: 500;
+      margin-top: 12px;
+      padding: 0 16px;
+    }
+
+    /* Dev Journal Button & Modal */
+    .dev-journal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(14, 165, 233, 0.3));
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      color: #a5b4fc;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 24px;
+    }
+
+    .dev-journal-btn:hover {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(14, 165, 233, 0.5));
+      border-color: rgba(99, 102, 241, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 24px;
+      padding: 36px 40px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .modal-header h3 {
+      font-size: 1.4rem;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.1);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #94a3b8;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .modal-body {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .modal-body p {
+      margin-bottom: 16px;
+    }
+
+    .modal-body p:last-child {
+      margin-bottom: 0;
     }
 
     /* V3 Specific Styles */
@@ -774,7 +905,24 @@
         This approach allows the agent to operate based on genuine understanding of its visual surroundings,
         leading to emergent, unscripted behaviors.
       </p>
+      <button class="dev-journal-btn" onclick="openDevJournal()">
+        📓 Development Journal
+      </button>
     </header>
+
+    <!-- Dev Journal Modal -->
+    <div class="modal-overlay" id="dev-journal-modal" onclick="closeDevJournal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <h3>📓 Development Journal</h3>
+          <button class="modal-close" onclick="closeDevJournal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>This project represents a solitary yet enlightening journey into Embodied AI. Starting in November 2025, I attempted to drive an NPC using LLMs within Unity. My initial approach relied on heuristic hacks like Raycast for perception, which resulted in poor navigation and a lack of true spatial awareness. I briefly detoured into ML-Agents, only to realize that reinforcement learning created a "conditioned subject"—functional but incapable of the generalization I sought.</p>
+          <p>The breakthrough came in December with the integration of Vision-Language Models (VLM), granting the agent the ability to truly "see." Following a brief academic hiatus, in January 2026, I successfully achieved an end-to-end loop: an agent that perceives, reasons, and reacts with specific behaviors and emotions. While hardware constraints currently necessitate a script-driven action layer (preventing a full VLA implementation), this prototype validates the core architecture and paves the way for future explorations in World Models and Sim2Real robotics.</p>
+        </div>
+      </div>
+    </div>
 
     <!-- Paper Abstract -->
     <section class="abstract-card">
@@ -817,28 +965,31 @@
             </div>
             <div class="evolution-body">
               <p class="evolution-desc">
-                目前我又更新了一版具身NPC，这次他拥有了表情和行走动作和一个化身可以与玩家交互。
-                尽管现在模型和场景很粗糙，还有一些bug需要攻克，但已经迈出了一步。
-                在实现3D场景中的具身以及行走还有数据库的搭建比我想得困难得多。
-                但现在基本的要求已经具备，后续可以在一个新的场景中实现游戏的设计，为开放剧场游戏理论提供支撑。
+                I've updated another version of the embodied NPC — this time with facial expressions, 
+                walking animations, and an avatar that can interact with players. Although the models 
+                and scenes are still rough and there are some bugs to fix, this is a significant step forward. 
+                Implementing embodiment in 3D environments, walking mechanics, and database construction 
+                proved far more challenging than expected. However, the basic requirements are now in place, 
+                and future development will focus on game design in new environments to support the 
+                Open Theatre Game Theory.
               </p>
 
               <div class="feature-grid">
                 <div class="feature-item">
                   <h4>New Features</h4>
-                  <p>表情系统 + 行走动画</p>
+                  <p>Expression System + Walk Animation</p>
                 </div>
                 <div class="feature-item">
                   <h4>Avatar</h4>
-                  <p>可交互化身角色</p>
+                  <p>Interactive Character Body</p>
                 </div>
                 <div class="feature-item">
                   <h4>State Machine</h4>
-                  <p>完整状态机实现</p>
+                  <p>Complete FSM Implementation</p>
                 </div>
                 <div class="feature-item">
                   <h4>Goal</h4>
-                  <p>开放剧场游戏理论</p>
+                  <p>Open Theatre Game Theory</p>
                 </div>
               </div>
 
@@ -847,44 +998,39 @@
                 <p class="gallery-title">System Architecture Diagrams</p>
                 <div class="gallery-carousel" id="v3-gallery">
                   <div class="gallery-track">
-                    <div class="gallery-slide">
-                      <img src="Embodied Ai/01_core_algorithm_flow.png" alt="Core Algorithm Flow" />
-                      <p class="gallery-slide-caption">Core Algorithm Flow - VLM → LLM → Action Pipeline</p>
+                    <div class="gallery-slide" data-title="Algorithm Flow">
+                      <img src="Embodied Ai/algorithm flow.png" alt="Algorithm Flow" />
                     </div>
-                    <div class="gallery-slide">
-                      <img src="Embodied Ai/02_system_architecture.png" alt="System Architecture" />
-                      <p class="gallery-slide-caption">System Architecture - 4-Layer Design</p>
+                    <div class="gallery-slide" data-title="Autonomous Mode Dataflow">
+                      <img src="Embodied Ai/autonomous mode dataflow.png" alt="Autonomous Mode Dataflow" />
                     </div>
-                    <div class="gallery-slide">
-                      <img src="Embodied Ai/03_autonomous_mode_dataflow.png" alt="Autonomous Mode Dataflow" />
-                      <p class="gallery-slide-caption">Autonomous Mode - Environmental Data Collection</p>
+                    <div class="gallery-slide" data-title="Components IPO">
+                      <img src="Embodied Ai/components ipo.png" alt="Components IPO" />
                     </div>
-                    <div class="gallery-slide">
-                      <img src="Embodied Ai/04_conversation_mode_dataflow.png" alt="Conversation Mode Dataflow" />
-                      <p class="gallery-slide-caption">Conversation Mode - User Interaction Pipeline</p>
+                    <div class="gallery-slide" data-title="Conversation Mode Dataflow">
+                      <img src="Embodied Ai/conversation mode dataflow.png" alt="Conversation Mode Dataflow" />
                     </div>
-                    <div class="gallery-slide">
-                      <img src="Embodied Ai/05_core_components_ipo.png" alt="Core Components IPO" />
-                      <p class="gallery-slide-caption">Core Components - VLMClient & ExternalLLM</p>
+                    <div class="gallery-slide" data-title="State Machine">
+                      <img src="Embodied Ai/state machine.png" alt="State Machine" />
                     </div>
-                    <div class="gallery-slide">
-                      <img src="Embodied Ai/06_state_machine.png" alt="State Machine" />
-                      <p class="gallery-slide-caption">State Machine - LLMBrain & YangguangAI States</p>
+                    <div class="gallery-slide" data-title="System Architecture">
+                      <img src="Embodied Ai/system architecture.png" alt="System Architecture" />
                     </div>
                   </div>
-                  <div class="gallery-nav">
-                    <button class="gallery-btn" onclick="slideGallery('v3-gallery', -1)" aria-label="Previous image">←</button>
-                    <div class="gallery-dots">
-                      <button class="gallery-dot active" onclick="goToGallerySlide('v3-gallery', 0)" aria-label="Image 1"></button>
-                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 1)" aria-label="Image 2"></button>
-                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 2)" aria-label="Image 3"></button>
-                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 3)" aria-label="Image 4"></button>
-                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 4)" aria-label="Image 5"></button>
-                      <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 5)" aria-label="Image 6"></button>
-                    </div>
-                    <span class="gallery-counter" id="v3-gallery-counter">1 / 6</span>
-                    <button class="gallery-btn" onclick="slideGallery('v3-gallery', 1)" aria-label="Next image">→</button>
+                </div>
+                <p class="gallery-image-title" id="v3-gallery-title">Algorithm Flow</p>
+                <div class="gallery-nav">
+                  <button class="gallery-btn" onclick="slideGallery('v3-gallery', -1)" aria-label="Previous image">←</button>
+                  <div class="gallery-dots">
+                    <button class="gallery-dot active" onclick="goToGallerySlide('v3-gallery', 0)" aria-label="Image 1"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 1)" aria-label="Image 2"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 2)" aria-label="Image 3"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 3)" aria-label="Image 4"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 4)" aria-label="Image 5"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 5)" aria-label="Image 6"></button>
                   </div>
+                  <span class="gallery-counter" id="v3-gallery-counter">1 / 6</span>
+                  <button class="gallery-btn" onclick="slideGallery('v3-gallery', 1)" aria-label="Next image">→</button>
                 </div>
               </div>
 
@@ -1152,6 +1298,7 @@
       const slides = gallery.querySelectorAll('.gallery-slide');
       const dots = gallery.querySelectorAll('.gallery-dot');
       const counter = document.getElementById(galleryId + '-counter');
+      const titleEl = document.getElementById(galleryId + '-title');
       const state = getGalleryState(galleryId);
       
       state.currentSlide += direction;
@@ -1168,6 +1315,12 @@
       if (counter) {
         counter.textContent = `${state.currentSlide + 1} / ${slides.length}`;
       }
+
+      // Update title based on current slide
+      if (titleEl && slides[state.currentSlide]) {
+        const newTitle = slides[state.currentSlide].getAttribute('data-title');
+        if (newTitle) titleEl.textContent = newTitle;
+      }
     }
 
     function goToGallerySlide(galleryId, slideIndex) {
@@ -1176,6 +1329,7 @@
       const slides = gallery.querySelectorAll('.gallery-slide');
       const dots = gallery.querySelectorAll('.gallery-dot');
       const counter = document.getElementById(galleryId + '-counter');
+      const titleEl = document.getElementById(galleryId + '-title');
       const state = getGalleryState(galleryId);
       
       state.currentSlide = slideIndex;
@@ -1188,7 +1342,32 @@
       if (counter) {
         counter.textContent = `${state.currentSlide + 1} / ${slides.length}`;
       }
+
+      // Update title based on current slide
+      if (titleEl && slides[state.currentSlide]) {
+        const newTitle = slides[state.currentSlide].getAttribute('data-title');
+        if (newTitle) titleEl.textContent = newTitle;
+      }
     }
+
+    // Dev Journal Modal functions
+    function openDevJournal() {
+      document.getElementById('dev-journal-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDevJournal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      document.getElementById('dev-journal-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDevJournal();
+      }
+    });
 
     // Touch/swipe support for video carousels
     document.querySelectorAll('.video-carousel').forEach(carousel => {
