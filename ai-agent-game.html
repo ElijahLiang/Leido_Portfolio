@@ -57,30 +57,53 @@
         }
 
         .global-nav a {
+            position: relative;
             display: inline-flex;
             align-items: center;
+            gap: 8px;
             padding: 10px 18px;
-            border-radius: 999px;
-            background: rgba(30, 41, 59, 0.75);
-            border: 1px solid rgba(102, 126, 234, 0.35);
-            color: #e2e8f0;
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
             text-decoration: none;
             font-weight: 600;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            letter-spacing: 0.01em;
+            transition: color 0.3s ease, transform 0.2s ease;
+            overflow: hidden;
+        }
+
+        .global-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #cbd5e1;
+            transition: width 0.3s ease, background-color 0.3s ease;
+            border-radius: 2px;
         }
 
         .global-nav a:hover,
         .global-nav a:focus-visible {
+            color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(102, 126, 234, 0.25);
-            background: rgba(102, 126, 234, 0.25);
             outline: none;
         }
 
+        .global-nav a:hover::after {
+            width: 60%;
+            background-color: #ffffff;
+        }
+
         .global-nav a.active {
-            background: rgba(102, 126, 234, 0.35);
-            border-color: rgba(148, 163, 184, 0.5);
             color: #ffffff;
+        }
+
+        .global-nav a.active::after {
+            width: 80%;
+            background-color: #818cf8;
         }
 
         /* Timeline Container */
@@ -1334,20 +1357,31 @@
             display: inline-block;
             font-size: 0.9rem;
         }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <nav class="global-nav" aria-label="Primary navigation">
-            <a href="index.html">🪐 Playground</a>
-            <a href="ai-agent-game.html" class="active">🤖 AI Agent Chat Game</a>
-            <a href="digital-creature.html">👾 Creative Coding Lab</a>
-            <a href="embodied-intelligence.html">🧠 Embodied Intelligence Project</a>
-            <a href="sustainable-design.html">♻️ Sustainable Design</a>
+            <a href="index.html">🛸 Playground</a>
+            <a href="ai-agent-game.html" class="active">🪐 Game Design</a>
+            <a href="digital-creature.html">🌕 Digital Media Art</a>
+            <a href="sustainable-design.html">🌏 Product Design</a>
+            <a href="embodied-intelligence.html">🧠 Embodied AI</a>
         </nav>
 
         <!-- Header -->
-        <div class="header">
+        <div class="header reveal">
             <h1>LLM Dialogue Games: Research Evolution</h1>
             <p>A systematic exploration from technical validation to therapeutic innovation.</p>
         </div>
@@ -1355,7 +1389,7 @@
         <!-- Timeline -->
         <div class="timeline">
             <!-- Phase 4: Boundary -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <div class="timeline-node">🎭</div>
                 <div class="progress-indicator">Phase IV</div>
 
@@ -1561,7 +1595,7 @@
             <div class="arrow-connector">↓</div>
 
             <!-- Phase 3: Be Happy, Elijah -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <div class="timeline-node">💚</div>
                 <div class="progress-indicator">Phase III</div>
 
@@ -2256,7 +2290,7 @@
             <div class="arrow-connector">↓</div>
 
             <!-- Phase 2: Warring States -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <div class="timeline-node">⚔️</div>
                 <div class="progress-indicator">Phase II</div>
 
@@ -2342,7 +2376,7 @@
             <div class="arrow-connector">↓</div>
 
             <!-- Phase 1: Eastern Jin Dynasty -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <div class="timeline-node">🎭</div>
                 <div class="progress-indicator">Phase I</div>
 
@@ -2549,7 +2583,19 @@
                 this.style.animation = 'fadeIn 0.5s ease';
             });
         });
-    </script>
+    
+    // Scroll reveal animation
+    const ioReveal = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                ioReveal.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => ioReveal.observe(el));
+</script>
 </body>
 </html>
 

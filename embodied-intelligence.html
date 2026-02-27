@@ -36,32 +36,53 @@
     }
 
     .global-nav a {
+      position: relative;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 10px 18px;
-      border-radius: 999px;
-      background: rgba(30, 41, 59, 0.65);
-      border: 1px solid rgba(99, 102, 241, 0.4);
-      color: #e2e8f0;
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
       text-decoration: none;
       font-weight: 600;
       letter-spacing: 0.01em;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      transition: color 0.3s ease, transform 0.2s ease;
+      overflow: hidden;
+    }
+
+    .global-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background-color: #cbd5e1;
+      transition: width 0.3s ease, background-color 0.3s ease;
+      border-radius: 2px;
     }
 
     .global-nav a:hover,
     .global-nav a:focus-visible {
+      color: #ffffff;
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(99, 102, 241, 0.35);
-      background: rgba(99, 102, 241, 0.28);
       outline: none;
     }
 
+    .global-nav a:hover::after {
+      width: 60%;
+      background-color: #ffffff;
+    }
+
     .global-nav a.active {
-      background: rgba(129, 140, 248, 0.4);
-      border-color: rgba(191, 219, 254, 0.55);
-      color: #fff;
+      color: #ffffff;
+    }
+
+    .global-nav a.active::after {
+      width: 80%;
+      background-color: #818cf8;
     }
 
     /* Hero */
@@ -428,6 +449,27 @@
       border: 1px solid rgba(148, 163, 184, 0.2);
       border-radius: 24px;
       overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .evolution-content:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .evolution-item.v3 .evolution-content:hover {
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15), inset 0 0 20px rgba(245, 158, 11, 0.05);
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+    
+    .evolution-item.v2 .evolution-content:hover {
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15), inset 0 0 20px rgba(16, 185, 129, 0.05);
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+    
+    .evolution-item.v1 .evolution-content:hover {
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15), inset 0 0 20px rgba(99, 102, 241, 0.05);
+      border-color: rgba(99, 102, 241, 0.5);
     }
 
     .evolution-item.v2 .evolution-content {
@@ -1048,19 +1090,29 @@
         min-width: 100%;
       }
     }
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <nav class="global-nav" aria-label="Primary navigation">
-      <a href="index.html">🪐 Playground</a>
-      <a href="ai-agent-game.html">🤖 AI Agent Chat Game</a>
-      <a href="digital-creature.html">👾 Creative Coding Lab</a>
-      <a href="sustainable-design.html">♻️ Sustainable Design</a>
-      <a href="embodied-intelligence.html" class="active">🧠 Embodied Intelligence Project</a>
+      <a href="index.html">🛸 Playground</a>
+      <a href="ai-agent-game.html">🪐 Game Design</a>
+      <a href="digital-creature.html">🌕 Digital Media Art</a>
+      <a href="sustainable-design.html">🌏 Product Design</a>
+      <a href="embodied-intelligence.html" class="active">🧠 Embodied AI</a>
     </nav>
 
-    <header class="hero">
+    <header class="hero reveal">
       <p class="hero-eyebrow">Embodied AI · VLM-Driven Framework</p>
       <h1>Yangguang: Embodied Intelligence for 3D Worlds</h1>
       <p class="hero-subtitle">A paradigm shift from scripted AI to perception-driven cognition</p>
@@ -1082,7 +1134,7 @@
     </header>
 
     <!-- Featured Application: Museum Docent -->
-    <section class="application-showcase">
+    <section class="application-showcase reveal">
       <img 
         src="https://img.youtube.com/vi/SgXNTRx8tP0/maxresdefault.jpg" 
         alt="Yangguang AI Docent at Wuxi Hongshan Museum Virtual Exhibition" 
@@ -1155,7 +1207,7 @@
     </div>
 
     <!-- Paper Abstract -->
-    <section class="abstract-card">
+    <section class="abstract-card reveal">
       <h2>📄 Paper Abstract</h2>
       <p>
         This paper introduces <strong>Yangguang</strong>, a novel framework for developing embodied AI agents,
@@ -1175,7 +1227,7 @@
 
     <!-- Evolution Timeline (Reversed: V2 first, V1 second) -->
     <section class="evolution-section">
-      <div class="section-header">
+      <div class="section-header reveal">
         <h2>Development Timeline</h2>
         <p>From VLM-driven visual cognition back to white-box validation — tracking each iteration of the Yangguang framework.</p>
       </div>
@@ -1183,7 +1235,7 @@
       <div class="evolution-timeline">
 
         <!-- V3: Embodied NPC with Avatar (LATEST) -->
-        <article class="evolution-item v3">
+        <article class="evolution-item v3 reveal">
           <div class="evolution-marker">V3</div>
           <div class="evolution-content">
             <div class="evolution-header">
@@ -1280,7 +1332,7 @@
         </article>
 
         <!-- V2: VLM Visual Cognition -->
-        <article class="evolution-item v2">
+        <article class="evolution-item v2 reveal">
           <div class="evolution-marker">V2</div>
           <div class="evolution-content">
             <div class="evolution-header">
@@ -1363,7 +1415,7 @@
         </article>
 
         <!-- V1: White-box Testing (NOW SECOND) -->
-        <article class="evolution-item v1">
+        <article class="evolution-item v1 reveal">
           <div class="evolution-marker">V1</div>
           <div class="evolution-content">
             <div class="evolution-header">
@@ -1642,6 +1694,18 @@
         isDragging = false;
       });
     });
+
+    // Scroll reveal animation
+    const ioReveal = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          ioReveal.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => ioReveal.observe(el));
   </script>
 </body>
 </html>
