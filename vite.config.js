@@ -6,5 +6,15 @@ export default defineConfig({
   base: process.env.VERCEL ? '/' : '/Leido_Portfolio/',
   build: {
     outDir: 'dist',
+    target: 'es2020',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          gsap: ['gsap'],
+          glmatrix: ['gl-matrix'],
+        },
+      },
+    },
   },
 })

@@ -32,7 +32,7 @@ void main() {
     }
     worldPosition.xyz = radius * normalize(worldPosition.xyz);
     gl_Position = uProjectionMatrix * uViewMatrix * worldPosition;
-    vAlpha = smoothstep(0.5, 1., normalize(worldPosition.xyz).z) * .9 + .1;
+    vAlpha = smoothstep(0.4, 1., normalize(worldPosition.xyz).z);
     vUvs = aModelUvs;
     vInstanceId = gl_InstanceID;
 }
@@ -58,6 +58,7 @@ void main() {
     st = st * cellSize + cellOffset;
     outColor = texture(uTex, st);
     outColor.a *= vAlpha;
+    if (outColor.a < 0.05) discard;
 }
 `;
 
@@ -538,8 +539,18 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }) {
     window.addEventListener('resize', onResize);
     onResize();
 
+    const onVisibility = () => {
+      if (document.hidden) {
+        sketchRef.current?.stop();
+      } else {
+        sketchRef.current?.run();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
     return () => {
       window.removeEventListener('resize', onResize);
+      document.removeEventListener('visibilitychange', onVisibility);
       sketchRef.current?.stop();
     };
   }, [items, scale]);

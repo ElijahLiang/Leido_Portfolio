@@ -5,7 +5,6 @@ import InfiniteMenu from './components/InfiniteMenu/InfiniteMenu';
 import AboutMe from './components/AboutMe/AboutMe';
 import EasterEgg from './components/EasterEgg/EasterEgg';
 import ManifestoModal from './components/ManifestoModal/ManifestoModal';
-import PixelTrail from './components/PixelTrail/PixelTrail';
 import './App.css';
 
 import coverGame from './assets/cards/game-cover.png';
@@ -43,20 +42,7 @@ export default function App() {
 
   return (
     <>
-      <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-        <PixelTrail
-          gridSize={20}
-          trailSize={0.1}
-          maxAge={700}
-          interpolate={3.3}
-          color="#4ff8f5"
-          gooeyFilter={{ id: 'custom-goo-filter', strength: 2 }}
-          gooeyEnabled
-          gooStrength={2}
-        />
-      </div>
-
-      <Particles count={100} />
+      <Particles count={80} />
 
       <div className="app-layer">
         <Header />
