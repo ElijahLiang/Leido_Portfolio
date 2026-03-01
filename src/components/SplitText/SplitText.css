@@ -1,0 +1,11 @@
+.split-text-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  perspective: 800px;
+}
+
+.split-char {
+  display: inline-block;
+  will-change: transform, opacity;
+  transform-origin: bottom center;
+}

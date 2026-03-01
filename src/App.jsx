@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback } from 'react';
+import Particles from './components/Particles/Particles';
 import Header from './components/Header/Header';
 import CardSwap, { Card } from './components/CardSwap/CardSwap';
 import AboutMe from './components/AboutMe/AboutMe';
@@ -63,43 +64,47 @@ export default function App() {
 
   return (
     <>
-      <Header activeKey={activeKey} onSelect={handleSelect} />
+      <Particles count={100} />
 
-      <main className="app-container">
-        <section className="cardswap-section">
-          <CardSwap
-            ref={swapRef}
-            width={460}
-            height={320}
-            cardDistance={50}
-            verticalDistance={55}
-            delay={4000}
-            pauseOnHover
-            skewAmount={4}
-            easing="elastic"
-            onCardClick={handleCardClick}
-          >
-            {cards.map(c => (
-              <Card key={c.key} customClass="project-card">
-                <img src={c.img} alt={c.title} className="project-card-img" />
-                <div className="project-card-overlay">
-                  <span className="project-card-icon">{c.icon}</span>
-                  <h3 className="project-card-title">{c.title}</h3>
-                  <p className="project-card-desc">{c.desc}</p>
-                  <span className="project-card-cta">Click to explore →</span>
-                </div>
-              </Card>
-            ))}
-          </CardSwap>
-        </section>
+      <div className="app-layer">
+        <Header activeKey={activeKey} onSelect={handleSelect} />
 
-        <AboutMe />
-      </main>
+        <main className="app-container">
+          <section className="cardswap-section">
+            <CardSwap
+              ref={swapRef}
+              width={460}
+              height={320}
+              cardDistance={50}
+              verticalDistance={55}
+              delay={4000}
+              pauseOnHover
+              skewAmount={4}
+              easing="elastic"
+              onCardClick={handleCardClick}
+            >
+              {cards.map(c => (
+                <Card key={c.key} customClass="project-card">
+                  <img src={c.img} alt={c.title} className="project-card-img" />
+                  <div className="project-card-overlay">
+                    <span className="project-card-icon">{c.icon}</span>
+                    <h3 className="project-card-title">{c.title}</h3>
+                    <p className="project-card-desc">{c.desc}</p>
+                    <span className="project-card-cta">Click to explore →</span>
+                  </div>
+                </Card>
+              ))}
+            </CardSwap>
+          </section>
 
-      <div className="escape-center">
-        <button className="escape-btn" onClick={() => alert("Bye！Earth！🌍Bye！Human！🔥")}>
-          Click me to escape💨escape💨escape💨
-        </button>
+          <AboutMe />
+        </main>
+
+        <div className="escape-center">
+          <button className="escape-btn" onClick={() => alert("Bye！Earth！🌍Bye！Human！🔥")}>
+            Click me to escape💨escape💨escape💨
+          </button>
+        </div>
       </div>
 
       <EasterEgg onClick={() => setShowManifesto(true)} />

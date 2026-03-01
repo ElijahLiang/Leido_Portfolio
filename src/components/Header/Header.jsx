@@ -1,3 +1,4 @@
+import ShuffleText from '../ShuffleText/ShuffleText';
 import './Header.css';
 
 const buttons = [
@@ -10,11 +11,15 @@ const buttons = [
 export default function Header({ activeKey, onSelect }) {
   return (
     <header className="hero">
-      <div className="slide-left">
-        <span className="scrolling-text">🛸 Welcome to Welcome to</span>
+      <div className="hero-title-row">
+        <span className="hero-small-text">
+          <ShuffleText text="🛸 Welcome to Welcome to" speed={25} delay={200} />
+        </span>
       </div>
-      <div className="slide-right">
-        <span className="scrolling-texto">🛸  Leido'PlayGround✦ </span>
+      <div className="hero-title-row">
+        <span className="hero-big-text">
+          <ShuffleText text="Leido'PlayGround ✦" speed={35} delay={800} className="hero-shuffle-big" />
+        </span>
       </div>
       <div className="topbar">
         {buttons.map(b => (

@@ -1,10 +1,33 @@
 .hero {
-  padding: 40px 20px;
+  padding: 60px 20px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
   text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title-row {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-small-text {
+  font-weight: 600;
+  color: #fffbc0;
+  font-size: clamp(20px, 3.5vw, 32px);
+}
+
+.hero-big-text {
+  font-weight: 800;
+  color: #fffbc0;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+}
+
+.hero-shuffle-big {
+  letter-spacing: 0.02em;
 }
 
 .topbar {
@@ -12,7 +35,7 @@
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 12px;
+  margin-top: 20px;
 }
 
 .topbar button {
@@ -64,4 +87,5 @@
 
 @media (max-width: 640px) {
   .topbar { gap: 8px; }
+  .hero { padding: 40px 16px 24px; }
 }
