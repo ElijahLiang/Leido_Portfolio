@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import SplitText from '../SplitText/SplitText';
+import FallingText from '../FallingText/FallingText';
 import selfie from '../../assets/selfie.png';
 import './AboutMe.css';
 
@@ -16,44 +16,39 @@ export default function AboutMe() {
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
     if (sectionRef.current) obs.observe(sectionRef.current);
     return () => obs.disconnect();
   }, []);
 
   return (
-    <section className="bottom-section" ref={sectionRef}>
-      <div className="intro-container">
-        <h2 className="intro-title">About Me</h2>
-        <div className="intro-grid">
-          <div className="intro-photo-stack">
-            <div className="intro-photo-wrapper">
-              <img src={selfie} alt="宇航员手持星光的插画肖像" className="intro-photo" />
-            </div>
-            <p className="intro-text">
-              Email：<a href="mailto:erioleiono@gmail.com">erioleiono@gmail.com</a><br />
-              WeChat：Leidododo<br />
-              Instagram：<a href="https://www.instagram.com/leido_liang" target="_blank" rel="noopener noreferrer">@leido_liang</a>
-            </p>
-          </div>
-          <div className="intro-noise-panel">
-            <div className="noise-section">
-              {lines.map((line, i) => (
-                <div key={i} className="noise-row">
-                  <span className="scrolling-text">
-                    {visible ? (
-                      <SplitText text={line} delay={i * 0.4} stagger={0.025} />
-                    ) : (
-                      <span style={{ opacity: 0 }}>{line}</span>
-                    )}
-                  </span>
-                </div>
-              ))}
-              <div className="noise-row">
-                <span className="scrolling-text noise-divider">── ── ── ── ── ── ── ── ── ── ──</span>
+    <section className="fallen-section" ref={sectionRef}>
+      <div className="fallen-floor-line" />
+      <div className="fallen-inner">
+        <div className="fallen-photo-wrap">
+          <img src={selfie} alt="Leido" className="fallen-photo" />
+        </div>
+
+        <div className="fallen-content">
+          <div className="fallen-lines">
+            {lines.map((line, i) => (
+              <div key={i} className="fallen-line">
+                {visible ? (
+                  <FallingText text={line} delay={i * 0.55} stagger={0.025} />
+                ) : (
+                  <span style={{ opacity: 0 }}>{line}</span>
+                )}
               </div>
-            </div>
+            ))}
+          </div>
+
+          <div className="fallen-contact">
+            <span>Email：<a href="mailto:erioleiono@gmail.com">erioleiono@gmail.com</a></span>
+            <span>WeChat：Leidododo</span>
+            <span>
+              Instagram：<a href="https://www.instagram.com/leido_liang" target="_blank" rel="noopener noreferrer">@leido_liang</a>
+            </span>
           </div>
         </div>
       </div>

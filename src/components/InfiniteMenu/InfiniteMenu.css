@@ -1,0 +1,125 @@
+.im-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.im-canvas {
+  cursor: grab;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  background: transparent;
+}
+
+.im-canvas:active {
+  cursor: grabbing;
+}
+
+/* ── Title overlay ── */
+.im-title {
+  user-select: none;
+  position: absolute;
+  font-weight: 900;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: #fffbc0;
+  left: 1.6em;
+  top: 50%;
+  transform: translate(20%, -50%);
+  pointer-events: none;
+}
+
+.im-title.active {
+  opacity: 1;
+  transform: translate(20%, -50%);
+  pointer-events: auto;
+  transition: 0.5s ease;
+}
+
+.im-title.inactive {
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.1s ease;
+}
+
+/* ── Description overlay ── */
+.im-desc {
+  user-select: none;
+  position: absolute;
+  max-width: 14ch;
+  top: 50%;
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  color: #cbd5e1;
+  right: 1%;
+  transform: translate(0, -50%);
+  line-height: 1.5;
+}
+
+.im-desc.active {
+  opacity: 1;
+  transform: translate(-90%, -50%);
+  pointer-events: auto;
+  transition: 0.5s ease;
+}
+
+.im-desc.inactive {
+  pointer-events: none;
+  transform: translate(-60%, -50%);
+  opacity: 0;
+  transition: 0.1s ease;
+}
+
+/* ── Action button ── */
+.im-action {
+  position: absolute;
+  left: 50%;
+  z-index: 10;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  background: rgba(158, 203, 255, 0.25);
+  border: 3px solid rgba(158, 203, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.3s ease;
+}
+
+.im-action:hover {
+  background: rgba(158, 203, 255, 0.45);
+}
+
+.im-action-icon {
+  user-select: none;
+  position: relative;
+  color: #fffbc0;
+  top: 2px;
+  font-size: 22px;
+  margin: 0;
+}
+
+.im-action.active {
+  bottom: 3.5em;
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+  transition: 0.5s ease;
+}
+
+.im-action.inactive {
+  bottom: -80px;
+  transform: translateX(-50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.1s ease;
+}
+
+@media (max-width: 1200px) {
+  .im-title,
+  .im-desc {
+    display: none;
+  }
+}

@@ -30,62 +30,6 @@
   letter-spacing: 0.02em;
 }
 
-.topbar {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.topbar button {
-  position: relative;
-  padding: 10px 20px;
-  border: none;
-  background: transparent;
-  color: #fffbc0;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.3s ease, transform 0.2s ease;
-  overflow: hidden;
-}
-
-.topbar button::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background-color: #fffbc0;
-  transition: width 0.3s ease, background-color 0.3s ease;
-  border-radius: 2px;
-}
-
-.topbar button:hover,
-.topbar button:focus-visible {
-  color: #ffffff;
-  transform: translateY(-2px);
-  outline: none;
-}
-
-.topbar button:hover::after {
-  width: 60%;
-  background-color: #ffffff;
-}
-
-.topbar button.active {
-  color: #ffffff;
-}
-
-.topbar button.active::after {
-  width: 80%;
-  background-color: #9ecbff;
-}
-
 @media (max-width: 640px) {
-  .topbar { gap: 8px; }
   .hero { padding: 40px 16px 24px; }
 }
