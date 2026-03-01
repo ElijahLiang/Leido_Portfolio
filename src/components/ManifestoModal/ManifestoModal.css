@@ -1,0 +1,119 @@
+.manifesto-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeOverlay 0.4s ease forwards;
+}
+
+@keyframes fadeOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.manifesto-modal-content {
+  background: linear-gradient(145deg, rgba(20, 30, 60, 0.95), rgba(10, 15, 30, 0.98));
+  border: 1px solid rgba(158, 203, 255, 0.3);
+  border-radius: 24px;
+  padding: 40px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  animation: scaleIn 0.4s ease forwards;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.manifesto-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.manifesto-close:hover {
+  background: rgba(239, 68, 68, 0.8);
+}
+
+.manifesto-modal-body { margin-top: 10px; }
+
+.manifesto-heading {
+  font-size: 28px;
+  color: #e9eefc;
+  margin-bottom: 20px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.manifesto-lede {
+  color: #c9d2f7;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.manifesto-quote {
+  padding: 16px 24px;
+  border-left: 3px solid rgba(158, 203, 255, 0.4);
+  background: rgba(158, 203, 255, 0.05);
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 24px;
+}
+
+.manifesto-quote p {
+  color: #fff;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+}
+
+.manifesto-quote cite {
+  color: #9ecbff;
+  font-size: 14px;
+}
+
+.manifesto-text p {
+  color: #c9d2f7;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.manifesto-footer {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(158, 203, 255, 0.2);
+}
+
+.manifesto-footer p {
+  color: #e9eefc;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.manifesto-footer strong {
+  color: #ffffff;
+}

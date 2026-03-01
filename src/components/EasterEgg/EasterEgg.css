@@ -1,0 +1,154 @@
+.easter-egg-container {
+  position: fixed;
+  bottom: 60px;
+  right: 60px;
+  z-index: 100;
+}
+
+.letter-wrapper {
+  position: relative;
+  cursor: pointer;
+  perspective: 1000px;
+  transition: transform 0.3s ease;
+  margin: 0 auto;
+}
+
+.letter-wrapper:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.envelope {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #f0e6d2;
+  border-radius: 8px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 40px rgba(180, 150, 100, 0.4);
+  transform-style: preserve-3d;
+}
+
+.envelope-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  z-index: 3;
+  clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(to bottom, #d8c8b2, #e8dcc4);
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: #d8c8b2;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  z-index: 4;
+  transition: transform 0.6s ease;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.envelope-paper {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  height: 80%;
+  background: #fff;
+  z-index: 2;
+  border-radius: 4px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.envelope-paper h4 {
+  margin: 0 0 5px 0;
+  color: #8c2a2a;
+  font-family: 'Crimson Pro', serif;
+  font-size: 20px;
+}
+
+.envelope-paper p {
+  margin: 0;
+  color: #555;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.wax-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: #a32222;
+  border-radius: 50%;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 4px 6px rgba(0,0,0,0.3);
+  font-size: 16px;
+  color: #fff;
+}
+
+.letter-hint {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fffbc0;
+  opacity: 0.7;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+/* Small floating variant */
+.letter-wrapper.small-letter {
+  width: 75px;
+  height: 50px;
+}
+
+.letter-wrapper.small-letter:hover {
+  transform: translateY(-8px) scale(1.1) rotate(5deg);
+}
+
+.floating-letter {
+  animation: floatEgg 4s ease-in-out infinite;
+}
+
+@keyframes floatEgg {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.letter-wrapper.small-letter .envelope-paper h4 { font-size: 8px; margin-bottom: 2px; }
+.letter-wrapper.small-letter .envelope-paper p { font-size: 5px; letter-spacing: 0; }
+.letter-wrapper.small-letter .wax-seal { width: 18px; height: 18px; font-size: 8px; }
+.letter-wrapper.small-letter .letter-hint {
+  bottom: -28px;
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.letter-wrapper.small-letter:hover .letter-hint { opacity: 1; }
+
+@media (max-width: 768px) {
+  .easter-egg-container { bottom: 20px; right: 20px; }
+}

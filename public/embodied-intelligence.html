@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yangguang — VLM-Driven Embodied AI Framework</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(ellipse at top, rgba(13, 18, 38, 0.92), #020617 68%);
+      color: #e2e8f0;
+      line-height: 1.7;
+      min-height: 100vh;
+      padding: 60px 20px 100px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Navigation */
+    .global-nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .global-nav a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: color 0.3s ease, transform 0.2s ease;
+      overflow: hidden;
+    }
+
+    .global-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background-color: #cbd5e1;
+      transition: width 0.3s ease, background-color 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .global-nav a:hover,
+    .global-nav a:focus-visible {
+      color: #ffffff;
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .global-nav a:hover::after {
+      width: 60%;
+      background-color: #ffffff;
+    }
+
+    .global-nav a.active {
+      color: #ffffff;
+    }
+
+    .global-nav a.active::after {
+      width: 80%;
+      background-color: #818cf8;
+    }
+
+    /* Hero */
+    .hero {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 32px;
+      padding: clamp(32px, 4vw, 56px);
+      margin-bottom: 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: auto -40% -60% auto;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(129, 140, 248, 0.28), transparent 70%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      font-size: 0.8rem;
+      color: rgba(248, 250, 252, 0.6);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      margin-bottom: 16px;
+      color: #f8fafc;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: #a5b4fc;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      color: #cbd5f5;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: rgba(51, 65, 85, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #e2e8f0;
+    }
+
+    .badge.success {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #6ee7b7;
+    }
+
+    .badge.paper {
+      background: rgba(168, 85, 247, 0.18);
+      border-color: rgba(168, 85, 247, 0.5);
+      color: #c4b5fd;
+    }
+
+    .badge.application {
+      background: rgba(234, 179, 8, 0.18);
+      border-color: rgba(234, 179, 8, 0.5);
+      color: #fde047;
+    }
+
+    /* Featured Application Showcase */
+    .application-showcase {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.08), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(234, 179, 8, 0.35);
+      border-radius: 32px;
+      padding: 0;
+      margin-bottom: 56px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .application-showcase::before {
+      content: '🏛️ REAL-WORLD APPLICATION';
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(234, 179, 8, 0.25);
+      border: 1px solid rgba(234, 179, 8, 0.5);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #fde047;
+      z-index: 10;
+    }
+
+    .showcase-hero-image {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+    }
+
+    .showcase-content {
+      padding: 32px 40px 40px;
+    }
+
+    .showcase-header {
+      margin-bottom: 24px;
+    }
+
+    .showcase-header h2 {
+      font-size: 1.8rem;
+      color: #fde047;
+      margin-bottom: 8px;
+    }
+
+    .showcase-header .location {
+      font-size: 1.1rem;
+      color: #fbbf24;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .showcase-intro {
+      font-size: 1.05rem;
+      color: #fef3c7;
+      margin-bottom: 20px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .showcase-desc {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .showcase-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .showcase-feature-group h4 {
+      font-size: 0.85rem;
+      color: #fbbf24;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .showcase-feature-group ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .showcase-feature-group ul li {
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .showcase-feature-group ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #fbbf24;
+    }
+
+    .showcase-tagline {
+      font-style: italic;
+      color: #a5b4fc;
+      font-size: 0.95rem;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .showcase-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .showcase-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .showcase-btn.primary {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.4), rgba(251, 191, 36, 0.4));
+      border: 1px solid rgba(234, 179, 8, 0.6);
+      color: #fef3c7;
+    }
+
+    .showcase-btn.primary:hover {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.6), rgba(251, 191, 36, 0.6));
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(234, 179, 8, 0.3);
+    }
+
+    .showcase-btn.secondary {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+    }
+
+    .showcase-btn.secondary:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.7);
+      transform: translateY(-2px);
+    }
+
+    /* Paper Abstract */
+    .abstract-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 56px;
+    }
+
+    .abstract-card h2 {
+      font-size: 1.4rem;
+      color: #c4b5fd;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .abstract-card p {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .abstract-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    /* Section Header */
+    .section-header {
+      margin-bottom: 36px;
+    }
+
+    .section-header h2 {
+      font-size: 1.9rem;
+      margin-bottom: 8px;
+      color: #f8fafc;
+    }
+
+    .section-header p {
+      color: #94a3b8;
+      max-width: 820px;
+    }
+
+    /* Evolution Timeline */
+    .evolution-section {
+      margin-bottom: 72px;
+    }
+
+    .evolution-timeline {
+      position: relative;
+      display: grid;
+      gap: 48px;
+    }
+
+    .evolution-timeline::before {
+      content: '';
+      position: absolute;
+      left: 32px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.6), rgba(99, 102, 241, 0.2));
+      border-radius: 2px;
+    }
+
+    .evolution-item {
+      position: relative;
+      padding-left: 80px;
+    }
+
+    .evolution-marker {
+      position: absolute;
+      left: 16px;
+      top: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 2;
+    }
+
+    .evolution-item.v1 .evolution-marker {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.2);
+    }
+
+    .evolution-item.v2 .evolution-marker {
+      background: linear-gradient(135deg, #10b981, #34d399);
+      box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.2);
+      animation: pulse-green 2s infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.2); }
+      50% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0.35); }
+    }
+
+    .evolution-content {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 24px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .evolution-content:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .evolution-item.v3 .evolution-content:hover {
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15), inset 0 0 20px rgba(245, 158, 11, 0.05);
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+    
+    .evolution-item.v2 .evolution-content:hover {
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15), inset 0 0 20px rgba(16, 185, 129, 0.05);
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+    
+    .evolution-item.v1 .evolution-content:hover {
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15), inset 0 0 20px rgba(99, 102, 241, 0.05);
+      border-color: rgba(99, 102, 241, 0.5);
+    }
+
+    .evolution-item.v2 .evolution-content {
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .evolution-header {
+      padding: 28px 32px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .evolution-header h3 {
+      font-size: 1.5rem;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .evolution-header .version-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 12px;
+    }
+
+    .evolution-item.v1 .version-tag {
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+    }
+
+    .evolution-item.v2 .version-tag {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+    }
+
+    .evolution-header .date-tag {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .evolution-body {
+      padding: 28px 32px;
+      display: grid;
+      gap: 28px;
+    }
+
+    .evolution-desc {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-item {
+      background: rgba(30, 41, 59, 0.5);
+      border-radius: 16px;
+      padding: 16px 20px;
+    }
+
+    .feature-item h4 {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .feature-item p {
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+    /* V1 Architecture Track (preserved) */
+    .architecture-track {
+      position: relative;
+      padding-left: 48px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .architecture-track::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.15), rgba(59, 130, 246, 0.5));
+    }
+
+    .architecture-node {
+      position: relative;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 18px;
+      padding: 20px 24px 20px 28px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .architecture-node::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 24px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid rgba(99, 102, 241, 0.8);
+      background: #020617;
+      box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.18);
+    }
+
+    .node-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 252, 0.55);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .architecture-node h4 {
+      font-size: 1.1rem;
+      color: #e0e7ff;
+      font-weight: 600;
+    }
+
+    .architecture-node ul {
+      list-style: none;
+      display: grid;
+      gap: 5px;
+      color: #cbd5f5;
+      font-size: 0.9rem;
+    }
+
+    .architecture-node ul li::before {
+      content: '▹';
+      margin-right: 8px;
+      color: #818cf8;
+    }
+
+    /* Video Carousel */
+    .video-wrapper {
+      margin-top: 24px;
+    }
+
+    .video-carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+    }
+
+    .youtube-preview {
+      position: relative;
+      display: block;
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: #0b1223;
+      box-shadow: 0 16px 48px rgba(15, 23, 42, 0.6);
+      text-decoration: none;
+    }
+
+    .youtube-preview img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95);
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .youtube-preview:hover img,
+    .youtube-preview:focus-visible img {
+      transform: scale(1.02);
+      filter: brightness(1);
+    }
+
+    .youtube-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(2, 6, 23, 0.6);
+      font-size: 0.75rem;
+      color: #e2e8f0;
+      backdrop-filter: blur(6px);
+    }
+
+    .youtube-button {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .youtube-button::before {
+      content: '▶';
+      font-size: 0.85rem;
+    }
+
+    .video-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    /* Carousel Navigation */
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .carousel-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #e2e8f0;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(99, 102, 241, 0.3);
+      border-color: rgba(99, 102, 241, 0.7);
+      transform: scale(1.08);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 10px;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .carousel-dot.active {
+      background: #6ee7b7;
+      box-shadow: 0 0 12px rgba(110, 231, 183, 0.5);
+      transform: scale(1.2);
+    }
+
+    .carousel-dot:hover:not(.active) {
+      background: rgba(148, 163, 184, 0.6);
+    }
+
+    /* Architecture Image */
+    .arch-image-wrapper {
+      background: linear-gradient(135deg, rgba(8, 47, 73, 0.5), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 24px;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .arch-image-wrapper img {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .arch-image-title {
+      font-size: 1.1rem;
+      color: #7dd3fc;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    /* Image Gallery Carousel - matches arch-image-wrapper style */
+    .image-gallery {
+      background: linear-gradient(135deg, rgba(8, 47, 73, 0.5), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 24px;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .gallery-title {
+      font-size: 1.1rem;
+      color: #7dd3fc;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .gallery-carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      max-height: 500px;
+    }
+
+    .gallery-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%;
+    }
+
+    .gallery-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-slide img {
+      max-width: 100%;
+      max-height: 480px;
+      width: auto;
+      height: auto;
+      border-radius: 16px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .gallery-slide-caption {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .gallery-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .gallery-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(14, 165, 233, 0.4);
+      color: #7dd3fc;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .gallery-btn:hover {
+      background: rgba(14, 165, 233, 0.3);
+      border-color: rgba(14, 165, 233, 0.7);
+      transform: scale(1.08);
+    }
+
+    .gallery-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .gallery-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .gallery-dot.active {
+      background: #7dd3fc;
+      box-shadow: 0 0 10px rgba(125, 211, 252, 0.5);
+      transform: scale(1.2);
+    }
+
+    .gallery-dot:hover:not(.active) {
+      background: rgba(148, 163, 184, 0.6);
+    }
+
+    .gallery-counter {
+      font-size: 0.75rem;
+      color: #64748b;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .gallery-image-title {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #7dd3fc;
+      font-weight: 500;
+      margin-top: 12px;
+      padding: 0 16px;
+    }
+
+    /* Dev Journal Button & Modal */
+    .dev-journal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(14, 165, 233, 0.3));
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      color: #a5b4fc;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 24px;
+    }
+
+    .dev-journal-btn:hover {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(14, 165, 233, 0.5));
+      border-color: rgba(99, 102, 241, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 24px;
+      padding: 36px 40px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .modal-header h3 {
+      font-size: 1.4rem;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.1);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #94a3b8;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .modal-body {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .modal-body p {
+      margin-bottom: 16px;
+    }
+
+    .modal-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* V3 Specific Styles */
+    .evolution-item.v3 .evolution-marker {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2);
+      animation: pulse-amber 2s infinite;
+    }
+
+    @keyframes pulse-amber {
+      0%, 100% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2); }
+      50% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0.35); }
+    }
+
+    .evolution-item.v3 .evolution-content {
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+
+    .evolution-item.v3 .version-tag {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 32px 18px 64px;
+      }
+
+      .hero {
+        padding: 28px;
+      }
+
+      .evolution-timeline::before {
+        left: 18px;
+      }
+
+      .evolution-item {
+        padding-left: 56px;
+      }
+
+      .evolution-marker {
+        left: 2px;
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+      }
+
+      .evolution-header,
+      .evolution-body {
+        padding: 20px 24px;
+      }
+
+      .layer-modules {
+        flex-direction: column;
+      }
+
+      .arch-module {
+        min-width: 100%;
+      }
+    }
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="global-nav" aria-label="Primary navigation">
+      <a href="index.html">🛸 Playground</a>
+      <a href="ai-agent-game.html">🪐 Game Design</a>
+      <a href="digital-creature.html">🌕 Digital Media Art</a>
+      <a href="sustainable-design.html">🌏 Product Design</a>
+      <a href="embodied-intelligence.html" class="active">🧠 Embodied AI</a>
+    </nav>
+
+    <header class="hero reveal">
+      <p class="hero-eyebrow">Embodied AI · VLM-Driven Framework</p>
+      <h1>Yangguang: Embodied Intelligence for 3D Worlds</h1>
+      <p class="hero-subtitle">A paradigm shift from scripted AI to perception-driven cognition</p>
+      <div class="badge-row">
+        <span class="badge success">VLM + LLM Architecture</span>
+        <span class="badge">Observe → Think → Act Loop</span>
+        <span class="badge application">🏛️ Museum Application Live</span>
+        <span class="badge paper">📄 arXiv Draft Ready</span>
+      </div>
+      <p>
+        Yangguang leverages a Vision-Language Model (VLM) to interpret first-person visual input, enabling
+        a Large Language Model (LLM) to perform reasoning and decision-making in natural language.
+        This approach allows the agent to operate based on genuine understanding of its visual surroundings,
+        leading to emergent, unscripted behaviors.
+      </p>
+      <button class="dev-journal-btn" onclick="openDevJournal()">
+        📓 Development Journal
+      </button>
+    </header>
+
+    <!-- Featured Application: Museum Docent -->
+    <section class="application-showcase reveal">
+      <img 
+        src="https://img.youtube.com/vi/SgXNTRx8tP0/maxresdefault.jpg" 
+        alt="Yangguang AI Docent at Wuxi Hongshan Museum Virtual Exhibition" 
+        class="showcase-hero-image"
+        onerror="this.src='https://img.youtube.com/vi/SgXNTRx8tP0/hqdefault.jpg'"
+      />
+      <div class="showcase-content">
+        <div class="showcase-header">
+          <h2>Yangguang: VLM-Embodied AI Docent</h2>
+          <p class="location">📍 Wuxi Hongshan Museum Virtual Exhibition</p>
+        </div>
+        
+        <p class="showcase-intro">
+          From experimental prototype to real-world application — Yangguang becomes an intelligent docent in a virtual museum.
+        </p>
+        
+        <p class="showcase-desc">
+          This is the first embodied tour guide system powered by Vision-Language Models (VLM): instead of relying on 
+          pre-scripted dialogues, the AI "sees" the exhibits, autonomously generates explanations, and responds in 
+          real-time based on visitor location and questions.
+        </p>
+
+        <div class="showcase-features">
+          <div class="showcase-feature-group">
+            <h4>⚡ Technical Features</h4>
+            <ul>
+              <li><strong>VLM-driven scene perception</strong> — AI can "see" and understand exhibits</li>
+              <li><strong>LLM reasoning</strong> — generates natural narration based on visual understanding</li>
+              <li><strong>Autonomous navigation</strong> — guides visitors through exhibition halls</li>
+              <li><strong>Emotional interaction</strong> — responds with warmth and personality</li>
+            </ul>
+          </div>
+          <div class="showcase-feature-group">
+            <h4>🚀 Future Directions</h4>
+            <ul>
+              <li>VR immersive tour experience</li>
+              <li>User experience mapping and analytics</li>
+              <li>Intelligent docent for more cultural venues</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="showcase-tagline">
+          From dialogue to embodiment, from prototype to application — AI begins to truly exist within our spaces.
+        </p>
+
+        <div class="showcase-actions">
+          <a href="https://youtu.be/SgXNTRx8tP0" target="_blank" rel="noopener noreferrer" class="showcase-btn primary">
+            ▶️ Watch Demo on YouTube
+          </a>
+          <a href="https://elijahliang.github.io/Leiodo-Journey-Development/" target="_blank" rel="noopener noreferrer" class="showcase-btn secondary">
+            📝 Read Tech Blog
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dev Journal Modal -->
+    <div class="modal-overlay" id="dev-journal-modal" onclick="closeDevJournal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <h3>📓 Development Journal</h3>
+          <button class="modal-close" onclick="closeDevJournal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>This project represents a solitary yet enlightening journey into Embodied AI. Starting in November 2025, I attempted to drive an NPC using LLMs within Unity. My initial approach relied on heuristic hacks like Raycast for perception, which resulted in poor navigation and a lack of true spatial awareness. I briefly detoured into ML-Agents, only to realize that reinforcement learning created a "conditioned subject"—functional but incapable of the generalization I sought.</p>
+          <p>The breakthrough came in December with the integration of Vision-Language Models (VLM), granting the agent the ability to truly "see." Following a brief academic hiatus, in January 2026, I successfully achieved an end-to-end loop: an agent that perceives, reasons, and reacts with specific behaviors and emotions. While hardware constraints currently necessitate a script-driven action layer (preventing a full VLA implementation), this prototype validates the core architecture and paves the way for future explorations in World Models and Sim2Real robotics.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paper Abstract -->
+    <section class="abstract-card reveal">
+      <h2>📄 Paper Abstract</h2>
+      <p>
+        This paper introduces <strong>Yangguang</strong>, a novel framework for developing embodied AI agents,
+        specifically Non-Player Characters (NPCs), within interactive 3D environments. The system marks a
+        paradigm shift from traditional, programmatic AI—which relies on structured data like ray-casting
+        and predefined behavior trees—to a <em>perception-driven cognitive architecture</em>. We detail the
+        system's architecture, the core components of its Observe-Think-Act loop, and the data flow for both
+        autonomous operation and player interaction. The Yangguang framework represents a significant step
+        towards creating more dynamic, believable, and truly intelligent agents in virtual worlds.
+      </p>
+      <div class="abstract-meta">
+        <span>👤 Author: Yibin Liang</span>
+        <span>📅 December 4, 2025</span>
+        <span>🏷️ Embodied AI, VLM, LLM, Unity, NPC</span>
+      </div>
+    </section>
+
+    <!-- Evolution Timeline (Reversed: V2 first, V1 second) -->
+    <section class="evolution-section">
+      <div class="section-header reveal">
+        <h2>Development Timeline</h2>
+        <p>From VLM-driven visual cognition back to white-box validation — tracking each iteration of the Yangguang framework.</p>
+      </div>
+
+      <div class="evolution-timeline">
+
+        <!-- V3: Embodied NPC with Avatar (LATEST) -->
+        <article class="evolution-item v3 reveal">
+          <div class="evolution-marker">V3</div>
+          <div class="evolution-content">
+            <div class="evolution-header">
+              <h3>
+                <span class="version-tag">Phase III · Current</span>
+                Embodied NPC · Interactive Avatar
+              </h3>
+              <span class="date-tag">January 2026</span>
+            </div>
+            <div class="evolution-body">
+              <p class="evolution-desc">
+                I've updated another version of the embodied NPC — this time with facial expressions, 
+                walking animations, and an avatar that can interact with players. Although the models 
+                and scenes are still rough and there are some bugs to fix, this is a significant step forward. 
+                Implementing embodiment in 3D environments, walking mechanics, and database construction 
+                proved far more challenging than expected. However, the basic requirements are now in place, 
+                and future development will focus on game design in new environments to support the 
+                Open Theatre Game Theory.
+              </p>
+
+              <div class="feature-grid">
+                <div class="feature-item">
+                  <h4>New Features</h4>
+                  <p>Expression System + Walk Animation</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Avatar</h4>
+                  <p>Interactive Character Body</p>
+                </div>
+                <div class="feature-item">
+                  <h4>State Machine</h4>
+                  <p>Complete FSM Implementation</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Goal</h4>
+                  <p>Open Theatre Game Theory</p>
+                </div>
+              </div>
+
+              <!-- Architecture Diagrams Gallery -->
+              <div class="image-gallery">
+                <p class="gallery-title">System Architecture Diagrams</p>
+                <div class="gallery-carousel" id="v3-gallery">
+                  <div class="gallery-track">
+                    <div class="gallery-slide" data-title="Algorithm Flow">
+                      <img src="Embodied Ai/algorithm flow.png" alt="Algorithm Flow" />
+                    </div>
+                    <div class="gallery-slide" data-title="Autonomous Mode Dataflow">
+                      <img src="Embodied Ai/autonomous mode dataflow.png" alt="Autonomous Mode Dataflow" />
+                    </div>
+                    <div class="gallery-slide" data-title="Components IPO">
+                      <img src="Embodied Ai/components ipo.png" alt="Components IPO" />
+                    </div>
+                    <div class="gallery-slide" data-title="Conversation Mode Dataflow">
+                      <img src="Embodied Ai/conversation mode dataflow.png" alt="Conversation Mode Dataflow" />
+                    </div>
+                    <div class="gallery-slide" data-title="State Machine">
+                      <img src="Embodied Ai/state machine.png" alt="State Machine" />
+                    </div>
+                    <div class="gallery-slide" data-title="System Architecture">
+                      <img src="Embodied Ai/system architecture.png" alt="System Architecture" />
+                    </div>
+                  </div>
+                </div>
+                <p class="gallery-image-title" id="v3-gallery-title">Algorithm Flow</p>
+                <div class="gallery-nav">
+                  <button class="gallery-btn" onclick="slideGallery('v3-gallery', -1)" aria-label="Previous image">←</button>
+                  <div class="gallery-dots">
+                    <button class="gallery-dot active" onclick="goToGallerySlide('v3-gallery', 0)" aria-label="Image 1"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 1)" aria-label="Image 2"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 2)" aria-label="Image 3"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 3)" aria-label="Image 4"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 4)" aria-label="Image 5"></button>
+                    <button class="gallery-dot" onclick="goToGallerySlide('v3-gallery', 5)" aria-label="Image 6"></button>
+                  </div>
+                  <span class="gallery-counter" id="v3-gallery-counter">1 / 6</span>
+                  <button class="gallery-btn" onclick="slideGallery('v3-gallery', 1)" aria-label="Next image">→</button>
+                </div>
+              </div>
+
+              <div class="video-wrapper">
+                <a class="youtube-preview" href="https://youtu.be/mXX53qJNvp4" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V3 Embodied NPC Demo">
+                  <img src="https://img.youtube.com/vi/mXX53qJNvp4/hqdefault.jpg" alt="V3 Embodied NPC Demo — YouTube preview" />
+                  <span class="youtube-badge">YouTube · V3 Demo</span>
+                  <span class="youtube-button">Watch Demo</span>
+                </a>
+                <div class="video-meta">
+                  <span>🎬 Embodied NPC with avatar demo</span>
+                  <span>🎭 Expression + Walking + Player Interaction</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- V2: VLM Visual Cognition -->
+        <article class="evolution-item v2 reveal">
+          <div class="evolution-marker">V2</div>
+          <div class="evolution-content">
+            <div class="evolution-header">
+              <h3>
+                <span class="version-tag">Phase II</span>
+                VLM Visual Cognition · True Perception
+              </h3>
+              <span class="date-tag">December 2025</span>
+            </div>
+            <div class="evolution-body">
+              <p class="evolution-desc">
+                Full integration of a Vision-Language Model (Qwen-VL-Plus) to interpret first-person camera frames.
+                The agent now perceives the world through actual pixels, not pre-processed geometry. This unlocks
+                emergent behaviors like curiosity-driven exploration and memory-informed avoidance.
+              </p>
+
+              <div class="feature-grid">
+                <div class="feature-item">
+                  <h4>VLM Provider</h4>
+                  <p>Aliyun Qwen-VL-Plus API</p>
+                </div>
+                <div class="feature-item">
+                  <h4>LLM Reasoning</h4>
+                  <p>DeepSeek-V2 for decisions</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Cycle Time</h4>
+                  <p>3–8 seconds end-to-end</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Hourly Cost</h4>
+                  <p>~$0.86 per agent</p>
+                </div>
+              </div>
+
+              <!-- Architecture Diagram Image -->
+              <div class="arch-image-wrapper">
+                <p class="arch-image-title">System Architecture</p>
+                <img src="Embodied Ai/ai_data_flow_diagram_detailed.png" alt="AI Data Flow Diagram - Perception, Cognition, Action stages" />
+              </div>
+
+              <div class="video-wrapper">
+                <div class="video-carousel" id="v2-carousel">
+                  <div class="carousel-track">
+                    <div class="carousel-slide">
+                      <a class="youtube-preview" href="https://youtu.be/0WpcWLnyKGc" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V2 VLM Visual Cognition">
+                        <img src="https://img.youtube.com/vi/0WpcWLnyKGc/hqdefault.jpg" alt="V2 VLM Visual Cognition — YouTube preview" />
+                        <span class="youtube-badge">YouTube · V2 Demo</span>
+                        <span class="youtube-button">Watch Demo</span>
+                      </a>
+                      <div class="video-meta">
+                        <span>🎬 VLM visual cognition demo</span>
+                        <span>👁️ First-person camera → VLM → LLM → Action</span>
+                      </div>
+                    </div>
+                    <div class="carousel-slide">
+                      <a class="youtube-preview" href="https://youtu.be/dcj-9YucPV4" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V2 Extended Demo">
+                        <img src="https://img.youtube.com/vi/dcj-9YucPV4/hqdefault.jpg" alt="V2 Extended Demo — YouTube preview" />
+                        <span class="youtube-badge">YouTube · V2 Extended</span>
+                        <span class="youtube-button">Watch Demo</span>
+                      </a>
+                      <div class="video-meta">
+                        <span>🎬 Extended cognition demo</span>
+                        <span>🧠 Autonomous exploration & decision-making</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-nav">
+                    <button class="carousel-btn" onclick="slideCarousel('v2-carousel', -1)" aria-label="Previous slide">←</button>
+                    <div class="carousel-dots">
+                      <button class="carousel-dot active" onclick="goToSlide('v2-carousel', 0)" aria-label="Go to slide 1"></button>
+                      <button class="carousel-dot" onclick="goToSlide('v2-carousel', 1)" aria-label="Go to slide 2"></button>
+                    </div>
+                    <button class="carousel-btn" onclick="slideCarousel('v2-carousel', 1)" aria-label="Next slide">→</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- V1: White-box Testing (NOW SECOND) -->
+        <article class="evolution-item v1 reveal">
+          <div class="evolution-marker">V1</div>
+          <div class="evolution-content">
+            <div class="evolution-header">
+              <h3>
+                <span class="version-tag">Phase I</span>
+                White-box Testing · Text-based Vision
+              </h3>
+              <span class="date-tag">November 2025</span>
+            </div>
+            <div class="evolution-body">
+              <p class="evolution-desc">
+                Initial proof-of-concept using OverlapSphere + raycasting to generate text descriptions of the scene.
+                The agent relied on geometric detections converted to natural language, validating the
+                Observe → Decide → Act → Report loop before integrating real visual perception.
+              </p>
+
+              <div class="feature-grid">
+                <div class="feature-item">
+                  <h4>Test Coverage</h4>
+                  <p>12 primary paths validated</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Core Loop</h4>
+                  <p>DialogueSystem → LLMBrain → YangguangAI</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Navigation</h4>
+                  <p>NavMesh with anti-stuck fallback</p>
+                </div>
+                <div class="feature-item">
+                  <h4>Memory</h4>
+                  <p>Triple memory: env / dialogue / goals</p>
+                </div>
+              </div>
+
+              <!-- V1 Technical Architecture Track -->
+              <div class="architecture-track">
+                <article class="architecture-node">
+                  <span class="node-label">DialogueSystem.cs</span>
+                  <h4>Multimodal dialogue gateway</h4>
+                  <ul>
+                    <li>Capture player text/voice inputs</li>
+                    <li>Call vision.GetVisualDesc() to inject live scene narration</li>
+                    <li>Assemble the system prompt with mission + safety guardrails</li>
+                  </ul>
+                </article>
+                <article class="architecture-node">
+                  <span class="node-label">LLMBrain.cs</span>
+                  <h4>Reasoning engine · THOUGHT/ACTION</h4>
+                  <ul>
+                    <li>Package environment state, short-term memory, and persona</li>
+                    <li>Guide the model to emit THOUGHT/ACTION/BELIEF templates</li>
+                    <li>Invoke ExternalLLM.Chat() while tracking token budget</li>
+                  </ul>
+                </article>
+                <article class="architecture-node">
+                  <span class="node-label">ExternalLLM.cs</span>
+                  <h4>Model abstraction layer</h4>
+                  <ul>
+                    <li>Wrap DeepSeek, GLM, and open APIs for hot swapping</li>
+                    <li>Unify JSON requests, retries, and rate limiting</li>
+                    <li>Return raw text responses for downstream parsing</li>
+                  </ul>
+                </article>
+                <article class="architecture-node">
+                  <span class="node-label">YangguangAI.cs</span>
+                  <h4>Behavior orchestration</h4>
+                  <ul>
+                    <li>Update current targets, behavior modes, and state machine</li>
+                    <li>Command NavMeshAgent with anti-stuck + exploration modes</li>
+                    <li>Track visited objects to avoid redundant searches</li>
+                  </ul>
+                </article>
+                <article class="architecture-node">
+                  <span class="node-label">YangguangVision.cs</span>
+                  <h4>Vision loop (text-based)</h4>
+                  <ul>
+                    <li>OverlapSphere + FOV filtering for 3D detections</li>
+                    <li>Raycast occlusion checks to build the visible list</li>
+                    <li>Convert world state into natural language for DialogueSystem</li>
+                  </ul>
+                </article>
+              </div>
+
+              <div class="video-wrapper">
+                <a class="youtube-preview" href="https://youtu.be/DceI-MnvLxM" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V1 White-box Test">
+                  <img src="https://img.youtube.com/vi/DceI-MnvLxM/hqdefault.jpg" alt="V1 White-box Test — YouTube preview" />
+                  <span class="youtube-badge">YouTube · V1 Demo</span>
+                  <span class="youtube-button">Watch Demo</span>
+                </a>
+                <div class="video-meta">
+                  <span>🎬 White-box testing demo</span>
+                  <span>🧪 Exploration / Reporting / Dialogue</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Carousel state management
+    const carouselStates = {};
+
+    function getCarouselState(carouselId) {
+      if (!carouselStates[carouselId]) {
+        carouselStates[carouselId] = { currentSlide: 0 };
+      }
+      return carouselStates[carouselId];
+    }
+
+    function slideCarousel(carouselId, direction) {
+      const carousel = document.getElementById(carouselId);
+      const track = carousel.querySelector('.carousel-track');
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+      const state = getCarouselState(carouselId);
+      
+      state.currentSlide += direction;
+      
+      if (state.currentSlide < 0) state.currentSlide = slides.length - 1;
+      if (state.currentSlide >= slides.length) state.currentSlide = 0;
+      
+      track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+    }
+
+    function goToSlide(carouselId, slideIndex) {
+      const carousel = document.getElementById(carouselId);
+      const track = carousel.querySelector('.carousel-track');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+      const state = getCarouselState(carouselId);
+      
+      state.currentSlide = slideIndex;
+      track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+    }
+
+    // Gallery carousel functions
+    const galleryStates = {};
+
+    function getGalleryState(galleryId) {
+      if (!galleryStates[galleryId]) {
+        galleryStates[galleryId] = { currentSlide: 0 };
+      }
+      return galleryStates[galleryId];
+    }
+
+    function slideGallery(galleryId, direction) {
+      const gallery = document.getElementById(galleryId);
+      const track = gallery.querySelector('.gallery-track');
+      const slides = gallery.querySelectorAll('.gallery-slide');
+      const dots = gallery.querySelectorAll('.gallery-dot');
+      const counter = document.getElementById(galleryId + '-counter');
+      const titleEl = document.getElementById(galleryId + '-title');
+      const state = getGalleryState(galleryId);
+      
+      state.currentSlide += direction;
+      
+      if (state.currentSlide < 0) state.currentSlide = slides.length - 1;
+      if (state.currentSlide >= slides.length) state.currentSlide = 0;
+      
+      track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+
+      if (counter) {
+        counter.textContent = `${state.currentSlide + 1} / ${slides.length}`;
+      }
+
+      // Update title based on current slide
+      if (titleEl && slides[state.currentSlide]) {
+        const newTitle = slides[state.currentSlide].getAttribute('data-title');
+        if (newTitle) titleEl.textContent = newTitle;
+      }
+    }
+
+    function goToGallerySlide(galleryId, slideIndex) {
+      const gallery = document.getElementById(galleryId);
+      const track = gallery.querySelector('.gallery-track');
+      const slides = gallery.querySelectorAll('.gallery-slide');
+      const dots = gallery.querySelectorAll('.gallery-dot');
+      const counter = document.getElementById(galleryId + '-counter');
+      const titleEl = document.getElementById(galleryId + '-title');
+      const state = getGalleryState(galleryId);
+      
+      state.currentSlide = slideIndex;
+      track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+
+      if (counter) {
+        counter.textContent = `${state.currentSlide + 1} / ${slides.length}`;
+      }
+
+      // Update title based on current slide
+      if (titleEl && slides[state.currentSlide]) {
+        const newTitle = slides[state.currentSlide].getAttribute('data-title');
+        if (newTitle) titleEl.textContent = newTitle;
+      }
+    }
+
+    // Dev Journal Modal functions
+    function openDevJournal() {
+      document.getElementById('dev-journal-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDevJournal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      document.getElementById('dev-journal-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDevJournal();
+      }
+    });
+
+    // Touch/swipe support for video carousels
+    document.querySelectorAll('.video-carousel').forEach(carousel => {
+      let startX = 0;
+      let isDragging = false;
+
+      carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      carousel.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) {
+          slideCarousel(carousel.id, diff > 0 ? 1 : -1);
+        }
+        isDragging = false;
+      });
+    });
+
+    // Touch/swipe support for gallery carousels
+    document.querySelectorAll('.gallery-carousel').forEach(gallery => {
+      let startX = 0;
+      let isDragging = false;
+
+      gallery.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      gallery.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) {
+          slideGallery(gallery.id, diff > 0 ? 1 : -1);
+        }
+        isDragging = false;
+      });
+    });
+
+    // Scroll reveal animation
+    const ioReveal = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          ioReveal.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => ioReveal.observe(el));
+  </script>
+</body>
+</html>
