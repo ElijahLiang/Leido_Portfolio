@@ -29,6 +29,7 @@
   "dependencies": {
     "gl-matrix": "^3.4.4",
     "gsap": "^3.14.2",
+    "matter-js": "^0.20.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   }
