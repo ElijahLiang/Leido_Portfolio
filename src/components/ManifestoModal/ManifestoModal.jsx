@@ -1,15 +1,37 @@
+import { useEffect, useRef } from 'react';
 import './ManifestoModal.css';
 
 export default function ManifestoModal({ open, onClose }) {
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    contentRef.current?.focus();
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
   return (
-    <div className="manifesto-modal-overlay show" onClick={onClose}>
-      <div className="manifesto-modal-content" onClick={e => e.stopPropagation()}>
-        <button className="manifesto-close" onClick={onClose}>&times;</button>
+    <div
+      className="manifesto-modal-overlay show"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="manifesto-title"
+    >
+      <div
+        className="manifesto-modal-content"
+        onClick={e => e.stopPropagation()}
+        ref={contentRef}
+        tabIndex={-1}
+      >
+        <button className="manifesto-close" onClick={onClose} aria-label="关闭">&times;</button>
         <div className="manifesto-modal-body">
-          <h3 className="manifesto-heading">The meaning of life is how we illuminate one another.</h3>
-          
+          <h3 id="manifesto-title" className="manifesto-heading">The meaning of life is how we illuminate one another.</h3>
+
           <p className="manifesto-lede">
             Design, technology, and art are the torches I carry to reach people who have been overlooked and to meet them with warmth.
           </p>

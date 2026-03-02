@@ -780,30 +780,9 @@ body {
   font-weight: bold;
   color: #fffbc0;
   text-align: center;
-  font-size: 40px;
   justify-content: center;
   display: block;
   font-size: 5em;
-
-}
-
-.scrolling-text1 {
-  font-weight: bold;
-  color: #fffbc0;
-  text-align: center;
-  font-size: 80px;
-  justify-content: center;
-  display: inline-flex
-}
-
-.scrolling-text2 {
-  font-weight: bold;
-  color: #ffffff;
-  text-align: center;
-  font-size: 400px;
-  justify-content: center;
-  animation: alternate-reverse;
-
 }
 
 /* 按钮样式：已移除自定义，使用浏览器默认 */
@@ -844,15 +823,15 @@ body {
 
 /* 应用动画的类 */
 .slide-left {
-  animation: slideFromLeft 5s ease-out forwards;
+  animation: slideFromLeft 1.2s ease-out forwards;
 }
 
 .slide-right {
-  animation: slideFromRight 5s ease-out forwards;
+  animation: slideFromRight 1.2s ease-out forwards;
 }
 
 .slide-up {
-  animation: slideFromBottom 5s ease-out forwards;
+  animation: slideFromBottom 1.2s ease-out forwards;
 }
 
 /* 为不同行添加延迟 */
@@ -1432,7 +1411,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #e8dbxc;
+  background: #e8dbbc;
   border-radius: 8px;
   z-index: 3;
   clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);

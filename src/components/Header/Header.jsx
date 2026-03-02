@@ -6,7 +6,7 @@ export default function Header() {
     <header className="hero">
       <div className="hero-title-row">
         <span className="hero-small-text">
-          <ShuffleText text="🛸 Welcome to Welcome to" speed={25} delay={200} />
+          <ShuffleText text="🛸 Welcome to" speed={25} delay={200} />
         </span>
       </div>
       <div className="hero-title-row">

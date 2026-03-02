@@ -568,9 +568,9 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }) {
         <>
           <h2 className={`im-title ${isMoving ? 'inactive' : 'active'}`}>{activeItem.title}</h2>
           <p className={`im-desc ${isMoving ? 'inactive' : 'active'}`}>{activeItem.description}</p>
-          <div onClick={handleClick} className={`im-action ${isMoving ? 'inactive' : 'active'}`}>
+          <button onClick={handleClick} className={`im-action ${isMoving ? 'inactive' : 'active'}`} aria-label={`Open ${activeItem.title}`}>
             <p className="im-action-icon">&#x2197;</p>
-          </div>
+          </button>
         </>
       )}
     </div>

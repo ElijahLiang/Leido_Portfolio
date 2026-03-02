@@ -3,7 +3,7 @@ import './EasterEgg.css';
 export default function EasterEgg({ onClick }) {
   return (
     <div className="easter-egg-container floating-letter">
-      <div className="letter-wrapper small-letter" onClick={onClick} title="Design Manifesto">
+      <button className="letter-wrapper small-letter" onClick={onClick} title="Design Manifesto" aria-label="Open Design Manifesto">
         <div className="envelope">
           <div className="envelope-flap"></div>
           <div className="envelope-front">
@@ -15,7 +15,7 @@ export default function EasterEgg({ onClick }) {
           </div>
         </div>
         <p className="letter-hint">Tap to read</p>
-      </div>
+      </button>
     </div>
   );
 }

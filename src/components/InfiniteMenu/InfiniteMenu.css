@@ -73,6 +73,7 @@
 
 /* ── Action button ── */
 .im-action {
+  font-family: inherit;
   position: absolute;
   left: 50%;
   z-index: 10;
@@ -118,8 +119,35 @@
 }
 
 @media (max-width: 1200px) {
-  .im-title,
+  .im-title {
+    left: 50%;
+    top: auto;
+    bottom: 6rem;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
+    white-space: nowrap;
+  }
+  .im-title.active {
+    transform: translateX(-50%);
+  }
+  .im-title.inactive {
+    transform: translateX(-50%);
+  }
   .im-desc {
-    display: none;
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: 3.5rem;
+    transform: translateX(-50%);
+    text-align: center;
+    max-width: 90%;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+  }
+  .im-desc.active {
+    transform: translateX(-50%);
+  }
+  .im-desc.inactive {
+    transform: translateX(-50%);
   }
 }
