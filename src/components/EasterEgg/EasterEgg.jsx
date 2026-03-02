@@ -11,7 +11,7 @@ export default function EasterEgg({ onClick }) {
           </div>
           <div className="envelope-paper">
             <h4>Manifesto</h4>
-            <p>Torch of Light</p>
+            <p>Emergent Story</p>
           </div>
         </div>
         <p className="letter-hint">Tap to read</p>

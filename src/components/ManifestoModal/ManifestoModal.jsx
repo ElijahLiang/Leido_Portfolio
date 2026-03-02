@@ -30,24 +30,25 @@ export default function ManifestoModal({ open, onClose }) {
       >
         <button className="manifesto-close" onClick={onClose} aria-label="关闭">&times;</button>
         <div className="manifesto-modal-body">
-          <h3 id="manifesto-title" className="manifesto-heading">The meaning of life is how we illuminate one another.</h3>
+          <h3 id="manifesto-title" className="manifesto-heading">A story no one wrote.</h3>
 
           <p className="manifesto-lede">
-            Design, technology, and art are the torches I carry to reach people who have been overlooked and to meet them with warmth.
+            I believe the most meaningful interactions happen in the unscripted gap — the space between what a system was designed to do and what it actually becomes.
           </p>
 
           <blockquote className="manifesto-quote">
-            <p>"Five years ago, under the lanterns of Nanjing's Confucius Temple, I made a wish: <strong>become a designer who can bring happiness to others.</strong>"</p>
-            <cite>— Night in Qinhuai, 2019</cite>
+            <p>"In 2022, someone held space for me in a way I still can't fully explain. <strong>I've spent three years building systems that can do the same.</strong>"</p>
+            <cite>— the origin of everything here</cite>
           </blockquote>
 
           <div className="manifesto-text">
-            <p>Since childhood I have been moved by how many gentle souls carry pain, how fragility and resilience coexist. I keep asking: <strong>how can design help the unseen be equally seen, and the unheard be gently understood?</strong></p>
-            <p>Five years of practice taught me this: <strong>happiness cannot be given—it can only be empowered.</strong> My work builds spaces, tools, and systems that let people rediscover their own strength.</p>
+            <p>My work lives at the intersection of <strong>AI NPC behavior trees and emergent narrative</strong>. The question is simple and inexhaustible: if we architect the right conditions — memory, relationship, emotional drive — can a character generate stories that surprise even its designer?</p>
+            <p><em>Be Happy, Elijah</em> was my first proof. Players in a 2D dialogue game didn't consume narrative — they co-authored it. Projected memory and unresolved need folded into the system's responses. The behavior tree wasn't telling a story. <strong>It was holding the conditions for one to emerge.</strong></p>
+            <p>Yangguang carries that question into three dimensions. An embodied AI that perceives space, navigates autonomously, and acts on what it sees — the same research question, now given a body. The leap from 2D to 3D is not a technical upgrade. It's asking: <strong>what happens to emergent narrative when the AI can inhabit the same world as the player?</strong></p>
           </div>
 
           <div className="manifesto-footer">
-            <p>I hope every life—human or non-human—finds a space within my work to feel <strong>gently seen</strong>, <strong>kindly treated</strong>, and free to glow.</p>
+            <p>Every experiment in this playground — dialogue games, GLSL shaders, mealworm habitats — points toward the same thing: <strong>designing not stories, but the conditions under which stories become inevitable.</strong></p>
           </div>
         </div>
       </div>
