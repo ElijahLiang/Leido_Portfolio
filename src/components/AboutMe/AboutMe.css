@@ -133,14 +133,27 @@
 }
 
 @media (max-width: 700px) {
+  .fallen-section {
+    padding: 0 16px 48px;
+    margin-top: 12px;
+  }
+
+  .fallen-floor-line {
+    margin: 0 auto 28px;
+  }
+
   .fallen-inner {
     flex-direction: column;
     align-items: center;
-    gap: 28px;
+    gap: 20px;
   }
 
   .fallen-photo-wrap {
     transform: rotate(-3deg);
+  }
+
+  .fallen-photo {
+    width: min(180px, 40vw);
   }
 
   .contact-bubble {
@@ -148,6 +161,8 @@
     bottom: auto;
     top: calc(100% + 18px);
     transform: translateX(-50%) rotate(2deg);
+    width: min(280px, 80vw);
+    padding: 14px 16px;
   }
 
   .contact-bubble::before {
@@ -157,7 +172,7 @@
     transform: translateX(-50%) rotate(135deg);
   }
 
-  .fallen-section {
-    padding: 0 20px 60px;
+  .fallen-content {
+    gap: 16px;
   }
 }

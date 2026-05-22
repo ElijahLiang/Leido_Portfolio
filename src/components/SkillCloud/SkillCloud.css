@@ -51,6 +51,12 @@
 
 @media (max-width: 700px) {
   .skill-cloud-container {
-    height: 240px;
+    height: 200px;
+  }
+
+  .skill-chip {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-left-width: 6px;
   }
 }

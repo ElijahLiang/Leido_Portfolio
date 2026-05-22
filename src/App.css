@@ -8,3 +8,10 @@
   height: calc(100vh - 200px);
   min-height: 500px;
 }
+
+@media (max-width: 860px) {
+  .menu-section {
+    height: auto;
+    min-height: 0;
+  }
+}
