@@ -30,25 +30,25 @@ export default function ManifestoModal({ open, onClose }) {
       >
         <button className="manifesto-close" onClick={onClose} aria-label="关闭">&times;</button>
         <div className="manifesto-modal-body">
-          <h3 id="manifesto-title" className="manifesto-heading">A story no one wrote.</h3>
+          <h3 id="manifesto-title" className="manifesto-heading">一个没有被预先写好的故事</h3>
 
           <p className="manifesto-lede">
-            I believe the most meaningful interactions happen in the unscripted gap — the space between what a system was designed to do and what it actually becomes.
+            我相信最有意义的互动，发生在脚本之外：在系统原本被设计成什么，和它最终在真实使用中变成什么之间。
           </p>
 
           <blockquote className="manifesto-quote">
-            <p>"In 2022, someone held space for me in a way I still can't fully explain. <strong>I've spent three years building systems that can do the same.</strong>"</p>
-            <cite>— the origin of everything here</cite>
+            <p>“2022 年，有人以一种我至今难以完全解释的方式接住了我。<strong>过去三年，我一直在尝试建造也能做到这件事的系统。</strong>”</p>
+            <cite>— 这里一切的起点</cite>
           </blockquote>
 
           <div className="manifesto-text">
-            <p>My work lives at the intersection of <strong>AI NPC behavior trees and emergent narrative</strong>. The question is simple and inexhaustible: if we architect the right conditions — memory, relationship, emotional drive — can a character generate stories that surprise even its designer?</p>
-            <p><em>Be Happy, Elijah</em> was my first proof. Players in a 2D dialogue game didn't consume narrative — they co-authored it. Projected memory and unresolved need folded into the system's responses. The behavior tree wasn't telling a story. <strong>It was holding the conditions for one to emerge.</strong></p>
-            <p>Yangguang carries that question into three dimensions. An embodied AI that perceives space, navigates autonomously, and acts on what it sees — the same research question, now given a body. The leap from 2D to 3D is not a technical upgrade. It's asking: <strong>what happens to emergent narrative when the AI can inhabit the same world as the player?</strong></p>
+            <p>我的工作位于 <strong>AI NPC 行为树与涌现叙事</strong> 的交汇处。问题很简单，也几乎没有尽头：如果我们设计好记忆、关系与情感驱动力这些条件，一个角色能否生成连设计者也会被惊讶到的故事？</p>
+            <p><em>Be Happy, Elijah</em> 是我的第一次证明。玩家在 2D 对话游戏里并不是消费剧情，而是在共同书写它。被投射的记忆和未被满足的需要，会折叠进系统的回应中。行为树不是在讲故事，<strong>它是在托住故事发生的条件。</strong></p>
+            <p>智能 NPC 研究之旅把这个问题带入三维空间：一个能够感知环境、自主导航并基于所见行动的具身 AI。它不是从 2D 到 3D 的技术升级，而是在追问：<strong>当 AI 能和玩家共处同一个世界时，涌现叙事会发生什么？</strong></p>
           </div>
 
           <div className="manifesto-footer">
-            <p>Every experiment in this playground — dialogue games, GLSL shaders, mealworm habitats — points toward the same thing: <strong>designing not stories, but the conditions under which stories become inevitable.</strong></p>
+            <p>这个游乐场里的每一次实验——对话游戏、GLSL 着色器、黄粉虫生态系统——都指向同一件事：<strong>不是设计一个故事，而是设计让故事不可避免地发生的条件。</strong></p>
           </div>
         </div>
       </div>

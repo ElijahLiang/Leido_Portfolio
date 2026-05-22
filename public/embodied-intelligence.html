@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yangguang — VLM-Driven Embodied AI Framework</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <title>智能 NPC 研究之旅 — VLM 驱动的具身智能框架</title>
   <style>
-    * {
+    @font-face {
+      font-family: 'FashionBitmap16';
+      src: url('/fonts/FashionBitmap16_0.092.ttf') format('truetype');
+      font-display: swap;
+    }
+* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'FashionBitmap16', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: radial-gradient(ellipse at top, rgba(13, 18, 38, 0.92), #020617 68%);
       color: #e2e8f0;
       line-height: 1.7;
@@ -1105,88 +1109,86 @@
 <body>
   <div class="container">
     <nav class="global-nav" aria-label="Primary navigation">
-      <a href="index.html">🛸 Playground</a>
-      <a href="ai-agent-game.html">🪐 Game Design</a>
-      <a href="digital-creature.html">🌕 Digital Media Art</a>
-      <a href="sustainable-design.html">🌏 Product Design</a>
-      <a href="embodied-intelligence.html" class="active">🧠 Embodied AI</a>
+      <a href="index.html">🛸 首页</a>
+      <a href="ai-agent-game.html">🪐 LLM 技术游戏玩法研究</a>
+      <a href="digital-creature.html">🌕 互动媒体艺术作品</a>
+      <a href="sustainable-design.html">🌏 可持续产品设计</a>
+      <a href="embodied-intelligence.html" class="active">🧠 智能 NPC 研究之旅</a>
     </nav>
 
     <header class="hero reveal">
-      <p class="hero-eyebrow">Embodied AI · VLM-Driven Framework</p>
-      <h1>Yangguang: Embodied Intelligence for 3D Worlds</h1>
-      <p class="hero-subtitle">A paradigm shift from scripted AI to perception-driven cognition</p>
+      <p class="hero-eyebrow">智能 NPC 研究之旅 · VLM 驱动框架</p>
+      <h1>智能 NPC 研究之旅：面向 3D 世界的具身智能</h1>
+      <p class="hero-subtitle">从脚本式 AI 转向基于感知的认知架构</p>
       <div class="badge-row">
-        <span class="badge success">VLM + LLM Architecture</span>
-        <span class="badge">Observe → Think → Act Loop</span>
-        <span class="badge application">🏛️ Museum Application Live</span>
-        <span class="badge paper">📄 arXiv Draft Ready</span>
+        <span class="badge success">VLM + LLM 架构</span>
+        <span class="badge">观察 → 思考 → 行动循环</span>
+        <span class="badge application">🏛️ 博物馆应用场景</span>
+        <span class="badge paper">📄 论文草稿已完成</span>
       </div>
       <p>
-        Yangguang leverages a Vision-Language Model (VLM) to interpret first-person visual input, enabling
-        a Large Language Model (LLM) to perform reasoning and decision-making in natural language.
-        This approach allows the agent to operate based on genuine understanding of its visual surroundings,
-        leading to emergent, unscripted behaviors.
+        这个项目使用视觉语言模型（VLM）理解第一人称视觉输入，再由大语言模型（LLM）
+        进行自然语言推理与决策。它让 NPC 不再依赖预设脚本，而是基于对场景的理解进行行动，
+        从而生成更自然、更不可预设的行为。
       </p>
       <button class="dev-journal-btn" onclick="openDevJournal()">
-        📓 Development Journal
+        📓 开发日志
       </button>
     </header>
 
     <!-- Featured Application: Museum Docent -->
     <section class="application-showcase reveal">
       <img 
-        src="https://img.youtube.com/vi/SgXNTRx8tP0/maxresdefault.jpg" 
-        alt="Yangguang AI Docent at Wuxi Hongshan Museum Virtual Exhibition" 
+        src="/video-covers/SgXNTRx8tP0.jpg" 
+        alt="无锡鸿山博物馆虚拟展厅中的智能 NPC 讲解员" 
         class="showcase-hero-image"
-        onerror="this.src='https://img.youtube.com/vi/SgXNTRx8tP0/hqdefault.jpg'"
+        onerror="this.src='/video-covers/SgXNTRx8tP0.jpg'"
       />
       <div class="showcase-content">
         <div class="showcase-header">
-          <h2>Yangguang: VLM-Embodied AI Docent</h2>
-          <p class="location">📍 Wuxi Hongshan Museum Virtual Exhibition</p>
+          <h2>智能 NPC：VLM 驱动的虚拟讲解员</h2>
+          <p class="location">📍 无锡鸿山博物馆虚拟展厅</p>
         </div>
         
         <p class="showcase-intro">
-          From experimental prototype to real-world application — Yangguang becomes an intelligent docent in a virtual museum.
+          从实验原型走向真实应用：智能 NPC 成为虚拟博物馆中的讲解员。
         </p>
         
         <p class="showcase-desc">
-          This is the first embodied tour guide system powered by Vision-Language Models (VLM): instead of relying on 
-          pre-scripted dialogues, the AI "sees" the exhibits, autonomously generates explanations, and responds in 
-          real-time based on visitor location and questions.
+          这是一套由视觉语言模型（VLM）驱动的具身导览系统：它不再依赖预设对话，而是能够“看见”展品，
+          根据游客的位置和问题实时生成讲解，并自主回应场景变化。
         </p>
 
         <div class="showcase-features">
           <div class="showcase-feature-group">
-            <h4>⚡ Technical Features</h4>
+            <h4>⚡ 技术特征</h4>
             <ul>
-              <li><strong>VLM-driven scene perception</strong> — AI can "see" and understand exhibits</li>
-              <li><strong>LLM reasoning</strong> — generates natural narration based on visual understanding</li>
-              <li><strong>Autonomous navigation</strong> — guides visitors through exhibition halls</li>
-              <li><strong>Emotional interaction</strong> — responds with warmth and personality</li>
+              <li><strong>VLM 场景感知</strong> — AI 可以“看见”并理解展品</li>
+              <li><strong>LLM 推理</strong> — 基于视觉理解生成自然讲解</li>
+              <li><strong>自主导航</strong> — 引导游客穿行于展厅</li>
+              <li><strong>情感交互</strong> — 以更有温度和人格感的方式回应</li>
             </ul>
           </div>
           <div class="showcase-feature-group">
-            <h4>🚀 Future Directions</h4>
+            <h4>🚀 未来方向</h4>
             <ul>
-              <li>VR immersive tour experience</li>
-              <li>User experience mapping and analytics</li>
-              <li>Intelligent docent for more cultural venues</li>
+              <li>VR 沉浸式导览体验</li>
+              <li>用户体验路径记录与分析</li>
+              <li>扩展到更多文化空间中的智能讲解员</li>
             </ul>
           </div>
         </div>
 
         <p class="showcase-tagline">
-          From dialogue to embodiment, from prototype to application — AI begins to truly exist within our spaces.
+          从对话到具身，从原型到应用：AI 开始真正存在于我们的空间之中。
         </p>
 
         <div class="showcase-actions">
           <a href="https://youtu.be/SgXNTRx8tP0" target="_blank" rel="noopener noreferrer" class="showcase-btn primary">
-            ▶️ Watch Demo on YouTube
+            ▶️ 观看演示视频
           </a>
           <a href="https://elijahliang.github.io/Leiodo-Journey-Development/" target="_blank" rel="noopener noreferrer" class="showcase-btn secondary">
-            📝 Read Tech Blog
+            📝 阅读技术博客
           </a>
         </div>
       </div>
@@ -1196,40 +1198,38 @@
     <div class="modal-overlay" id="dev-journal-modal" onclick="closeDevJournal(event)">
       <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
-          <h3>📓 Development Journal</h3>
+          <h3>📓 开发日志</h3>
           <button class="modal-close" onclick="closeDevJournal()">&times;</button>
         </div>
         <div class="modal-body">
-          <p>This project represents a solitary yet enlightening journey into Embodied AI. Starting in November 2025, I attempted to drive an NPC using LLMs within Unity. My initial approach relied on heuristic hacks like Raycast for perception, which resulted in poor navigation and a lack of true spatial awareness. I briefly detoured into ML-Agents, only to realize that reinforcement learning created a "conditioned subject"—functional but incapable of the generalization I sought.</p>
-          <p>The breakthrough came in December with the integration of Vision-Language Models (VLM), granting the agent the ability to truly "see." Following a brief academic hiatus, in January 2026, I successfully achieved an end-to-end loop: an agent that perceives, reasons, and reacts with specific behaviors and emotions. While hardware constraints currently necessitate a script-driven action layer (preventing a full VLA implementation), this prototype validates the core architecture and paves the way for future explorations in World Models and Sim2Real robotics.</p>
+          <p>这个项目记录了我进入具身 AI 的研究过程。2025 年 11 月，我开始尝试在 Unity 中用 LLM 驱动 NPC。最初我依赖 Raycast 等启发式方法来模拟感知，但它很快暴露出导航不稳定、缺乏真实空间理解等问题。我也短暂尝试过 ML-Agents，却发现强化学习更像是在训练一个“被条件化的主体”，它能完成任务，却不具备我想要的泛化与理解能力。</p>
+          <p>真正的突破来自视觉语言模型（VLM）的接入。它让 NPC 第一次能够真正“看见”。到 2026 年 1 月，我完成了一个端到端循环：一个能够感知、推理，并以具体动作和情绪进行回应的智能体。虽然目前的动作层仍受硬件和实时性限制，需要部分脚本驱动，但这个原型验证了核心架构，也为后续世界模型与 Sim2Real 方向奠定基础。</p>
         </div>
       </div>
     </div>
 
     <!-- Paper Abstract -->
     <section class="abstract-card reveal">
-      <h2>📄 Paper Abstract</h2>
+      <h2>📄 论文摘要</h2>
       <p>
-        This paper introduces <strong>Yangguang</strong>, a novel framework for developing embodied AI agents,
-        specifically Non-Player Characters (NPCs), within interactive 3D environments. The system marks a
-        paradigm shift from traditional, programmatic AI—which relies on structured data like ray-casting
-        and predefined behavior trees—to a <em>perception-driven cognitive architecture</em>. We detail the
-        system's architecture, the core components of its Observe-Think-Act loop, and the data flow for both
-        autonomous operation and player interaction. The Yangguang framework represents a significant step
-        towards creating more dynamic, believable, and truly intelligent agents in virtual worlds.
+        本文介绍一套面向 3D 交互环境的具身 AI 智能体框架，尤其聚焦于非玩家角色（NPC）。
+        系统从依赖射线检测、预设行为树等结构化数据的传统程序式 AI，转向一种
+        <em>由感知驱动的认知架构</em>。论文说明了系统结构、观察-思考-行动循环的核心组件，
+        以及自主行动与玩家交互两种模式下的数据流。这个框架是通向更动态、更可信、
+        更具智能感的虚拟世界智能体的重要一步。
       </p>
       <div class="abstract-meta">
-        <span>👤 Author: Yibin Liang</span>
-        <span>📅 December 4, 2025</span>
-        <span>🏷️ Embodied AI, VLM, LLM, Unity, NPC</span>
+        <span>👤 作者：Yibin Liang</span>
+        <span>📅 2025 年 12 月 4 日</span>
+        <span>🏷️ 具身 AI、VLM、LLM、Unity、NPC</span>
       </div>
     </section>
 
     <!-- Evolution Timeline (Reversed: V2 first, V1 second) -->
     <section class="evolution-section">
       <div class="section-header reveal">
-        <h2>Development Timeline</h2>
-        <p>From VLM-driven visual cognition back to white-box validation — tracking each iteration of the Yangguang framework.</p>
+        <h2>开发时间线</h2>
+        <p>从白盒验证到 VLM 视觉认知，再到具身 NPC 原型：记录智能 NPC 框架的每一次迭代。</p>
       </div>
 
       <div class="evolution-timeline">
@@ -1317,10 +1317,10 @@
               </div>
 
               <div class="video-wrapper">
-                <a class="youtube-preview" href="https://youtu.be/mXX53qJNvp4" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V3 Embodied NPC Demo">
-                  <img src="https://img.youtube.com/vi/mXX53qJNvp4/hqdefault.jpg" alt="V3 Embodied NPC Demo — YouTube preview" />
+                <a class="youtube-preview" href="https://youtu.be/mXX53qJNvp4" target="_blank" rel="noopener noreferrer" title="打开视频： V3 Embodied NPC Demo">
+                  <img src="/video-covers/mXX53qJNvp4.jpg" alt="V3 Embodied NPC Demo — 视频预览" />
                   <span class="youtube-badge">YouTube · V3 Demo</span>
-                  <span class="youtube-button">Watch Demo</span>
+                  <span class="youtube-button">观看演示</span>
                 </a>
                 <div class="video-meta">
                   <span>🎬 Embodied NPC with avatar demo</span>
@@ -1378,10 +1378,10 @@
                 <div class="video-carousel" id="v2-carousel">
                   <div class="carousel-track">
                     <div class="carousel-slide">
-                      <a class="youtube-preview" href="https://youtu.be/0WpcWLnyKGc" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V2 VLM Visual Cognition">
-                        <img src="https://img.youtube.com/vi/0WpcWLnyKGc/hqdefault.jpg" alt="V2 VLM Visual Cognition — YouTube preview" />
+                      <a class="youtube-preview" href="https://youtu.be/0WpcWLnyKGc" target="_blank" rel="noopener noreferrer" title="打开视频： V2 VLM Visual Cognition">
+                        <img src="/video-covers/0WpcWLnyKGc.jpg" alt="V2 VLM Visual Cognition — 视频预览" />
                         <span class="youtube-badge">YouTube · V2 Demo</span>
-                        <span class="youtube-button">Watch Demo</span>
+                        <span class="youtube-button">观看演示</span>
                       </a>
                       <div class="video-meta">
                         <span>🎬 VLM visual cognition demo</span>
@@ -1389,10 +1389,10 @@
                       </div>
                     </div>
                     <div class="carousel-slide">
-                      <a class="youtube-preview" href="https://youtu.be/dcj-9YucPV4" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V2 Extended Demo">
-                        <img src="https://img.youtube.com/vi/dcj-9YucPV4/hqdefault.jpg" alt="V2 Extended Demo — YouTube preview" />
+                      <a class="youtube-preview" href="https://youtu.be/dcj-9YucPV4" target="_blank" rel="noopener noreferrer" title="打开视频： V2 Extended Demo">
+                        <img src="/video-covers/dcj-9YucPV4.jpg" alt="V2 Extended Demo — 视频预览" />
                         <span class="youtube-badge">YouTube · V2 Extended</span>
-                        <span class="youtube-button">Watch Demo</span>
+                        <span class="youtube-button">观看演示</span>
                       </a>
                       <div class="video-meta">
                         <span>🎬 Extended cognition demo</span>
@@ -1501,10 +1501,10 @@
               </div>
 
               <div class="video-wrapper">
-                <a class="youtube-preview" href="https://youtu.be/DceI-MnvLxM" target="_blank" rel="noopener noreferrer" title="Open on YouTube: V1 White-box Test">
-                  <img src="https://img.youtube.com/vi/DceI-MnvLxM/hqdefault.jpg" alt="V1 White-box Test — YouTube preview" />
+                <a class="youtube-preview" href="https://youtu.be/DceI-MnvLxM" target="_blank" rel="noopener noreferrer" title="打开视频： V1 White-box Test">
+                  <img src="/video-covers/DceI-MnvLxM.jpg" alt="V1 White-box Test — 视频预览" />
                   <span class="youtube-badge">YouTube · V1 Demo</span>
-                  <span class="youtube-button">Watch Demo</span>
+                  <span class="youtube-button">观看演示</span>
                 </a>
                 <div class="video-meta">
                   <span>🎬 White-box testing demo</span>
@@ -1709,3 +1709,7 @@
   </script>
 </body>
 </html>
+
+
+
+

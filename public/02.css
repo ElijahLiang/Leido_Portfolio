@@ -1,9 +1,15 @@
+@font-face {
+  font-family: 'FashionBitmap16';
+  src: url('/fonts/FashionBitmap16_0.092.ttf') format('truetype');
+  font-display: swap;
+}
+
 html,
 body {
   overscroll-behavior: auto;
   /* 星空插画背景 */
   background: #020817 url("index image/background.png") center / cover no-repeat fixed;
-  font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+  font-family: 'FashionBitmap16', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
 
 }
 

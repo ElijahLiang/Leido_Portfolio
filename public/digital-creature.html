@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creative Coding</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <title>互动媒体艺术作品</title>
   <style>
-    * {
+    @font-face {
+      font-family: 'FashionBitmap16';
+      src: url('/fonts/FashionBitmap16_0.092.ttf') format('truetype');
+      font-display: swap;
+    }
+* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'FashionBitmap16', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #0a0a0a;
       color: #e5e5e5;
       line-height: 1.6;
@@ -136,7 +140,7 @@
       display: block;
       background: #000;
     }
-    /* YouTube preview card (for videos that disallow embedding) */
+    /* 视频预览 card (for videos that disallow embedding) */
     .youtube-preview {
       position: relative;
       display: block;
@@ -509,15 +513,15 @@
 <body>
   <div class="container">
     <nav class="global-nav" aria-label="Primary navigation">
-      <a href="index.html">🛸 Playground</a>
-      <a href="ai-agent-game.html">🪐 Game Design</a>
-      <a href="digital-creature.html" class="active">🌕 Digital Media Art</a>
-      <a href="sustainable-design.html">🌏 Product Design</a>
-      <a href="embodied-intelligence.html">🧠 Embodied AI</a>
+      <a href="index.html">🛸 首页</a>
+      <a href="ai-agent-game.html">🪐 LLM 技术游戏玩法研究</a>
+      <a href="digital-creature.html" class="active">🌕 互动媒体艺术作品</a>
+      <a href="sustainable-design.html">🌏 可持续产品设计</a>
+      <a href="embodied-intelligence.html">🧠 智能 NPC 研究之旅</a>
     </nav>
     <div class="header reveal">
-      <h1>Creative Coding</h1>
-      <p>From Processing sketches to GLSL shaders — audio-reactive particles, breath-driven compositions, orbital mechanics, and event horizons. Capturing the algorithmic poetry behind every iteration.</p>
+      <h1>互动媒体艺术作品</h1>
+      <p>从 Processing 草图到 GLSL 着色器：声音驱动的粒子、呼吸交互的构图、轨道力学与事件视界。这组作品关注算法如何成为可感知、可互动的视觉诗学。</p>
     </div>
 
     <div class="projects-grid">
@@ -526,10 +530,10 @@
         <div class="project-media">
           <div class="project-canvas">
             <div class="canvas-tag">GLSL Shader</div>
-            <a class="youtube-preview" href="https://youtu.be/y2LnREOkP_Y" target="_blank" rel="noopener noreferrer" title="Open on YouTube: Saturn Shader">
-              <img src="https://img.youtube.com/vi/y2LnREOkP_Y/hqdefault.jpg" alt="Saturn Shader — YouTube preview">
-              <span class="youtube-badge">YouTube · Preview</span>
-              <span class="youtube-button">Watch on YouTube</span>
+            <a class="youtube-preview" href="https://youtu.be/y2LnREOkP_Y" target="_blank" rel="noopener noreferrer" title="打开视频： Saturn Shader">
+              <img src="/video-covers/y2LnREOkP_Y.jpg" alt="Saturn Shader — 视频预览">
+              <span class="youtube-badge">视频 · 预览</span>
+              <span class="youtube-button">在视频平台观看</span>
             </a>
           </div>
         </div>
@@ -537,21 +541,21 @@
         <div class="project-content">
           <div class="project-heading">
             <h2 class="project-title">Saturn</h2>
-            <div class="project-subtitle">Procedural Gas Giant with Ring System</div>
+            <div class="project-subtitle">带有光环系统的程序化气态巨行星</div>
           </div>
 
           <div class="project-meta">
             <div class="meta-item">
               <span>🪐</span>
-              <span>Procedural Planet</span>
+              <span>程序化星球</span>
             </div>
             <div class="meta-item">
               <span>💎</span>
-              <span>GLSL Shader</span>
+              <span>GLSL 着色器</span>
             </div>
             <div class="meta-item">
               <span>🌌</span>
-              <span>Real-time Rendering</span>
+              <span>实时渲染</span>
             </div>
           </div>
 
@@ -563,17 +567,17 @@
           </div>
 
           <div class="content-section">
-            <div class="section-title">Design Inspiration</div>
+            <div class="section-title">设计灵感</div>
             <div class="section-content">
-              <p>A real-time procedural rendering of Saturn, the ringed gas giant. The shader simulates the planet's iconic banded atmosphere with swirling storm systems, surrounded by its majestic ring system complete with Cassini Division gaps and subtle ice particle scattering.</p>
+              <p>这是一个实时程序化渲染的土星实验。着色器用噪声函数模拟气态巨行星的条带大气、旋涡风暴、卡西尼缝以及冰粒散射，让数学计算转化为宇宙尺度的视觉体验。</p>
               <div class="inspiration-quote">
-                "Mathematics becomes cosmic beauty — every band, every ring gap, every shadow is computed in real-time from pure noise functions."
+                “数学变成宇宙之美：每一条云带、每一道环缝、每一片阴影都由实时计算生成。”
               </div>
             </div>
           </div>
 
           <div class="content-section">
-            <div class="section-title">Core Techniques</div>
+            <div class="section-title">核心技术</div>
             <div class="section-content">
               <div class="algorithm-box">
                 <h4>1. Atmospheric Banding</h4>
@@ -604,7 +608,7 @@
 
               <a href="https://www.shadertoy.com/view/3cGcDR" target="_blank" rel="noopener noreferrer" class="shadertoy-link">
                 <span class="shadertoy-icon">🎨</span>
-                <span>View on Shadertoy →</span>
+                <span>查看 Shadertoy →</span>
               </a>
             </div>
           </div>
@@ -616,10 +620,10 @@
         <div class="project-media">
           <div class="project-canvas">
             <div class="canvas-tag">GLSL Shader</div>
-            <a class="youtube-preview" href="https://youtu.be/Azt45EPrElQ" target="_blank" rel="noopener noreferrer" title="Open on YouTube: Event Horizon">
-              <img src="https://img.youtube.com/vi/Azt45EPrElQ/hqdefault.jpg" alt="Event Horizon — YouTube preview">
-              <span class="youtube-badge">YouTube · Preview</span>
-              <span class="youtube-button">Watch on YouTube</span>
+            <a class="youtube-preview" href="https://youtu.be/Azt45EPrElQ" target="_blank" rel="noopener noreferrer" title="打开视频： Event Horizon">
+              <img src="/video-covers/Azt45EPrElQ.jpg" alt="Event Horizon — 视频预览">
+              <span class="youtube-badge">视频 · 预览</span>
+              <span class="youtube-button">在视频平台观看</span>
             </a>
           </div>
         </div>
@@ -627,7 +631,7 @@
         <div class="project-content">
           <div class="project-heading">
             <h2 class="project-title">Event Horizon</h2>
-            <div class="project-subtitle">Black Hole Gravitational Lensing Simulation</div>
+            <div class="project-subtitle">黑洞引力透镜模拟</div>
           </div>
 
           <div class="project-meta">
@@ -653,17 +657,17 @@
           </div>
 
           <div class="content-section">
-            <div class="section-title">Design Inspiration</div>
+            <div class="section-title">设计灵感</div>
             <div class="section-content">
-              <p>A real-time visualization of a black hole's event horizon, simulating the extreme gravitational lensing that bends light around the singularity. The accretion disk glows with relativistic Doppler shifting, while background stars stretch into Einstein rings as they pass behind the cosmic abyss.</p>
+              <p>这是一个黑洞事件视界的实时可视化实验，模拟强引力如何弯曲光线。吸积盘通过相对论多普勒效应产生明暗变化，背景星光在黑洞周围被拉伸成爱因斯坦环。</p>
               <div class="inspiration-quote">
-                "Where physics meets art — the point of no return rendered in real-time, bending starlight into impossible geometries."
+                “当物理遇见艺术：不可返回之处被实时渲染，星光被弯折成几乎不可能的几何。”
               </div>
             </div>
           </div>
 
           <div class="content-section">
-            <div class="section-title">Core Techniques</div>
+            <div class="section-title">核心技术</div>
             <div class="section-content">
               <div class="algorithm-box">
                 <h4>1. Gravitational Lensing</h4>
@@ -694,7 +698,7 @@
 
               <a href="https://www.shadertoy.com/view/WfGcDh" target="_blank" rel="noopener noreferrer" class="shadertoy-link">
                 <span class="shadertoy-icon">🎨</span>
-                <span>View on Shadertoy →</span>
+                <span>查看 Shadertoy →</span>
               </a>
             </div>
           </div>
@@ -706,10 +710,10 @@
         <div class="project-media">
           <div class="project-canvas">
             <div class="canvas-tag">Audio-Reactive</div>
-            <a class="youtube-preview" href="https://youtu.be/tIS4zPs7lV0" target="_blank" rel="noopener noreferrer" title="Open on YouTube: Colorless Light">
-              <img src="https://img.youtube.com/vi/tIS4zPs7lV0/hqdefault.jpg" alt="Colorless Light — YouTube preview">
-              <span class="youtube-badge">YouTube · Preview</span>
-              <span class="youtube-button">Watch on YouTube</span>
+            <a class="youtube-preview" href="https://youtu.be/tIS4zPs7lV0" target="_blank" rel="noopener noreferrer" title="打开视频： Colorless Light">
+              <img src="/video-covers/tIS4zPs7lV0.jpg" alt="Colorless Light — 视频预览">
+              <span class="youtube-badge">视频 · 预览</span>
+              <span class="youtube-button">在视频平台观看</span>
             </a>
           </div>
         </div>
@@ -717,7 +721,7 @@
         <div class="project-content">
           <div class="project-heading">
             <h2 class="project-title">Colorless Light</h2>
-            <div class="project-subtitle">Vocal-Driven Audio Visualization</div>
+            <div class="project-subtitle">由人声驱动的音频可视化</div>
           </div>
 
           <div class="project-meta">
@@ -743,17 +747,17 @@
           </div>
 
           <div class="content-section">
-            <div class="section-title">Design Inspiration</div>
+            <div class="section-title">设计灵感</div>
             <div class="section-content">
-              <p>Inspired by the live set of <em>Colorless Light</em>, the installation turns vocal crescendos into a swirling nebula. A 512-point <code>FFT</code> isolates the mid-frequency band between 500 Hz and 4 kHz, compares it with low and high background energy, and drives the particle field via the vocal-to-backtrack ratio.</p>
+              <p>这个作品受到 <em>Colorless Light</em> 现场表演启发，将人声高潮转化为旋转星云。系统通过 512 点 <code>FFT</code> 分析 500 Hz 到 4 kHz 的人声频段，并根据人声与伴奏能量比驱动粒子场。</p>
               <div class="inspiration-quote">
-                "Sound energy becomes a visible galaxy. Stronger choruses summon more comet visitors and blaze a brighter core."
+                “声音能量变成可见的星系。越强烈的副歌，会召唤更多彗星，并点亮更明亮的核心。”
               </div>
             </div>
           </div>
 
           <div class="content-section">
-            <div class="section-title">Core Algorithms</div>
+            <div class="section-title">核心算法</div>
             <div class="section-content">
               <div class="algorithm-box">
                 <h4>1. Vocal Chorus Detection</h4>
@@ -822,10 +826,10 @@
         <div class="project-media">
           <div class="project-canvas">
             <div class="canvas-tag">Breath Interactive</div>
-            <a class="youtube-preview" href="https://youtu.be/fcNKNJJWSSI" target="_blank" rel="noopener noreferrer" title="Open on YouTube: Mondrian Generator">
-              <img src="https://img.youtube.com/vi/fcNKNJJWSSI/hqdefault.jpg" alt="Mondrian Generator — YouTube preview">
-              <span class="youtube-badge">YouTube · Preview</span>
-              <span class="youtube-button">Watch on YouTube</span>
+            <a class="youtube-preview" href="https://youtu.be/fcNKNJJWSSI" target="_blank" rel="noopener noreferrer" title="打开视频： Mondrian Generator">
+              <img src="/video-covers/fcNKNJJWSSI.jpg" alt="Mondrian Generator — 视频预览">
+              <span class="youtube-badge">视频 · 预览</span>
+              <span class="youtube-button">在视频平台观看</span>
             </a>
           </div>
         </div>
@@ -833,7 +837,7 @@
         <div class="project-content">
           <div class="project-heading">
             <h2 class="project-title">Mondrian Generator</h2>
-            <div class="project-subtitle">Breath-Responsive Composition</div>
+            <div class="project-subtitle">由呼吸驱动的构图生成</div>
           </div>
 
           <div class="project-meta">
@@ -859,9 +863,9 @@
           </div>
 
           <div class="content-section">
-            <div class="section-title">Design Inspiration</div>
+            <div class="section-title">设计灵感</div>
             <div class="section-content">
-              <p>Inside the AudioPress sketch, breath becomes both input and tempo. The system watches a 20-frame rolling microphone average; whenever the amplitude surpasses 1.2x the mean, it emits a set of classic ratio rectangles accompanied by wind particles.</p>
+              <p>在 AudioPress 草图中，呼吸既是输入，也是节奏。系统持续监听麦克风的 20 帧滚动平均值，当当前振幅超过平均值 1.2 倍时，就生成一组经典比例矩形，并伴随风粒子出现。</p>
               <div class="color-palette">
                 <div class="color-swatch" style="background: rgb(220, 42, 42)" title="Mondrian Red"></div>
                 <div class="color-swatch" style="background: rgb(255, 215, 0)" title="Mondrian Yellow"></div>
@@ -869,13 +873,13 @@
                 <div class="color-swatch" style="background: rgb(245, 240, 230)" title="Mondrian Cream"></div>
               </div>
               <div class="inspiration-quote">
-                "Breath turns into rectangles and primary colors, translating unconscious rhythms into Mondrian order."
+                “呼吸变成矩形与原色，把无意识的节奏翻译成蒙德里安式秩序。”
               </div>
             </div>
           </div>
 
           <div class="content-section">
-            <div class="section-title">Core Algorithms</div>
+            <div class="section-title">核心算法</div>
             <div class="section-content">
               <div class="algorithm-box">
                 <h4>1. Breath Detection</h4>
@@ -953,5 +957,9 @@
   </script>
 </body>
 </html>
+
+
+
+
 
 

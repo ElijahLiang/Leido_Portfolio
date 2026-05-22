@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import Particles from './components/Particles/Particles';
 import Header from './components/Header/Header';
 import InfiniteMenu from './components/InfiniteMenu/InfiniteMenu';
@@ -14,26 +14,26 @@ const menuItems = [
   {
     image: coverGame,
     link: 'ai-agent-game.html',
-    title: 'Game Design',
-    description: 'AI Agents, Dialogue Games, and Open Theatre Theory',
+    title: 'LLM 技术游戏玩法研究',
+    description: 'AI 对话、智能 NPC 与开放剧场理论',
   },
   {
-    image: 'https://img.youtube.com/vi/y2LnREOkP_Y/hqdefault.jpg',
+    image: '/video-covers/y2LnREOkP_Y.jpg',
     link: 'digital-creature.html',
-    title: 'Digital Media Art',
-    description: 'GLSL Shaders, Audio-Reactive, and Generative Art',
+    title: '互动媒体艺术作品',
+    description: 'GLSL 着色器、声音交互与生成艺术',
   },
   {
     image: coverProduct,
     link: 'sustainable-design.html',
-    title: 'Product Design',
-    description: 'Sustainable Design — Re:Cycle',
+    title: '可持续产品设计',
+    description: 'Re:Cycle：面向共生未来的生态系统',
   },
   {
-    image: 'https://img.youtube.com/vi/SgXNTRx8tP0/hqdefault.jpg',
+    image: '/video-covers/SgXNTRx8tP0.jpg',
     link: 'embodied-intelligence.html',
-    title: 'Embodied AI',
-    description: 'VLM-Driven Perception-Cognition Framework',
+    title: '智能 NPC 研究之旅',
+    description: 'VLM 驱动的感知、认知与行动框架',
   },
 ];
 
@@ -59,3 +59,4 @@ export default function App() {
     </>
   );
 }
+
