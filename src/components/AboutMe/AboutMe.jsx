@@ -1,29 +1,36 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import SkillCloud from '../SkillCloud/SkillCloud';
 import selfie from '../../assets/selfie.png';
 import './AboutMe.css';
 
 export default function AboutMe() {
   const sectionRef = useRef(null);
+  const [showContactBubble, setShowContactBubble] = useState(false);
 
   return (
     <section className="fallen-section" ref={sectionRef}>
       <div className="fallen-floor-line" />
       <div className="fallen-inner">
-        <div className="fallen-photo-wrap">
+        <button
+          type="button"
+          className="fallen-photo-wrap"
+          onClick={() => setShowContactBubble((visible) => !visible)}
+          aria-expanded={showContactBubble}
+          aria-label="显示联系方式"
+        >
           <img src={selfie} alt="Leido" className="fallen-photo" />
-        </div>
+          {showContactBubble && (
+            <div className="contact-bubble">
+              <p>可以从以下方式联系我</p>
+              <span>Email：erioleiono@gmail.com</span>
+              <span>WeChat：Leidododo</span>
+              <span>Instagram：@leido_liang</span>
+            </div>
+          )}
+        </button>
 
         <div className="fallen-content">
           <SkillCloud />
-
-          <div className="fallen-contact">
-            <span>Email：<a href="mailto:erioleiono@gmail.com">erioleiono@gmail.com</a></span>
-            <span>WeChat：Leidododo</span>
-            <span>
-              Instagram：<a href="https://www.instagram.com/leido_liang" target="_blank" rel="noopener noreferrer">@leido_liang</a>
-            </span>
-          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,214 @@
+@font-face {
+  font-family: 'FashionBitmap16';
+  src: url('/fonts/FashionBitmap16_0.092.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --paper: rgba(251, 250, 245, 0.92);
+  --paper-solid: #fbfaf5;
+  --ink: #050505;
+  --red: #d6281f;
+  --yellow: #f4d21f;
+  --blue: #1456a6;
+}
+
+html,
+body {
+  background: var(--paper-solid) !important;
+  color: var(--ink) !important;
+  font-family: 'FashionBitmap16', system-ui, -apple-system, 'Segoe UI', sans-serif !important;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(circle at 18% 10%, rgba(255,255,255,.96), transparent 28%),
+    radial-gradient(circle at 78% 84%, rgba(20,86,166,.08), transparent 34%),
+    #fbfaf5;
+}
+
+#particle-bg {
+  z-index: 0 !important;
+}
+
+.container,
+.hero,
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+body :where(p, li, h1, h2, h3, h4, h5, h6, span, strong, em, cite, blockquote) {
+  color: var(--ink);
+}
+
+.global-nav a {
+  color: var(--ink) !important;
+  background: rgba(251, 250, 245, 0.72) !important;
+  border: 1px solid rgba(5, 5, 5, 0.24) !important;
+}
+
+.global-nav a.active,
+.global-nav a:hover,
+.global-nav a:focus-visible {
+  color: var(--ink) !important;
+  background: rgba(244, 210, 31, 0.42) !important;
+}
+
+.header h1,
+.hero h1,
+.manifesto-title,
+.project-title,
+.section-header h2,
+.abstract-card h2,
+.portfolio-heading,
+.evolution-header h3,
+.showcase-header h2 {
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink) !important;
+  background: none !important;
+  font-family: 'FashionBitmap16', monospace !important;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.78) !important;
+}
+
+.header p,
+.hero p,
+.hero-subtitle,
+.project-subtitle,
+.section-header p,
+.section-content,
+.section-intro,
+.portfolio-text,
+.evolution-desc,
+.abstract-card p,
+.showcase-desc,
+.showcase-intro,
+.showcase-tagline,
+.meta-item,
+.video-meta,
+.abstract-meta,
+.feature-item p,
+.architecture-node ul,
+.architecture-node h4,
+.showcase-feature-group ul li,
+.modal-body {
+  color: rgba(5, 5, 5, 0.78) !important;
+}
+
+.header,
+.hero.reveal,
+.timeline-content,
+.project-content,
+.application-showcase,
+.abstract-card,
+.evolution-content,
+.portfolio-item,
+.manifesto-static,
+.algorithm-box,
+.architecture-node,
+.feature-item,
+.showcase-feature-group,
+.image-gallery,
+.arch-image-wrapper,
+.project-canvas,
+.modal-content {
+  position: relative;
+  color: var(--ink) !important;
+  background: linear-gradient(145deg, rgba(255,255,255,0.94), rgba(240,230,210,0.9)) !important;
+  border: 2px solid rgba(5, 5, 5, 0.52) !important;
+  border-radius: 10px !important;
+  box-shadow: 10px 14px 0 rgba(5, 5, 5, 0.10), 0 24px 54px rgba(5, 5, 5, 0.10) !important;
+  overflow: hidden;
+}
+
+.header::before,
+.hero.reveal::before,
+.timeline-content::before,
+.project-content::before,
+.application-showcase::before,
+.abstract-card::before,
+.evolution-content::before,
+.portfolio-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, rgba(244, 210, 31, 0.16), rgba(251, 250, 245, 0));
+  mix-blend-mode: multiply;
+}
+
+.header > *,
+.hero.reveal > *,
+.content-body,
+.project-content > *,
+.application-showcase > *,
+.abstract-card > *,
+.evolution-content > *,
+.portfolio-item > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero.reveal {
+  padding: clamp(34px, 4.5vw, 62px) !important;
+  margin-bottom: 56px !important;
+}
+
+.hero.reveal::after {
+  display: none !important;
+}
+
+.hero-eyebrow {
+  color: rgba(5, 5, 5, 0.62) !important;
+}
+
+.section-title,
+.canvas-tag,
+.node-label,
+.gallery-title,
+.arch-image-title,
+.version-tag,
+.badge,
+.tech-tag,
+.youtube-badge,
+.showcase-btn,
+.shadertoy-link {
+  color: var(--ink) !important;
+  background: rgba(244, 210, 31, 0.42) !important;
+  border-color: rgba(5, 5, 5, 0.42) !important;
+}
+
+a {
+  color: var(--blue) !important;
+}
+
+code,
+pre,
+.code-block,
+.code-block pre {
+  color: var(--ink) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  border-color: rgba(5, 5, 5, 0.32) !important;
+}
+
+.youtube-button {
+  color: var(--ink) !important;
+  background: rgba(251, 250, 245, 0.84) !important;
+  border: 1px solid rgba(5, 5, 5, 0.38) !important;
+}
+
+.youtube-preview,
+.portfolio-image-link,
+.screenshot-item {
+  background: rgba(251, 250, 245, 0.82) !important;
+  border-color: rgba(5, 5, 5, 0.32) !important;
+}

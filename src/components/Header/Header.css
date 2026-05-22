@@ -15,15 +15,19 @@
 }
 
 .hero-small-text {
+  font-family: 'FashionBitmap16', monospace;
   font-weight: 600;
-  color: #fffbc0;
+  color: #111111;
   font-size: clamp(20px, 3.5vw, 32px);
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.75);
 }
 
 .hero-big-text {
+  font-family: 'FashionBitmap16', monospace;
   font-weight: 800;
-  color: #fffbc0;
+  color: #111111;
   font-size: clamp(2.5rem, 8vw, 5rem);
+  text-shadow: 0 3px 0 rgba(255, 255, 255, 0.78);
 }
 
 .hero-shuffle-big {

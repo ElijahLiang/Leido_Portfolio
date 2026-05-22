@@ -7,8 +7,8 @@
 .fallen-floor-line {
   width: 90%;
   max-width: 1100px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(158, 203, 255, 0.18), transparent);
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(5, 5, 5, 0.32), transparent);
   margin: 0 auto 48px;
 }
 
@@ -22,10 +22,16 @@
 
 /* Photo — slightly tilted, as if it fell and leaned */
 .fallen-photo-wrap {
+  position: relative;
   flex-shrink: 0;
   transform: rotate(-5deg) translateY(10px);
-  filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.65));
+  filter: drop-shadow(12px 18px 0 rgba(20, 86, 166, 0.18)) drop-shadow(0 18px 26px rgba(0, 0, 0, 0.18));
   transition: transform 0.4s ease;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
 }
 
 .fallen-photo-wrap:hover {
@@ -34,8 +40,52 @@
 
 .fallen-photo {
   width: min(220px, 30vw);
-  border-radius: 20px;
+  border: 3px solid #050505;
+  border-radius: 0;
   display: block;
+}
+
+.contact-bubble {
+  position: absolute;
+  left: 68%;
+  bottom: calc(100% + 20px);
+  width: min(320px, 72vw);
+  padding: 18px 20px;
+  display: grid;
+  gap: 8px;
+  color: #050505;
+  text-align: left;
+  background: rgba(251, 250, 245, 0.96);
+  border: 2px solid #050505;
+  border-radius: 12px;
+  box-shadow: 8px 10px 0 rgba(214, 40, 31, 0.18), 0 16px 36px rgba(5, 5, 5, 0.16);
+  font-family: 'FashionBitmap16', monospace;
+  transform: rotate(4deg);
+  z-index: 20;
+}
+
+.contact-bubble::before {
+  content: '';
+  position: absolute;
+  left: 36px;
+  bottom: -14px;
+  width: 24px;
+  height: 24px;
+  background: inherit;
+  border-left: 2px solid #050505;
+  border-bottom: 2px solid #050505;
+  transform: rotate(-45deg);
+}
+
+.contact-bubble p {
+  margin: 0 0 4px;
+  color: #d6281f;
+  font-size: 1rem;
+}
+
+.contact-bubble span {
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
 /* Text and contact — settled at the bottom */
@@ -67,17 +117,19 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px 28px;
-  color: #fffbc0;
+  color: #050505;
+  font-family: 'FashionBitmap16', monospace;
   font-size: clamp(13px, 1.8vw, 17px);
-  opacity: 0.85;
-  border-top: 1px solid rgba(255, 251, 192, 0.12);
+  opacity: 1;
+  border-top: 2px solid rgba(5, 5, 5, 0.24);
   padding-top: 16px;
 }
 
 .fallen-contact a {
-  color: #ffffff;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: #1456a6;
+  text-decoration: none;
+  border-bottom: 2px solid #d6281f;
+  text-underline-offset: 4px;
 }
 
 @media (max-width: 700px) {
@@ -89,6 +141,20 @@
 
   .fallen-photo-wrap {
     transform: rotate(-3deg);
+  }
+
+  .contact-bubble {
+    left: 50%;
+    bottom: auto;
+    top: calc(100% + 18px);
+    transform: translateX(-50%) rotate(2deg);
+  }
+
+  .contact-bubble::before {
+    left: 50%;
+    bottom: auto;
+    top: -14px;
+    transform: translateX(-50%) rotate(135deg);
   }
 
   .fallen-section {

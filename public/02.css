@@ -8,7 +8,7 @@ html,
 body {
   overscroll-behavior: auto;
   /* 星空插画背景 */
-  background: #020817 url("index image/background.png") center / cover no-repeat fixed;
+  background: #fbfaf5;
   font-family: 'FashionBitmap16', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
 
 }
@@ -23,6 +23,8 @@ body {
   align-items: center;
   gap: 24px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-cover {

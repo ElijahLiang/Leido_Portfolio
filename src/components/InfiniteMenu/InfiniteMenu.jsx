@@ -389,6 +389,9 @@ class InfiniteGridMenu {
     const ctx = cvs.getContext('2d');
     const cellSize = 512;
     cvs.width = this.atlasSize * cellSize; cvs.height = this.atlasSize * cellSize;
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    gl.bindTexture(gl.TEXTURE_2D, this.tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cvs);
     Promise.all(this.items.map(item => new Promise(resolve => {
       const img = new Image(); img.crossOrigin = 'anonymous';
       img.onload = () => resolve(img); img.onerror = () => resolve(null); img.src = item.image;
@@ -518,61 +521,28 @@ class InfiniteGridMenu {
   }
 }
 
-export default function InfiniteMenu({ items = [], scale = 1.0 }) {
-  const canvasRef = useRef(null);
-  const sketchRef = useRef(null);
-  const [activeItem, setActiveItem] = useState(null);
-  const [isMoving, setIsMoving] = useState(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const handleActive = index => {
-      const ii = index % items.length;
-      setActiveItem(items[ii]);
-    };
-
-    sketchRef.current = new InfiniteGridMenu(canvas, items, handleActive, setIsMoving, sk => sk.run(), scale);
-
-    const onResize = () => sketchRef.current?.resize();
-    window.addEventListener('resize', onResize);
-    onResize();
-
-    const onVisibility = () => {
-      if (document.hidden) {
-        sketchRef.current?.stop();
-      } else {
-        sketchRef.current?.run();
-      }
-    };
-    document.addEventListener('visibilitychange', onVisibility);
-
-    return () => {
-      window.removeEventListener('resize', onResize);
-      document.removeEventListener('visibilitychange', onVisibility);
-      sketchRef.current?.stop();
-    };
-  }, [items, scale]);
-
-  const handleClick = () => {
-    if (!activeItem?.link) return;
-    window.location.href = activeItem.link;
-  };
-
+export default function InfiniteMenu({ items = [] }) {
   return (
-    <div className="im-container">
-      <canvas ref={canvasRef} className="im-canvas" />
-
-      {activeItem && (
-        <>
-          <h2 className={`im-title ${isMoving ? 'inactive' : 'active'}`}>{activeItem.title}</h2>
-          <p className={`im-desc ${isMoving ? 'inactive' : 'active'}`}>{activeItem.description}</p>
-          <button onClick={handleClick} className={`im-action ${isMoving ? 'inactive' : 'active'}`} aria-label={`Open ${activeItem.title}`}>
-            <p className="im-action-icon">&#x2197;</p>
-          </button>
-        </>
-      )}
+    <div className="im-container" aria-label="作品集项目入口">
+      <div className="im-letter-grid">
+        {items.map((item, index) => (
+          <a
+            key={item.title}
+            className="im-letter-card"
+            href={item.link}
+            style={{ '--letter-tilt': `${index % 2 === 0 ? -3 : 3}deg` }}
+          >
+            <span className="im-letter-stamp">{String(index + 1).padStart(2, '0')}</span>
+            <span className="im-letter-fold" />
+            <span className="im-letter-preview">
+              <img src={item.image} alt={`${item.title} 预览图`} />
+            </span>
+            <span className="im-letter-title">{item.title}</span>
+            <span className="im-letter-desc">{item.description}</span>
+            <span className="im-letter-open">打开信件 ↗</span>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

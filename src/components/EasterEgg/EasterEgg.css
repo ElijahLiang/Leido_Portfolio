@@ -77,13 +77,14 @@
 .envelope-paper h4 {
   margin: 0 0 5px 0;
   color: #8c2a2a;
-  font-family: 'Crimson Pro', serif;
+  font-family: 'FashionBitmap16', monospace;
   font-size: 20px;
 }
 
 .envelope-paper p {
   margin: 0;
   color: #555;
+  font-family: 'FashionBitmap16', monospace;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -112,8 +113,9 @@
   bottom: -40px;
   left: 50%;
   transform: translateX(-50%);
-  color: #fffbc0;
-  opacity: 0.7;
+  color: #050505;
+  opacity: 0.72;
+  font-family: 'FashionBitmap16', monospace;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -148,7 +150,7 @@
   font-size: 11px;
   opacity: 0;
   transition: opacity 0.3s ease;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.9);
   font-weight: 600;
   letter-spacing: 1px;
 }
