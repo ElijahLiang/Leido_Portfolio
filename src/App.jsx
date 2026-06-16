@@ -35,6 +35,12 @@ const menuItems = [
     title: '智能 NPC 研究之旅',
     description: 'VLM 驱动的感知、认知与行动框架',
   },
+  {
+    image: '/video-covers/rhythm-game-cover.svg',
+    link: 'rhythm-game-demo.html',
+    title: '智械驯服专家 · 音游 Demo',
+    description: '音乐节奏 × 战斗输出的玩法实验',
+  },
 ];
 
 export default function App() {
