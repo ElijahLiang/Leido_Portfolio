@@ -52,8 +52,8 @@
 
   <g transform="translate(400 300)" text-anchor="middle"
      font-family="'Segoe UI', system-ui, sans-serif" fill="#ffffff">
-    <text y="-12" font-size="58" font-weight="800" letter-spacing="6">z�o�</text>
-    <text y="44" font-size="22" letter-spacing="14" fill="#cbd5e1" font-weight="500">RHYTHM � COMBAT</text>
+    <text y="-12" font-size="58" font-weight="800" letter-spacing="6">智械驯服专家</text>
+    <text y="44" font-size="22" letter-spacing="14" fill="#cbd5e1" font-weight="500">RHYTHM × COMBAT</text>
     <text y="84" font-size="16" letter-spacing="3" fill="#94a3b8">Music Rhythm Game Demo</text>
   </g>
 </svg>

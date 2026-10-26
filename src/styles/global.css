@@ -1,41 +1,59 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-@font-face {
-  font-family: 'FashionBitmap16';
-  src: url('/fonts/FashionBitmap16_0.092.ttf') format('truetype');
-  font-display: swap;
+:root {
+  font-family: Arial, 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  color: #eeeee8;
+  background: #101110;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-html, body, #root {
-  min-height: 100vh;
-  overscroll-behavior: auto;
-  background: #fbfaf5;
-  font-family: 'FashionBitmap16', 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  color: #111111;
-  line-height: 1.6;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  min-width: 320px;
 }
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
-/* ---- Scrolling Text ---- */
-.scrolling-text {
-  font-weight: 600;
-  color: #111111;
-  text-align: center;
-  font-size: clamp(20px, 3.5vw, 32px);
-  display: block;
+button {
+  font: inherit;
+  cursor: pointer;
 }
 
-.noise-divider {
-  opacity: 0.4;
+button, a {
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 640px) {
-  .scrolling-text { font-size: 18px; }
+button:focus-visible, a:focus-visible {
+  outline: 2px solid #c7e58d;
+  outline-offset: 6px;
+}
+
+::selection {
+  background: #c7e58d;
+  color: #101110;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
 }

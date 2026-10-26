@@ -1,0 +1,279 @@
+/* Museum world — case study pages for the virtual human project.
+   Matches World 03 on the homepage: paper, serif display type, cinnabar red. */
+
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('/fonts/instrument-serif-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  src: url('/fonts/instrument-serif-latin-400-italic.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --paper: #ebe6da;
+  --card: #f8f5ee;
+  --ink: #1d1a15;
+  --muted: #6b6457;
+  --seal: #b23a24;
+  --line: #1d1a1526;
+  --serif: 'Instrument Serif', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', STSong, Georgia, serif;
+  --sans: 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--paper);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.8;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .05 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--seal);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--seal);
+  outline-offset: 5px;
+}
+
+.case-container {
+  position: relative;
+  width: min(1100px, 89%);
+  margin: auto;
+}
+
+.global-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.global-nav a:first-child {
+  font-size: 25px;
+  margin-right: auto;
+}
+
+.global-nav a:hover {
+  color: var(--seal);
+}
+
+.case-header {
+  padding: 70px 0 55px;
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 55px;
+}
+
+.case-eyebrow {
+  color: var(--seal);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.case-header h1 {
+  font-family: var(--serif);
+  font-size: clamp(46px, 8vw, 104px);
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -1px;
+  margin: 25px 0;
+}
+
+.case-header h1 span {
+  font-style: italic;
+  color: var(--seal);
+}
+
+.case-header > p:last-of-type {
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 19px;
+}
+
+.case-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+.case-tags span {
+  border: 1px solid var(--ink);
+  border-radius: 25px;
+  padding: 6px 15px;
+  font-size: 11px;
+}
+
+.application-showcase {
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 16px;
+  box-shadow: 0 50px 80px -50px #1d1a1566;
+}
+
+.showcase-hero-image {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  filter: sepia(.2) contrast(1.05);
+}
+
+.showcase-content {
+  padding: clamp(22px, 5vw, 60px) clamp(6px, 4vw, 50px) clamp(16px, 3vw, 30px);
+}
+
+.showcase-header h2 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.location {
+  color: var(--seal);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.showcase-intro {
+  font-family: var(--serif);
+  font-size: 22px;
+  margin-top: 30px;
+}
+
+.showcase-desc {
+  margin: 20px 0 35px;
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 760px;
+}
+
+.showcase-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  border-top: 1px solid var(--ink);
+  padding-top: 30px;
+}
+
+.showcase-feature-group h4 {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.showcase-feature-group ul {
+  list-style: none;
+  font-size: 13px;
+}
+
+.showcase-feature-group li {
+  margin: 0;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.showcase-feature-group strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.showcase-tagline {
+  border-top: 1px solid var(--line);
+  padding-top: 25px;
+  margin-top: 30px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+}
+
+.showcase-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.showcase-btn {
+  border: 1px solid var(--ink);
+  padding: 12px 22px;
+  font-size: 13px;
+  transition: background .2s, color .2s, border-color .2s;
+}
+
+.showcase-btn.primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.showcase-btn:hover {
+  background: var(--seal);
+  border-color: var(--seal);
+  color: var(--paper);
+}
+
+.case-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 45px 0;
+  margin-top: 55px;
+  border-top: 1px solid var(--ink);
+  font-size: 12px;
+}
+
+.case-footer a:hover {
+  color: var(--seal);
+}
+
+@media (max-width: 640px) {
+  .global-nav a:first-child { flex-basis: 100%; }
+  .case-header { padding-top: 35px; }
+  .application-showcase { padding: 8px; }
+  .showcase-features { grid-template-columns: 1fr; gap: 20px; }
+  .showcase-actions { flex-direction: column; }
+  .showcase-btn { text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
