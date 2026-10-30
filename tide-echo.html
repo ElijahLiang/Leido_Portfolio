@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="tide-echo">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3e7cf">
+<title>上岸 Tide Echo — Leido</title>
+<meta name="description" content="上岸：第一人称海岛生活游戏。七天义工，第七天决定去留。">
+<link rel="stylesheet" href="/src/styles/pages.css">
+<style>
+/* Sand paper and sea ink. Every picture is a matted frame; the caption is a word or two. */
+main { width: min(1240px, 92%); margin: auto; padding-top: 40px; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.frame { position: relative; margin: 0; padding: 9px; background: var(--cream); border: 1.5px solid var(--ink); border-radius: 18px; box-shadow: 8px 10px 0 var(--shadow); }
+.frame img { border-radius: 10px; transform: scale(.985); opacity: .4; transition: transform 1.4s var(--ease), opacity 1.2s var(--ease); }
+.frame.seen img { transform: none; opacity: 1; }
+.frame figcaption { position: absolute; left: 26px; bottom: 24px; display: grid; padding: 6px 16px 8px; font: italic 14px var(--serif); letter-spacing: 1.5px; color: var(--accent); background: var(--cream); border: 1.5px solid var(--ink); border-radius: 14px; }
+.frame figcaption b { font: 400 clamp(20px, 2.2vw, 28px)/1.2 var(--body); letter-spacing: 0; color: var(--ink); }
+
+.full { height: min(86svh, 760px); }
+.wide { aspect-ratio: 21 / 9; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.pair .frame { aspect-ratio: 4 / 3; }
+.pair .frame:first-child { rotate: -.8deg; }
+.pair .frame:last-child { rotate: .8deg; }
+.stack { display: grid; gap: 30px; margin: 30px 0; }
+
+.hero { height: min(88svh, 780px); }
+.hero h1 { position: absolute; z-index: 2; left: 40px; bottom: 40px; padding: 18px 34px 22px; font: 400 clamp(64px, 10vw, 150px)/1 var(--body); color: var(--ink); background: var(--cream); border: 1.5px solid var(--ink); border-radius: 22px; box-shadow: 6px 8px 0 var(--shadow); }
+.hero h1 em { display: block; margin-top: 6px; font-size: .3em; color: var(--accent); }
+
+.line { padding: 13vh 5% 11vh; text-align: center; font: 400 clamp(28px, 3.6vw, 48px)/1.45 var(--body); }
+.line em { color: var(--accent); }
+.line small { display: block; margin-top: 14px; font: italic 17px var(--serif); letter-spacing: 1px; color: var(--muted); }
+.line::after { content: ''; display: block; width: 220px; height: 22px; margin: 26px auto 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 22'%3E%3Cpath d='M2 11q12-10 24 0t24 0t24 0t24 0M124 11q12-10 24 0t24 0t24 0t24 0' fill='none' stroke='%233f7d8a' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='110' cy='11' r='5' fill='%23e8a96a' stroke='%233d2f2b' stroke-width='1.5'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+/* Below the waterline the paper turns sea-blue. */
+.waterline { position: relative; height: 40px; margin: 40px calc(50% - 50vw) 0; }
+.waterline::after { content: ''; position: absolute; inset: auto 0 0; height: 22px; background: radial-gradient(circle at 20px 26px, #2f5d6b 19px, transparent 20px) 0 0 / 40px 22px repeat-x; }
+.deep { margin: 0 calc(50% - 50vw); padding: 30px calc(50vw - 50%) 60px; background: #2f5d6b; }
+.deep .frame { box-shadow: 8px 10px 0 #1f444f; }
+
+.depth { position: absolute; right: 26px; bottom: 24px; padding: 4px 14px; font: italic 18px var(--serif); color: var(--cream); background: var(--accent); border: 1.5px solid var(--ink); border-radius: 999px; }
+
+.verbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 70px 0 30px; }
+.verbs div { padding: 34px 16px; text-align: center; font: 400 clamp(28px, 3vw, 40px) var(--body); background: var(--card); border: 1.5px solid var(--ink); border-radius: 50% 50% 22px 22px / 34% 34% 22px 22px; }
+.verbs small { display: block; margin-top: 4px; font: italic 16px var(--serif); letter-spacing: 1px; color: var(--accent); }
+
+.reel { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 40px; margin: 30px 0; padding: 50px; color: var(--ink); background: var(--card); border: 1.5px solid var(--ink); border-radius: 26px; outline: 1.5px dashed color-mix(in srgb, var(--ink) 30%, transparent); outline-offset: -12px; }
+.reel h2 { font: 400 clamp(34px, 4vw, 52px) var(--body); }
+.reel h2 small { display: block; margin-bottom: 6px; font: italic 18px var(--serif); color: var(--accent); }
+.reel-stage { display: grid; gap: 14px; }
+.water { position: relative; height: 120px; overflow: hidden; border: 1.5px solid var(--ink); border-radius: 16px; background: linear-gradient(#f3e2c0 0 26%, #7db3bd 26%, #3f7d8a); }
+.water::before { content: ''; position: absolute; left: 0; right: 0; top: calc(26% - 6px); height: 12px; background: radial-gradient(circle at 10px 0, #7db3bd 9px, transparent 9.5px) 0 0 / 20px 12px repeat-x; }
+.bobber { position: absolute; top: 22px; left: calc(var(--line-left, 85) * 1%); width: 18px; height: 26px; border: 1.5px solid var(--ink); border-radius: 50% 50% 40% 40%; background: linear-gradient(180deg, #cf6e52 0 50%, #fbf5e8 50%); transform: translateX(-50%) translateY(var(--bob, 0px)); transition: left .1s linear; }
+.fish { position: absolute; top: 74px; left: calc(var(--line-left, 85) * 1%); width: 40px; height: 18px; border: 1.5px solid var(--ink); border-radius: 50%; background: #e8bb5e; transform: translateX(-20%); transition: left .1s linear; }
+.fish::after { content: ''; position: absolute; right: -12px; top: 1px; width: 14px; height: 13px; background: #cf6e52; border: 1.5px solid var(--ink); clip-path: polygon(0 50%, 100% 0, 100% 100%); }
+.bar { position: relative; height: 14px; overflow: hidden; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--paper); }
+.bar .zone { position: absolute; top: 0; bottom: 0; left: 25%; width: 50%; background: #8fb07e55; }
+.bar .fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 99px; background: #8fb07e; }
+.bar .fill.warn { background: #e8bb5e; }
+.bar .fill.danger { background: #cf6e52; }
+.line-bar .fill { background: var(--accent); }
+.reel-controls { display: flex; gap: 12px; align-items: center; }
+.reel-btn { padding: 12px 26px; font: 16px var(--body); color: var(--cream); background: var(--accent); border: 1.5px solid var(--ink); border-radius: 999px; box-shadow: 3px 4px 0 var(--shadow); cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; transition: translate .08s, box-shadow .08s; }
+.reel-btn.held, .reel-btn:active { translate: 0 3px; box-shadow: 0 1px 0 var(--shadow); }
+.reel-btn.secondary { color: var(--ink); background: var(--card); }
+.reel-btn:disabled { opacity: .5; }
+.reel-status { min-height: 1.6em; font-size: 16px; color: var(--accent); }
+
+.endings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 30px 0 70px; }
+.endings div { padding: 46px 20px; text-align: center; font: 400 clamp(28px, 3vw, 40px) var(--body); border: 1.5px solid var(--ink); border-radius: 22px; }
+.endings div:nth-child(1) { background: #f3c3a8; }
+.endings div:nth-child(2) { background: #b7dbd6; }
+.endings div:nth-child(3) { background: #d3d0ea; }
+.endings small { display: block; margin-bottom: 4px; font: italic 20px var(--serif); }
+
+@media (max-width: 760px) {
+  main { padding-top: 24px; }
+  .full, .hero { height: 70svh; }
+  .wide { aspect-ratio: 4 / 3; }
+  .pair { grid-template-columns: 1fr; }
+  .verbs, .endings { grid-template-columns: 1fr 1fr; }
+  .endings div:nth-child(3) { grid-column: 1 / -1; }
+  .reel { grid-template-columns: 1fr; padding: 30px 20px; }
+  .hero h1 { left: 20px; bottom: 20px; padding: 12px 20px 14px; }
+  .frame figcaption { left: 18px; bottom: 18px; }
+  .depth { right: 18px; bottom: 18px; }
+}
+</style>
+</head>
+<body>
+<nav class="global-nav" aria-label="作品集导航">
+  <a href="/">Leido.</a><a href="/games">游戏作品 ↗</a><a href="/sky-studio.html">天空岛 ↗</a><a href="/lost-light.html">丢失的光明 ↗</a><a href="/rhythm-game-demo.html">智械驯服专家 ↗</a><a href="/embodied-intelligence.html">鸿山博物馆 ↗</a><a href="/#contact">联系我 ↗</a>
+</nav>
+
+<main>
+  <figure class="frame full hero">
+    <img src="/games/tide-echo/aerial-island.webp" alt="从空中俯瞰的海岛、沙滩海湾与青绿色浅海" fetchpriority="high">
+    <h1>上岸<em>Tide Echo</em></h1>
+  </figure>
+
+  <p class="line">到桂山岛做七天义工。<br>第七天，<em>决定去留。</em><small>第一人称海岛生活 · UNITY 6</small></p>
+
+  <figure class="frame full"><img src="/games/tide-echo/title-beach.webp" alt="沙滩上的高脚木屋、倒扣的小船和伸向海里的栈桥" loading="lazy"><figcaption>DAY 1<b>抵达</b></figcaption></figure>
+
+  <div class="stack">
+    <figure class="frame wide"><img src="/games/tide-echo/bay-pier.webp" alt="海湾全景：栈桥、渔船、沙滩村落与山腰住区" loading="lazy"><figcaption>THE BAY<b>海湾与村落</b></figcaption></figure>
+    <div class="pair">
+      <figure class="frame"><img src="/games/tide-echo/hillside.webp" alt="山腰上层层排开的住区" loading="lazy"><figcaption>HILLSIDE<b>山腰住区</b></figcaption></figure>
+      <figure class="frame"><img src="/games/tide-echo/coast-road.webp" alt="沿海岸山壁的环岛公路与浅海礁石" loading="lazy"><figcaption>RING ROAD<b>环岛公路</b></figcaption></figure>
+    </div>
+    <figure class="frame wide"><img src="/games/tide-echo/road-level.webp" alt="第一人称视角的环岛公路，右侧是护栏与大海" loading="lazy"><figcaption>RIDE<b>骑行 3.7 km</b></figcaption></figure>
+  </div>
+
+  <p class="line">海，是岛的<em>另一半。</em><small>FFT 实时海面 · 全部为游戏内实时渲染</small></p>
+
+  <div class="stack">
+    <figure class="frame full"><img src="/games/tide-echo/sea-sunpath.webp" alt="开阔海面上的太阳光路" loading="lazy"><figcaption>SURFACE<b>海面</b></figcaption><span class="depth">0 m</span></figure>
+    <div class="pair">
+      <figure class="frame"><img src="/games/tide-echo/sea-clarity.webp" alt="从反光到通透的海水" loading="lazy"><figcaption>CLARITY<b>通透</b></figcaption></figure>
+      <figure class="frame"><img src="/games/tide-echo/shallows.webp" alt="浅滩沙底的焦散光纹与浪花" loading="lazy"><figcaption>SHALLOWS<b>浅滩</b></figcaption><span class="depth">1 m</span></figure>
+    </div>
+    <figure class="frame wide"><img src="/games/tide-echo/boat-jetty.webp" alt="青绿色浅海中的珊瑚与栈桥边的渔船" loading="lazy"><figcaption>NEARSHORE<b>近岸</b></figcaption><span class="depth">3 m</span></figure>
+  </div>
+
+  <div class="waterline" aria-hidden="true"></div>
+
+  <div class="stack deep">
+    <figure class="frame full"><img src="/games/tide-echo/surface-from-below.webp" alt="从水下仰望起伏的海面" loading="lazy"><figcaption>BELOW<b>水下</b></figcaption><span class="depth">−6 m</span></figure>
+    <div class="pair">
+      <figure class="frame"><img src="/games/tide-echo/underwater-reef.webp" alt="光柱、鱼群与珊瑚礁" loading="lazy"><figcaption>REEF<b>礁盘</b></figcaption><span class="depth">−10 m</span></figure>
+      <figure class="frame"><img src="/games/tide-echo/reef-close.webp" alt="海底的珊瑚、鱼与海龟" loading="lazy"><figcaption>SEABED<b>海底</b></figcaption><span class="depth">−12 m</span></figure>
+    </div>
+  </div>
+
+  <div class="verbs" aria-label="核心玩法">
+    <div>海钓<small>FISH</small></div><div>潜水<small>DIVE</small></div><div>义工<small>WORK</small></div><div>骑行<small>RIDE</small></div>
+  </div>
+
+  <section class="reel" aria-label="海钓小游戏">
+    <h2><small>TRY IT</small>收一条鱼</h2>
+    <div class="reel-stage">
+      <div class="water" aria-hidden="true"><span class="bobber"></span><span class="fish"></span></div>
+      <div class="bar" role="meter" aria-label="钓线张力" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="zone"></span><span class="fill tension-fill"></span></div>
+      <div class="bar line-bar" role="meter" aria-label="剩余线长" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span class="fill line-fill"></span></div>
+      <div class="reel-controls"><button class="reel-btn" type="button">按住收线</button><button class="reel-btn secondary restart" type="button">重来</button></div>
+      <p class="reel-status" aria-live="polite">张力留在绿区里。</p>
+    </div>
+  </section>
+
+  <div class="endings" aria-label="三种结局">
+    <div><small>i.</small>漂泊</div><div><small>ii.</small>留下</div><div><small>iii.</small>回去</div>
+  </div>
+</main>
+
+<footer class="page-footer">
+  <a href="/#tide-echo">← 回到小星球的故事集市</a>
+  <p>海岛地形、植被与海面基于开源项目 Tidewater（MIT）。画面于 Unity 编辑器中实时渲染截取。</p>
+  <a href="/sky-studio.html">下一页：天空岛 ↗</a>
+</footer>
+
+<script>
+// Pictures settle into place as they scroll into view.
+(() => {
+  const frames = document.querySelectorAll('.frame');
+  if (!('IntersectionObserver' in window)) { frames.forEach(frame => frame.classList.add('seen')); return; }
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('seen'); observer.unobserve(entry.target); }
+  }), { threshold: .2 });
+  frames.forEach(frame => observer.observe(frame));
+})();
+
+// Fishing toy: a simplified version of the in-game line tension.
+(() => {
+  const stage = document.querySelector('.reel-stage');
+  const button = stage.querySelector('.reel-btn:not(.secondary)');
+  const restart = stage.querySelector('.restart');
+  const status = stage.querySelector('.reel-status');
+  const tensionFill = stage.querySelector('.tension-fill');
+  const lineFill = stage.querySelector('.line-fill');
+  const tensionBar = tensionFill.parentElement, lineBar = lineFill.parentElement;
+  let tension, line, slack, strain, stamina, holding, done, started, last, frame, time;
+
+  const reset = () => {
+    tension = 30; line = 100; slack = 0; strain = 0; stamina = 1; holding = false; done = false; started = false; time = 0;
+    status.textContent = '张力留在绿区里。';
+    button.disabled = false;
+    cancelAnimationFrame(frame); last = performance.now(); frame = requestAnimationFrame(step);
+  };
+  const finish = message => { done = true; holding = false; button.classList.remove('held'); button.disabled = true; status.textContent = message; };
+
+  function step(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now; time += dt;
+    if (!done && started) {
+      const surge = Math.max(0, Math.sin(time * 1.7) * Math.sin(time * .63)) * 55 * stamina;
+      tension = Math.max(0, Math.min(100, tension + ((holding ? 46 : -38) + surge) * dt));
+      const inZone = tension >= 25 && tension <= 75;
+      line = holding ? line - (inZone ? 24 : 9) * dt : Math.min(100, line + 1.5 * dt);
+      stamina = Math.max(.35, stamina - .03 * dt);
+      strain = tension > 92 ? strain + dt : Math.max(0, strain - dt * 2);
+      slack = tension < 8 ? slack + dt : 0;
+      if (strain > .9) finish('线断了。');
+      else if (slack > 2.2) finish('鱼脱钩了。');
+      else if (line <= 0) { line = 0; finish('钓上来了！'); }
+      else status.textContent = tension > 80 ? '太紧了！' : tension < 15 ? '太松了！' : holding ? '收线中……' : '张力留在绿区里。';
+    }
+    tensionFill.style.width = tension + '%';
+    tensionFill.classList.toggle('warn', tension > 75 || tension < 15);
+    tensionFill.classList.toggle('danger', tension > 90);
+    lineFill.style.width = line + '%';
+    tensionBar.setAttribute('aria-valuenow', Math.round(tension));
+    lineBar.setAttribute('aria-valuenow', Math.round(line));
+    stage.style.setProperty('--line-left', 12 + line * .78);
+    stage.style.setProperty('--bob', (Math.sin(time * 4) * 3 + (tension > 60 ? 6 : 0)) + 'px');
+    if (!done) frame = requestAnimationFrame(step);
+  }
+
+  const hold = value => { if (done) return; if (value) started = true; holding = value; button.classList.toggle('held', value); };
+  button.addEventListener('pointerdown', event => { event.preventDefault(); button.setPointerCapture(event.pointerId); hold(true); });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => button.addEventListener(type, () => hold(false)));
+  button.addEventListener('keydown', event => { if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) { event.preventDefault(); hold(true); } });
+  button.addEventListener('keyup', event => { if (event.key === ' ' || event.key === 'Enter') hold(false); });
+  restart.addEventListener('click', () => { reset(); button.focus(); });
+  reset();
+})();
+</script>
+</body>
+</html>

@@ -5,9 +5,9 @@
 }
 
 :root {
-  font-family: Arial, 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
-  color: #eeeee8;
-  background: #101110;
+  font-family: 'LXGW WenKai Screen', 'Kaiti SC', 'STKaiti', 'PingFang SC', 'Microsoft YaHei', serif;
+  color: #3d2f2b;
+  background: #f5ecd7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -37,13 +37,13 @@ button, a {
 }
 
 button:focus-visible, a:focus-visible {
-  outline: 2px solid #c7e58d;
+  outline: 2px dashed #cf6e52;
   outline-offset: 6px;
 }
 
 ::selection {
-  background: #c7e58d;
-  color: #101110;
+  background: #e8bb5e;
+  color: #3d2f2b;
 }
 
 @media (prefers-reduced-motion: reduce) {

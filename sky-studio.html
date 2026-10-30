@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="sky-studio">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3e4e6">
+<title>天空岛 Sky Studio — Leido</title>
+<meta name="description" content="天空岛 Sky Studio：以创作为回忆的音乐叙事游戏。收集乐句，在织歌机上编一首自己的歌，让音乐变成风。">
+<link rel="stylesheet" href="/src/styles/pages.css">
+<style>
+/* Dusk-pink paper and lilac ink. Pictures are matted frames; the music is the game's own. */
+main { width: min(1240px, 92%); margin: auto; padding-top: 40px; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.frame { position: relative; margin: 0; padding: 9px; background: var(--cream); border: 1.5px solid var(--ink); border-radius: 18px; box-shadow: 8px 10px 0 var(--shadow); }
+.frame img { border-radius: 10px; transform: scale(.985); opacity: .4; transition: transform 1.4s var(--ease), opacity 1.2s var(--ease); }
+.frame.seen img { transform: none; opacity: 1; }
+.frame figcaption { position: absolute; left: 26px; bottom: 24px; display: grid; padding: 6px 16px 8px; font: italic 14px var(--serif); letter-spacing: 1.5px; color: var(--accent); background: var(--cream); border: 1.5px solid var(--ink); border-radius: 14px; }
+.frame figcaption b { font: 400 clamp(20px, 2.2vw, 28px)/1.2 var(--body); letter-spacing: 0; color: var(--ink); }
+
+.full { height: min(86svh, 760px); }
+.wide { aspect-ratio: 21 / 9; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.pair .frame { aspect-ratio: 16 / 10; }
+.pair .frame:first-child { rotate: -.8deg; }
+.pair .frame:last-child { rotate: .8deg; }
+.stack { display: grid; gap: 30px; margin: 30px 0; }
+
+.hero { height: min(88svh, 780px); }
+.hero h1 { position: absolute; z-index: 2; left: 40px; bottom: 40px; padding: 18px 34px 22px; font: 400 clamp(64px, 10vw, 150px)/1 var(--body); color: var(--ink); background: var(--cream); border: 1.5px solid var(--ink); border-radius: 22px; box-shadow: 6px 8px 0 var(--shadow); }
+.hero h1 em { display: block; margin-top: 6px; font-size: .3em; color: var(--accent); }
+
+.line { padding: 13vh 5% 11vh; text-align: center; font: 400 clamp(28px, 3.6vw, 48px)/1.45 var(--body); }
+.line em { color: var(--accent); }
+.line small { display: block; margin-top: 14px; font: italic 17px var(--serif); letter-spacing: 1px; color: var(--muted); }
+.line::after { content: ''; display: block; width: 220px; height: 22px; margin: 26px auto 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 22'%3E%3Cpath d='M2 11q12-10 24 0t24 0t24 0t24 0M124 11q12-10 24 0t24 0t24 0t24 0' fill='none' stroke='%238a5f9e' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='110' cy='11' r='5' fill='%23e8a96a' stroke='%233d2f2b' stroke-width='1.5'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+/* The premise: a page from the thesis. */
+.premise { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 46px; margin: 0 0 30px; padding: 50px; background: var(--card); border: 1.5px solid var(--ink); border-radius: 26px; outline: 1.5px dashed color-mix(in srgb, var(--ink) 30%, transparent); outline-offset: -12px; }
+.premise blockquote { font: 400 clamp(26px, 3vw, 40px)/1.5 var(--body); }
+.premise blockquote em { color: var(--accent); }
+.premise p { margin-bottom: 12px; font-size: 17px; color: var(--muted); }
+.premise .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+
+.rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 30px 0; }
+.rules div { padding: 26px 22px; background: var(--card); border: 1.5px solid var(--ink); border-radius: 50% 50% 22px 22px / 26% 26% 22px 22px; }
+.rules h3 { padding-top: 18px; text-align: center; font: 400 clamp(24px, 2.4vw, 32px) var(--body); }
+.rules h3 small { display: block; font: italic 16px var(--serif); letter-spacing: 1px; color: var(--accent); }
+.rules p { margin-top: 10px; font-size: 15px; line-height: 1.75; color: var(--muted); }
+
+/* The Song Loom: four lanes, one loop each; every change lands on the next bar line. */
+.loom { margin: 30px 0; padding: 46px 50px; color: var(--ink); background: var(--card); border: 1.5px solid var(--ink); border-radius: 26px; outline: 1.5px dashed color-mix(in srgb, var(--ink) 30%, transparent); outline-offset: -12px; }
+.loom-head { display: grid; grid-template-columns: auto 1fr; align-items: end; gap: 10px 40px; margin-bottom: 30px; }
+.loom h2 { font: 400 clamp(34px, 4vw, 52px)/1.2 var(--body); }
+.loom h2 small { display: block; margin-bottom: 6px; font: italic 18px var(--serif); color: var(--accent); }
+.loom-head p { max-width: 560px; font-size: 16px; color: var(--muted); }
+.loom-body { display: grid; grid-template-columns: 1fr 130px; gap: 26px; }
+.loom-lanes { display: grid; gap: 12px; }
+.loom-lane { display: grid; grid-template-columns: 92px 1fr 1fr; gap: 12px; }
+.lane-name { display: grid; place-content: center; text-align: center; font-size: 18px; line-height: 1.3; background: color-mix(in srgb, var(--lane) 30%, var(--card)); border: 1.5px solid var(--ink); border-radius: 14px; }
+.lane-name small { font: italic 13px var(--serif); letter-spacing: 1px; color: var(--muted); }
+.loop { position: relative; display: grid; gap: 2px; padding: 12px 34px 12px 22px; text-align: left; font: 15px var(--body); color: var(--ink); background: var(--paper); border: 1.5px solid var(--ink); border-radius: 14px; box-shadow: inset 7px 0 0 var(--lane); cursor: pointer; transition: translate .2s var(--ease), background .25s; }
+.loop b { font: italic 400 22px/1.2 var(--serif); }
+.loop small { font-size: 13px; color: var(--muted); }
+.loop:hover, .loop:focus-visible { translate: 0 -2px; }
+.loop[aria-pressed="true"] { background: color-mix(in srgb, var(--lane) 40%, var(--card)); box-shadow: inset 7px 0 0 var(--lane), 3px 4px 0 var(--shadow); }
+.loop[aria-pressed="true"]::after { content: '♪'; position: absolute; right: 14px; top: 50%; translate: 0 -50%; font: italic 22px var(--serif); color: var(--accent); }
+.breath { position: relative; min-height: 300px; overflow: hidden; background: linear-gradient(#f7d9c6, #e9c1d2 50%, #b9a3d8); border: 1.5px solid var(--ink); border-radius: 65px 65px 16px 16px; }
+.breath-fill { position: absolute; left: 64%; bottom: 0; width: 46px; height: calc(var(--breath, 0) * 100%); translate: -50% 0; background: linear-gradient(to top, #f0c05ee6, #f0c05e00); border-radius: 23px 23px 0 0; transition: height .9s var(--ease); }
+.breath-porch { position: absolute; left: 0; right: 0; bottom: 62.5%; padding-left: 10px; font: italic 14px var(--serif); border-bottom: 2px dashed var(--ink); }
+.breath-spirit { position: absolute; left: 64%; bottom: calc(var(--breath, 0) * 100%); width: 40px; translate: -50% 0; transition: bottom .9s var(--ease); }
+.breath-spirit svg { display: block; width: 100%; height: auto; }
+.breath-label { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font: italic 15px var(--serif); }
+.loom-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 26px; }
+.loom-play { padding: 12px 26px; font: 16px var(--body); color: var(--cream); background: var(--accent); border: 1.5px solid var(--ink); border-radius: 999px; box-shadow: 3px 4px 0 var(--shadow); cursor: pointer; transition: translate .08s, box-shadow .08s; }
+.loom-play:active { translate: 0 3px; box-shadow: 0 1px 0 var(--shadow); }
+.loom-play:disabled { opacity: .6; cursor: progress; }
+.beats { display: flex; gap: 6px; }
+.beats i { width: 11px; height: 11px; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 50%; transition: background .1s; }
+.beats i:nth-child(4n + 1) { border-width: 2.5px; }
+.beats i.on { background: var(--accent-2); }
+.loom-status { flex: 1; min-width: 220px; min-height: 1.6em; font-size: 16px; color: var(--accent); }
+
+.acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 30px 0; }
+.acts div { padding: 40px 20px; text-align: center; font: 400 clamp(28px, 3vw, 40px) var(--body); border: 1.5px solid var(--ink); border-radius: 22px; }
+.acts div:nth-child(1) { background: #f3c9b4; }
+.acts div:nth-child(2) { background: #d9c6e6; }
+.acts div:nth-child(3) { background: color-mix(in srgb, #c3cfdc 60%, var(--paper)); border-style: dashed; }
+.acts small { display: block; margin-bottom: 4px; font: italic 20px var(--serif); }
+.acts span { display: block; margin-top: 6px; font-size: 15px; color: var(--muted); }
+
+.making { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 30px 0 70px; }
+.making div { padding: 22px 22px 24px; background: var(--card); border: 1.5px solid var(--ink); border-radius: 4px 20px 20px 20px; }
+.making h3 { margin-bottom: 6px; font: italic 400 20px var(--serif); color: var(--accent); }
+.making p { font-size: 15px; line-height: 1.75; color: var(--muted); }
+
+/* The gameplay flowchart: one row of steps, the ways back drawn as dashed returns above and below.
+   The returns are grid items spanning the steps they join; percentage margins (of the grid area)
+   pull their ends in to the centres of the first and last step. */
+.flow { margin: 50px 0 30px; }
+.flow h2 { text-align: center; font: 400 clamp(34px, 4vw, 52px)/1.2 var(--body); }
+.flow h2 small { display: block; margin-bottom: 6px; font: italic 18px var(--serif); color: var(--accent); }
+.flow-lead { margin: 10px auto 30px; text-align: center; font-size: 18px; color: var(--muted); }
+.flow-loop, .flow-chapter { --gap: 46px; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--gap); list-style: none; }
+.flow-loop > .flow-step { grid-row: 2; }
+.flow-step, .flow-chapter li { position: relative; display: grid; align-content: start; gap: 4px; padding: 16px 14px 18px; background: var(--card); border: 1.5px solid var(--ink); border-radius: 16px; box-shadow: 4px 5px 0 var(--shadow); }
+.flow-step i { display: grid; place-items: center; width: 30px; height: 30px; margin-bottom: 4px; font: italic 18px/1 var(--serif); color: var(--cream); background: var(--accent); border: 1.5px solid var(--ink); border-radius: 50%; }
+.flow-step b, .flow-chapter b { font-weight: 400; font-size: 20px; line-height: 1.3; }
+.flow-step small, .flow-chapter small { font-size: 14px; line-height: 1.65; color: var(--muted); }
+.flow-step:not(.flow-end)::after, .flow-chapter li:not(:last-child)::after { content: '→'; position: absolute; top: 50%; right: calc(var(--gap) / -2); translate: 50% -50%; font: 24px/1 var(--serif); color: var(--accent); }
+.flow-decision { place-content: center; justify-items: center; min-height: 140px; padding: 0; text-align: center; background: none; border: 0; box-shadow: none; isolation: isolate; }
+.flow-decision::before { content: ''; position: absolute; z-index: -1; left: 50%; top: 50%; width: min(96px, 64%); aspect-ratio: 1; translate: -50% -50%; rotate: 45deg; background: color-mix(in srgb, var(--accent-2) 45%, var(--card)); border: 1.5px solid var(--ink); border-radius: 12px; }
+.flow-decision b { font-size: 17px; }
+.flow-yes { position: absolute; top: calc(50% - 32px); right: calc(var(--gap) / -2); translate: 50% 0; font: italic 15px var(--serif); color: var(--accent); }
+.flow-aside { display: none; }
+.flow-back { position: relative; height: 46px; border: 2px dashed var(--accent); }
+.flow-back span { position: absolute; left: 50%; translate: -50% -50%; padding: 0 12px; font-size: 15px; color: var(--accent); white-space: nowrap; background: var(--paper); }
+.flow-back::after { content: ''; position: absolute; left: -7px; border: 6px solid transparent; }
+.flow-retry { grid-row: 1; grid-column: 3 / 6; margin: 0 calc((100% - 2 * var(--gap)) / 6) 12px; border-bottom: 0; border-radius: 22px 22px 0 0; }
+.flow-retry span { top: 0; }
+.flow-retry::after { top: 100%; border-top: 10px solid var(--accent); }
+.flow-again { grid-row: 3; grid-column: 1 / -1; margin: 12px calc((100% - 5 * var(--gap)) / 12) 0; border-top: 0; border-radius: 0 0 22px 22px; }
+.flow-again span { top: 100%; }
+.flow-again::after { bottom: 100%; border-bottom: 10px solid var(--accent); }
+.flow-sub { margin: 60px 0 18px; text-align: center; font: 400 26px var(--body); }
+.flow-sub small { display: block; font: italic 16px var(--serif); letter-spacing: 1px; color: var(--accent); }
+.flow-chapter { grid-template-columns: repeat(5, 1fr); }
+.flow-chapter li:first-child { background: color-mix(in srgb, var(--accent) 12%, var(--card)); }
+.flow-note { max-width: 780px; margin: 30px auto 0; padding: 16px 24px; text-align: center; font-size: 16px; color: var(--muted); background: var(--card); border: 1.5px dashed var(--ink); border-radius: 16px; }
+.flow-note b { font-weight: 400; color: var(--accent); }
+
+/* Narrower than the six steps can sit side by side: the chart runs top to bottom, and the
+   ways back become notes beside the diamond and inside the last step. */
+@media (max-width: 1120px) {
+  .flow-loop, .flow-chapter { grid-template-columns: 1fr; row-gap: 40px; max-width: 460px; margin-inline: auto; }
+  .flow-loop > .flow-step { grid-row: auto; }
+  .flow-back { display: none; }
+  .flow-aside { display: block; color: var(--accent) !important; }
+  .flow-step:not(.flow-end)::after, .flow-chapter li:not(:last-child)::after { content: '↓'; top: auto; right: auto; bottom: -32px; left: 50%; translate: -50% 0; }
+  .flow-decision { min-height: 150px; }
+  .flow-yes { top: auto; right: auto; bottom: -30px; left: calc(50% + 16px); translate: none; }
+  .flow-decision .flow-aside { position: absolute; left: calc(50% + 74px); top: 50%; max-width: 8.5em; translate: 0 -50%; text-align: left; }
+}
+
+@media (max-width: 900px) {
+  .rules, .making { grid-template-columns: 1fr 1fr; }
+  .premise { grid-template-columns: 1fr; gap: 20px; padding: 34px 28px; }
+  .loom { padding: 34px 26px; }
+  .loom-head { grid-template-columns: 1fr; }
+  .loom-body { grid-template-columns: 1fr; }
+  .breath { order: -1; min-height: 190px; border-radius: 16px; }
+}
+
+@media (max-width: 760px) {
+  main { padding-top: 24px; }
+  .full, .hero { height: 70svh; }
+  .wide { aspect-ratio: 4 / 3; }
+  .pair { grid-template-columns: 1fr; }
+  .rules, .making { grid-template-columns: 1fr; }
+  .acts { grid-template-columns: 1fr 1fr; }
+  .acts div:nth-child(3) { grid-column: 1 / -1; }
+  .loom-lane { grid-template-columns: 58px 1fr 1fr; gap: 8px; }
+  .lane-name { font-size: 15px; }
+  .lane-name small, .loop small { display: none; }
+  .loop { padding: 10px 26px 10px 16px; }
+  .loop b { font-size: 17px; }
+  .loop[aria-pressed="true"]::after { right: 8px; font-size: 18px; }
+  .hero h1 { left: 20px; bottom: 20px; padding: 12px 20px 14px; }
+  .frame figcaption { left: 18px; bottom: 18px; }
+}
+</style>
+</head>
+<body>
+<nav class="global-nav" aria-label="作品集导航">
+  <a href="/">Leido.</a><a href="/games">游戏作品 ↗</a><a href="/lost-light.html">丢失的光明 ↗</a><a href="/tide-echo.html">上岸 ↗</a><a href="/rhythm-game-demo.html">智械驯服专家 ↗</a><a href="/embodied-intelligence.html">鸿山博物馆 ↗</a><a href="/#contact">联系我 ↗</a>
+</nav>
+
+<main>
+  <figure class="frame full hero">
+    <img src="/games/sky-studio/ribbon-ride.webp" alt="一团小小的光撑着蕾丝伞，在黄昏的浮空岛之间乘风飞行" fetchpriority="high">
+    <h1>天空岛<em>Sky Studio</em></h1>
+  </figure>
+
+  <p class="line">外婆的摇篮曲，<em>散在了风里。</em><small>音乐创作 × 叙事探索 · 毕业设计原型 · UNITY 6</small></p>
+
+  <section class="premise" aria-label="创作理念">
+    <blockquote>记忆不是被保存下来的，<br>而是被<em>重新创作</em>出来的。</blockquote>
+    <div>
+      <p>《百年孤独》里，马孔多的人们为了对抗遗忘，在每件东西上贴满纸条。纸条留住了名字，却留不住生活。外婆的摇篮曲能一代代传下去，也不是因为被一字不差地保存，而是因为每一代人都在重新唱起它。</p>
+      <p>所以这里没有乐谱可以照着弹。你收集的是散落的乐句，编出来的是属于你自己的版本——歌越完整，梦里的风越高。</p>
+      <div class="tag-row"><span class="tag">以创作为回忆</span><span class="tag">记忆重构</span><span class="tag">音乐创作</span><span class="tag">梦境</span></div>
+    </div>
+  </section>
+
+  <p class="line">第一章 <em>Lullaby Isles</em><small>拾起 · 黎明时分的浮空岛</small></p>
+
+  <figure class="frame full"><img src="/games/sky-studio/arrival.webp" alt="长满青草的浮空岛，外婆的八音盒打开着，几盏纸灯笼立在远处" loading="lazy"><figcaption>LULLABY ISLE<b>外婆的岛</b></figcaption></figure>
+
+  <div class="stack">
+    <div class="pair">
+      <figure class="frame"><img src="/games/sky-studio/gust.webp" alt="金色的风环一圈圈向上，把小光团抛向空中" loading="lazy"><figcaption>HER TUNE<b>她的那一句</b></figcaption></figure>
+      <figure class="frame"><img src="/games/sky-studio/long-breath.webp" alt="小光团撑着伞，乘着一根气柱从低处的岛升起" loading="lazy"><figcaption>LONG BREATH<b>一根气柱</b></figcaption></figure>
+    </div>
+    <figure class="frame wide"><img src="/games/sky-studio/song-and-breath.webp" alt="中心岛上空的风环一层层叠起，高处悬着岩石浮岛" loading="lazy"><figcaption>THE BREATH<b>歌越满，呼吸越高</b></figcaption></figure>
+  </div>
+
+  <p class="line">没有音乐，<em>就没有风。</em><small>每朵石花只听歌里的一个声部，音符本身决定风</small></p>
+
+  <div class="rules" aria-label="风的规则">
+    <div><h3>阵风<small>STRUCK</small></h3><p>鼓、拨弦、竖琴、钢琴：每响一个音吹一阵风，把你抛到 reach × ½ × 力度² 的高度。</p></div>
+    <div><h3>气柱<small>HELD</small></h3><p>拉弦和长笛：音响着的时候吹一根稳定的气柱，随旋律起伏，休止时停下。</p></div>
+    <div><h3>越响越高<small>LOUDER</small></h3><p>同一朵石花，心跳般的重拍能把你送上石柱，轻轻的雨声只够扑腾一下。</p></div>
+    <div><h3>越满越高<small>FULLER</small></h3><p>中心岛的「呼吸」随声部增长：14 / 22 / 30 / 38 m。外婆的门廊，要三个声部才够得到。</p></div>
+  </div>
+
+  <section class="loom" aria-label="织歌机">
+    <div class="loom-head">
+      <h2><small>TRY IT · 游戏里的真实音乐</small>织一首歌</h2>
+      <p>四个声部，每个声部放一段 loop，再点一次就拿走。改动落在下一小节，所以怎么换都不会乱。外婆的那一句已经在旋律声部里了。</p>
+    </div>
+    <div class="loom-body">
+      <div class="loom-lanes">
+        <div class="loom-lane" data-lane="rhythm" style="--lane: #e8957a"><span class="lane-name">节奏<small>RHYTHM</small></span>
+          <button class="loop" type="button" data-loop="rhythm_heartbeat" aria-pressed="false"><b>Heartbeat</b><small>手鼓 · 敲击</small></button>
+          <button class="loop" type="button" data-loop="rhythm_rain" aria-pressed="false"><b>Rain on the Roof</b><small>沙锤与响板 · 敲击</small></button>
+        </div>
+        <div class="loom-lane" data-lane="bass" style="--lane: #9a86d6"><span class="lane-name">低音<small>BASS</small></span>
+          <button class="loop" type="button" data-loop="bass_breath" aria-pressed="false"><b>Long Breath</b><small>低音提琴与大提琴 · 持续</small></button>
+          <button class="loop" type="button" data-loop="bass_footsteps" aria-pressed="false"><b>Footsteps</b><small>低音提琴拨弦 · 敲击</small></button>
+        </div>
+        <div class="loom-lane" data-lane="harmony" style="--lane: #6cc2b0"><span class="lane-name">和声<small>HARMONY</small></span>
+          <button class="loop" type="button" data-loop="harmony_harp" aria-pressed="false"><b>Harp Ripple</b><small>竖琴 · 敲击</small></button>
+          <button class="loop" type="button" data-loop="harmony_piano" aria-pressed="false"><b>Parlour Piano</b><small>立式钢琴 · 敲击</small></button>
+        </div>
+        <div class="loom-lane" data-lane="melody" style="--lane: #f0c05e"><span class="lane-name">旋律<small>MELODY</small></span>
+          <button class="loop" type="button" data-loop="melody_hers" aria-pressed="true"><b>Her Tune</b><small>钟琴，像八音盒 · 敲击</small></button>
+          <button class="loop" type="button" data-loop="melody_answer" aria-pressed="false"><b>Your Answer</b><small>长笛 · 持续</small></button>
+        </div>
+      </div>
+      <div class="breath" aria-hidden="true">
+        <i class="breath-fill"></i>
+        <span class="breath-porch">门廊 25 m</span>
+        <span class="breath-spirit"><svg viewBox="0 0 40 34"><path d="M10 8c3-6 12-6 15-1c6-1 10 5 7 10c4 4 1 11-5 10c-2 6-11 7-15 2c-6 2-11-4-8-9c-5-4-2-11 6-12z" fill="#efd3e6" stroke="#3d2f2b" stroke-width="1.5"/><circle cx="14" cy="18" r="1.8" fill="#3d2f2b"/><circle cx="23" cy="18" r="1.8" fill="#3d2f2b"/></svg></span>
+        <span class="breath-label">呼吸 0 m</span>
+      </div>
+    </div>
+    <div class="loom-foot">
+      <button class="loom-play" type="button">▶ 放这首歌</button>
+      <div class="beats" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="loom-status" aria-live="polite">一个声部，呼吸 14 m。还够不到外婆的门廊。</p>
+    </div>
+  </section>
+
+  <div class="stack">
+    <figure class="frame wide"><img src="/games/sky-studio/song-loom.webp" alt="游戏里的织歌机界面：四个声部，每个声部两段 loop" loading="lazy"><figcaption>SONG LOOM<b>织歌机</b></figcaption></figure>
+    <div class="pair">
+      <figure class="frame"><img src="/games/sky-studio/dialogue.webp" alt="门廊前，外婆坐在摇椅上，对话框里写着：Oh... a little light" loading="lazy"><figcaption>GRANDMOTHER<b>外婆</b></figcaption></figure>
+      <figure class="frame"><img src="/games/sky-studio/performance.webp" alt="镜头环绕外婆，花瓣飘落，她跟着你编的歌轻轻哼唱" loading="lazy"><figcaption>PLAY IT FOR HER<b>唱给她听</b></figcaption></figure>
+    </div>
+  </div>
+
+  <p class="line">“不是我唱的那样……<br><em>可我好像更喜欢。</em>”<small>她听出来了：这首歌，像你</small></p>
+
+  <div class="stack">
+    <div class="pair">
+      <figure class="frame"><img src="/games/sky-studio/lantern-path.webp" alt="门廊外亮起一串灯笼台阶，通向更高的浮岛" loading="lazy"><figcaption>LANTERN STEPS<b>灯笼台阶</b></figcaption></figure>
+      <figure class="frame"><img src="/games/sky-studio/lantern-gate.webp" alt="浮岛顶端的灯笼门" loading="lazy"><figcaption>LANTERN GATE<b>灯笼门</b></figcaption></figure>
+    </div>
+  </div>
+
+  <p class="line">第二章 <em>Lantern Weave</em><small>编织 · 六十年前的灯会 · 3/4 拍华尔兹</small></p>
+
+  <figure class="frame full"><img src="/games/sky-studio/lantern-festival.webp" alt="黄昏的灯会浮岛：纺车、舞池、小摊和纸灯笼" loading="lazy"><figcaption>LANTERN FESTIVAL<b>灯会那一夜</b></figcaption></figure>
+
+  <div class="stack">
+    <div class="pair">
+      <figure class="frame"><img src="/games/sky-studio/grandfather.webp" alt="年轻的外公站在舞池边，问你有没有见过穿波点裙的姑娘" loading="lazy"><figcaption>GRANDFATHER<b>年轻的外公</b></figcaption></figure>
+      <figure class="frame"><img src="/games/sky-studio/piano-roll.webp" alt="钢琴卷帘界面，一段旋律从 F5 一路爬升到 D6" loading="lazy"><figcaption>YOUR MELODY<b>写一段旋律</b></figcaption></figure>
+    </div>
+  </div>
+
+  <p class="line">旋律的形状，<em>就是飞行的路线。</em><small>风琴丝带每一刻的高度，等于那一刻的音高：每半音 1.2 m</small></p>
+
+  <div class="stack">
+    <figure class="frame wide"><img src="/games/sky-studio/to-pavilion.webp" alt="小光团乘着金色的旋律丝带，飞向高处的月亭" loading="lazy"><figcaption>WIND HARP<b>乘着自己的旋律</b></figcaption></figure>
+    <div class="pair">
+      <figure class="frame"><img src="/games/sky-studio/lantern-lift.webp" alt="随低音音高升降的灯笼升降台" loading="lazy"><figcaption>LANTERN LIFT<b>低音升降台</b></figcaption></figure>
+      <figure class="frame"><img src="/games/sky-studio/dance.webp" alt="穿波点裙的年轻外婆站在月亭旁" loading="lazy"><figcaption>THE WALTZ<b>月亭里的华尔兹</b></figcaption></figure>
+    </div>
+    <figure class="frame full"><img src="/games/sky-studio/chapter-card.webp" alt="章节卡：Lantern Weave，月亭立在浮岛顶端" loading="lazy"><figcaption>CHAPTER TWO<b>灯笼织夜</b></figcaption></figure>
+  </div>
+
+  <section class="flow" aria-labelledby="flow-title">
+    <h2 id="flow-title"><small>HOW IT PLAYS</small>一张图看懂玩法</h2>
+    <p class="flow-lead">没有音乐，就没有风：你编的歌决定风有多高，风决定你能去哪儿。</p>
+
+    <ol class="flow-loop">
+      <li class="flow-step"><i>1</i><b>探索</b><small>在浮空岛之间跳跃，撑外婆的伞滑翔</small></li>
+      <li class="flow-step"><i>2</i><b>收集声音</b><small>碰到发光的声音球，得到一段 loop</small></li>
+      <li class="flow-step"><i>3</i><b>织歌机编曲</b><small>四个声部各放一段，改动在下一小节生效</small></li>
+      <li class="flow-step"><i>4</i><b>音乐起风</b><small>每朵石花听一个声部：敲击的音吹阵风，持续的音吹气柱，越响越高</small></li>
+      <li class="flow-step flow-decision"><b>风够高吗？</b><em class="flow-yes">够</em><small class="flow-aside">不够 ↩ 回到 3，换一段 loop</small></li>
+      <li class="flow-back flow-retry"><span>不够：回到 3，换一段 loop</span></li>
+      <li class="flow-step flow-end"><i>5</i><b>乘风上岛</b><small>到达新的岛，那里有新的声音</small><small class="flow-aside">↺ 回到 1，继续探索</small></li>
+      <li class="flow-back flow-again"><span>新的岛上有新的声音：回到 1，继续探索</span></li>
+    </ol>
+
+    <h3 class="flow-sub"><small>ONE CHAPTER</small>一章怎么走完</h3>
+    <ol class="flow-chapter">
+      <li><b>把歌编满</b><small>重复上面的循环：声部越多，中心岛的「呼吸」越高</small></li>
+      <li><b>三个声部</b><small>呼吸升到 30 m，够到外婆的门廊</small></li>
+      <li><b>为她演奏</b><small>你编的歌完整放一遍，她跟着轻轻哼</small></li>
+      <li><b>她想起往事</b><small>她听出这首歌像你，说起一段回忆</small></li>
+      <li><b>灯笼门</b><small>走进她更早的一段记忆：下一章</small></li>
+    </ol>
+    <p class="flow-note"><b>第二章多一步：</b>在钢琴卷帘上写自己的旋律。旋律的音高就是风琴丝带的高度，结尾写得够高，才飞得上月亭。</p>
+  </section>
+
+  <div class="acts" aria-label="三幕">
+    <div><small>i.</small>拾起<span>Lullaby Isles · 已完成</span></div>
+    <div><small>ii.</small>编织<span>Lantern Weave · 已完成</span></div>
+    <div><small>iii.</small>改写<span>Fog Harbor · 下一章</span></div>
+  </div>
+
+  <div class="making" aria-label="制作">
+    <div><h3>Engine</h3><p>Unity 6 · URP。两章场景都由编辑器脚本生成，玩法数值写在生成器里一起检查。</p></div>
+    <div><h3>Art</h3><p>Tripo 生成模型，经 Blender 进入 Unity；对话头像在构建时从 3D 模型渲染。</p></div>
+    <div><h3>Music</h3><p>VSCO 2 CE（CC0）采样，用 Python 渲染成 90 BPM、F 大调的 loop，每段带音符数据驱动风。</p></div>
+    <div><h3>Playtest</h3><p>自动试玩按设计意图通关：第一章 124 项、第二章 77 项检查全部通过。</p></div>
+  </div>
+</main>
+
+<footer class="page-footer">
+  <a href="/#sky-studio">← 回到小星球的故事集市</a>
+  <p>画面为 Unity 中自动试玩时的截帧。织歌机里的音乐，就是游戏里的 loop。</p>
+  <a href="/lost-light.html">下一页：丢失的光明 ↗</a>
+</footer>
+
+<script>
+// Pictures settle into place as they scroll into view.
+(() => {
+  const frames = document.querySelectorAll('.frame');
+  if (!('IntersectionObserver' in window)) { frames.forEach(frame => frame.classList.add('seen')); return; }
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('seen'); observer.unobserve(entry.target); }
+  }), { threshold: .2 });
+  frames.forEach(frame => observer.observe(frame));
+})();
+
+// Song Loom: every loop starts together and stays in sync; a lane is heard only while it is
+// chosen, and a change waits for the next bar line, as in the game.
+(() => {
+  const BEAT = 60 / 90, BAR = 4 * BEAT, LOOP = 16 * BEAT;
+  const loom = document.querySelector('.loom');
+  const loops = [...loom.querySelectorAll('.loop')];
+  const playButton = loom.querySelector('.loom-play');
+  const status = loom.querySelector('.loom-status');
+  const label = loom.querySelector('.breath-label');
+  const dots = [...loom.querySelectorAll('.beats i')];
+  const chosen = { rhythm: null, bass: null, harmony: null, melody: 'melody_hers' };
+  const voices = {};
+  let context, start, frame, lit = -1;
+
+  const laneOf = button => button.closest('.loom-lane').dataset.lane;
+  const isOn = id => Object.values(chosen).includes(id);
+
+  const render = () => {
+    loops.forEach(button => button.setAttribute('aria-pressed', isOn(button.dataset.loop)));
+    const lanes = Object.values(chosen).filter(Boolean).length;
+    const height = lanes ? 14 + (lanes - 1) * 8 : 0;
+    loom.style.setProperty('--breath', height / 40);
+    label.textContent = `呼吸 ${height} m`;
+    status.textContent = !lanes ? '一片安静。没有音乐，就没有风。'
+      : lanes < 3 ? `${['', '一', '两'][lanes]}个声部，呼吸 ${height} m。还够不到外婆的门廊。`
+      : `${['', '', '', '三', '四'][lanes]}个声部，呼吸 ${height} m——够到外婆的门廊了。`;
+  };
+
+  const schedule = () => {
+    if (!context || !start) return;
+    const at = start + Math.ceil((context.currentTime - start + .03) / BAR) * BAR;
+    for (const [id, gain] of Object.entries(voices)) {
+      gain.gain.cancelScheduledValues(at);
+      gain.gain.setTargetAtTime(isOn(id) ? 1 : 0, at, .02);
+    }
+  };
+
+  const tick = () => {
+    const beat = Math.floor(((context.currentTime - start) % LOOP + LOOP) % LOOP / BEAT);
+    if (beat !== lit) { dots[lit]?.classList.remove('on'); dots[beat]?.classList.add('on'); lit = beat; }
+    frame = requestAnimationFrame(tick);
+  };
+
+  const begin = async () => {
+    const Context = window.AudioContext || window.webkitAudioContext;
+    if (!Context) { status.textContent = '这个浏览器放不了声音，但风的规则不变。'; return; }
+    context = new Context();
+    playButton.disabled = true;
+    playButton.textContent = '载入中……';
+    const ids = loops.map(button => button.dataset.loop);
+    const buffers = await Promise.all(ids.map(id => fetch(`/games/sky-studio/loops/${id}.mp3`)
+      .then(response => response.arrayBuffer()).then(data => context.decodeAudioData(data)).catch(() => null)));
+    start = context.currentTime + .1;
+    ids.forEach((id, i) => {
+      if (!buffers[i]) return;
+      const source = context.createBufferSource();
+      source.buffer = buffers[i];
+      source.loop = true;
+      source.loopEnd = LOOP;
+      const gain = context.createGain();
+      gain.gain.value = isOn(id) ? 1 : 0;
+      source.connect(gain).connect(context.destination);
+      source.start(start);
+      voices[id] = gain;
+    });
+    playButton.disabled = false;
+    playButton.textContent = '❚❚ 停一下';
+    tick();
+  };
+
+  const toggle = async () => {
+    if (!context) return begin();
+    if (context.state === 'running') {
+      await context.suspend();
+      cancelAnimationFrame(frame);
+      playButton.textContent = '▶ 接着放';
+    } else {
+      await context.resume();
+      playButton.textContent = '❚❚ 停一下';
+      tick();
+    }
+  };
+
+  loops.forEach(button => button.addEventListener('click', () => {
+    const lane = laneOf(button), id = button.dataset.loop;
+    chosen[lane] = chosen[lane] === id ? null : id;
+    render();
+    if (!context) begin(); else schedule();
+  }));
+  playButton.addEventListener('click', toggle);
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="lost-light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2b3454">
+<title>丢失的光明 Lost Light — Leido</title>
+<meta name="description" content="丢失的光明：一款第一人称互动叙事游戏。圣火被盗的黄昏，玩家收集印记、辨认真假火，并以思、言、行决定把光交给谁。">
+<link rel="stylesheet" href="/src/styles/pages.css">
+<style>
+/* Night-and-lantern page: indigo paper, honey light, ink-edged frames. */
+.hero { padding: 64px 0 20px; }
+.hero-frame { position: relative; }
+.hero-frame img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 40%; }
+.hero-frame::after { content: ''; position: absolute; left: 50%; bottom: -26px; width: 52px; height: 52px; margin-left: -26px; border: 1.5px solid var(--ink); border-radius: 50%; background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 6c6 9 12 13 10 22c-1 5-5 8-10 8s-9-3-10-8c-1-6 4-9 5-15c2 4 3 5 4 5c1-5 0-8 1-12z' fill='%23cf6e52' stroke='%233d2f2b' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") center / 30px no-repeat; }
+.hero-meta { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 48px; }
+.hero-meta p { font: italic 18px var(--serif); color: var(--muted); }
+.hero-meta .tags { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.tags span { background: transparent; }
+
+.intro { padding: 90px 0 80px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 70px; align-items: center; }
+.intro h2 { font: 400 clamp(52px, 7vw, 100px)/1.1 var(--body); letter-spacing: .06em; }
+.intro h2 small { display: block; margin-top: 10px; font: italic .3em var(--serif); letter-spacing: .2em; color: var(--accent); }
+.intro p { color: var(--muted); font-size: 16px; }
+.intro p + p { margin-top: 14px; }
+.opening { font-size: 24px !important; line-height: 1.7; color: var(--text) !important; }
+.disclaimer { padding: 12px 16px; font-size: 13px !important; background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 4px 14px 14px 14px; }
+
+.trailer { padding-bottom: 100px; }
+.trailer video { width: 100%; aspect-ratio: 16 / 9; background: #1c2238; }
+.trailer-caption { display: flex; justify-content: space-between; gap: 20px; padding: 18px 4px 0; font-size: 14px; color: var(--muted); }
+.trailer-caption span:last-child { font: italic 18px var(--serif); color: var(--accent); }
+
+.section { padding: 90px 0; }
+.section + .section { border-top: 1.5px dashed var(--line); }
+.section-head { display: grid; grid-template-columns: 220px 1fr; gap: 40px; margin-bottom: 50px; }
+.section-head h2, .dialogue h2 { font: 400 clamp(34px, 4vw, 54px)/1.25 var(--body); letter-spacing: .04em; }
+.section-head p:not(.eyebrow) { max-width: 640px; margin-top: 10px; color: var(--muted); }
+
+.triad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.triad article { padding: 30px 28px 34px; background: var(--card); border: 1.5px solid var(--text); border-radius: 22px; transition: translate .35s var(--ease); }
+.triad article:hover { translate: 0 -4px; }
+.triad b { display: grid; place-items: center; width: 96px; height: 96px; font: 400 56px/1 var(--body); color: var(--ink); background: var(--accent); border: 1.5px solid var(--ink); border-radius: 50%; box-shadow: 0 0 0 6px var(--card), 0 0 0 7.5px color-mix(in srgb, var(--text) 50%, transparent); }
+.triad article:nth-child(2) b { background: #e9a596; }
+.triad article:nth-child(3) b { background: #8fb07e; }
+.triad h3 { margin: 20px 0 6px; font: italic 400 18px var(--serif); letter-spacing: 1px; color: var(--accent); }
+.triad p { font-size: 15px; color: var(--muted); }
+.triad-note { margin-top: 24px; font-size: 15px; color: var(--muted); text-align: center; }
+
+.act { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 44px 0; }
+.act:nth-child(even) .act-media { order: 2; }
+.act-media { position: relative; }
+.act-media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.act-media figcaption { position: absolute; left: 22px; bottom: 20px; padding: 2px 12px; font-size: 13px; color: var(--ink); background: var(--cream); border: 1.5px solid var(--ink); border-radius: 999px; }
+.act-num { font: italic 22px var(--serif); color: var(--accent); }
+.act h3 { margin: 4px 0 14px; font: 400 34px var(--body); letter-spacing: .04em; }
+.act p { color: var(--muted); font-size: 16px; }
+.seals { display: flex; gap: 12px; margin-top: 22px; }
+.seals span { position: relative; display: grid; place-items: center; width: 62px; height: 62px; font-size: 26px; color: var(--ink); background: var(--accent); border: 1.5px solid var(--ink); border-radius: 50%; }
+.seals span:nth-child(2) { background: #e9a596; }
+.seals span:nth-child(3) { background: var(--cream); }
+.seals span::after { content: attr(data-order); position: absolute; top: -6px; right: -6px; display: grid; place-items: center; width: 22px; height: 22px; font: italic 13px var(--serif); color: var(--text); background: var(--paper); border: 1.5px solid var(--text); border-radius: 50%; }
+
+.listen { margin: 30px 0 20px; padding: 40px; background: radial-gradient(ellipse 70% 40% at 50% 112%, #4a3a52 60%, transparent 61%), var(--card); border: 1.5px solid var(--text); border-radius: 26px; outline: 1.5px dashed color-mix(in srgb, var(--text) 30%, transparent); outline-offset: -12px; }
+.listen-head { display: flex; justify-content: space-between; gap: 20px; align-items: start; flex-wrap: wrap; }
+.listen-head h3 { font: 400 30px var(--body); }
+.listen-head p { max-width: 520px; font-size: 15px; color: var(--muted); }
+.sound-toggle { padding: 8px 18px; font: 15px var(--body); color: var(--text); background: transparent; border: 1.5px solid var(--text); border-radius: 999px; cursor: pointer; }
+.sound-toggle[aria-pressed="true"] { color: var(--ink); background: var(--accent); border-color: var(--ink); }
+.flames { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0 14px; }
+.flame-btn { display: grid; justify-items: center; gap: 14px; padding: 24px 10px 16px; font: inherit; color: var(--text); background: transparent; border: 1.5px dashed transparent; border-radius: 18px; cursor: pointer; transition: border-color .3s, background .3s; }
+.flame-btn:hover, .flame-btn:focus-visible { border-color: var(--line); background: #ffffff08; outline: none; }
+.flame-btn .fire { width: 50px; height: 72px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 72'%3E%3Cpath d='M25 3c9 15 21 23 18 40c-1 13-9 26-18 26S8 60 7 47C6 36 15 32 16 19c3 7 5 9 7 9c1-11-1-17 2-25z' fill='%23cf6e52' stroke='%233d2f2b' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M25 28c5 9 10 13 8 22c-1 6-4 11-8 11s-8-4-8-10c0-7 5-9 5-15c1 3 2 4 3 4c1-5 0-8 0-12z' fill='%23e8bb5e' stroke='%233d2f2b' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M25 46c2 4 4 6 3 9c-1 3-5 3-6 0c-1-3 2-5 3-9z' fill='%23fbf5e8' stroke='%233d2f2b' stroke-width='1.2'/%3E%3C/svg%3E") center bottom / contain no-repeat; transform-origin: 50% 100%; opacity: .18; transform: scale(.88); transition: opacity .08s, transform .08s, filter .2s; }
+.flame-btn .fire.on { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 16px #e8a05e); }
+.flame-btn.cold .fire { filter: hue-rotate(200deg) drop-shadow(0 0 12px #b6a4d0); }
+.flame-btn span { font-size: 14px; color: var(--muted); }
+.flame-btn.picked-right { border-color: var(--accent); border-style: solid; }
+.flame-btn.picked-wrong { border-color: #b6a4d0; border-style: solid; }
+.listen-result { min-height: 1.8em; font-size: 19px; text-align: center; }
+.listen-actions { display: flex; justify-content: center; margin-top: 12px; }
+.listen-actions button { padding: 2px 0; font: 15px var(--body); color: var(--muted); background: transparent; border: 0; border-bottom: 1.5px dashed currentColor; cursor: pointer; }
+
+.dialogue { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center; }
+.dialogue > p { color: var(--muted); }
+.dialogue ul { list-style: none; margin-top: 18px; display: grid; gap: 10px; }
+.dialogue li { padding: 12px 18px; font-size: 15px; color: var(--muted); background: var(--card); border-radius: 4px 16px 16px 16px; }
+.dialogue li strong { display: block; font-weight: 400; color: var(--text); }
+.dialogue li strong::before { content: '❦ '; color: var(--accent); }
+
+.gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+.gallery a { position: relative; grid-column: span 2; transition: translate .4s var(--ease); }
+.gallery a:nth-child(1), .gallery a:nth-child(2) { grid-column: span 3; }
+.gallery a:nth-child(odd) { rotate: -.6deg; }
+.gallery a:nth-child(even) { rotate: .6deg; }
+.gallery a:hover { translate: 0 -4px; }
+.gallery img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.gallery span { position: absolute; left: 20px; bottom: 18px; padding: 1px 12px; font-size: 13px; color: var(--ink); background: var(--cream); border: 1.5px solid var(--ink); border-radius: 999px; }
+
+.tech { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.tech article { padding: 24px 22px; background: var(--card); border: 1.5px solid color-mix(in srgb, var(--text) 50%, transparent); border-radius: 18px; }
+.tech h3 { margin-bottom: 8px; font: 400 21px var(--body); color: var(--accent); }
+.tech p { font-size: 14px; color: var(--muted); }
+
+.endings { list-style: none; display: grid; gap: 10px; }
+.endings li { display: grid; grid-template-columns: 54px 1fr 1.4fr; gap: 22px; align-items: center; padding: 16px 22px; background: var(--card); border-radius: 18px; transition: translate .35s var(--ease); }
+.endings li:hover { translate: 8px 0; }
+.endings i { display: grid; place-items: center; width: 40px; height: 40px; font: italic 20px var(--serif); color: var(--ink); background: var(--cream); border: 1.5px solid var(--ink); border-radius: 50%; }
+.endings h3 { font: 400 24px var(--body); }
+.endings p { font-size: 15px; color: var(--muted); }
+.endings .hidden-ending { background: color-mix(in srgb, var(--accent) 22%, var(--card)); }
+.endings .hidden-ending i { background: var(--accent); }
+
+@media (max-width: 860px) {
+  .intro, .dialogue, .act, .section-head { grid-template-columns: 1fr; gap: 26px; }
+  .act:nth-child(even) .act-media { order: 0; }
+  .triad { grid-template-columns: 1fr; }
+  .tech { grid-template-columns: 1fr 1fr; }
+  .gallery { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .gallery a, .gallery a:nth-child(1), .gallery a:nth-child(2) { grid-column: span 1; }
+  .gallery a:nth-child(1) { grid-column: span 2; }
+  .endings li { grid-template-columns: 40px 1fr; }
+  .endings li p { grid-column: 2; }
+  .hero-meta { flex-direction: column; align-items: start; }
+  .hero-meta .tags { justify-content: flex-start; }
+}
+@media (max-width: 560px) {
+  .hero { padding-top: 36px; }
+  .intro { padding: 60px 0; }
+  .listen { padding: 26px 16px; }
+  .flames { gap: 6px; }
+  .tech { grid-template-columns: 1fr; }
+  .trailer-caption { flex-direction: column; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<nav class="global-nav" aria-label="作品集导航">
+  <a href="/">Leido.</a><a href="/games">游戏作品 ↗</a><a href="/sky-studio.html">天空岛 ↗</a><a href="/tide-echo.html">上岸 ↗</a><a href="/rhythm-game-demo.html">智械驯服专家 ↗</a><a href="/embodied-intelligence.html">鸿山博物馆 ↗</a><a href="/#contact">联系我 ↗</a>
+</nav>
+
+<header class="hero wrap">
+  <figure class="hero-frame matted"><img src="/games/lost-light/poster.webp" alt="《丢失的光明》海报：夜色中的拱形圣火亭，火焰在坛中燃烧。标语：天亮以前，你还能再走一步。" fetchpriority="high"></figure>
+  <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">丢失的光明 Lost Light</h1>
+  <div class="hero-meta">
+    <p>No. 01 · Lost Light · 第一人称互动叙事</p>
+    <div class="tags"><span>Unity 6 · URP</span><span>Windows</span><span>自由输入的 NPC 对话</span><span>五种结局</span></div>
+  </div>
+</header>
+
+<main>
+  <section class="wrap intro">
+    <h2>丢失的光明<small>LOST LIGHT</small></h2>
+    <div>
+      <p class="opening">黄昏。村里的火坛灭了。<br>圣火昨夜被人拿走。</p>
+      <p>玩家在阶地村落里追索圣火的去向：收集三枚印记，回到火坛复原那个人走过的路，再提着灯走进荒地，分辨哪一簇才是真火。最后，在兄妹与神祇面前，决定把光交给谁，以及回去之后怎么讲这件事。</p>
+      <p class="disclaimer">以琐罗亚斯德教（祆教）文化为背景，受现实议题启发的虚构叙事，不代表所有信徒观点。角色服装容貌为游戏化设计，并非考古复原。</p>
+    </div>
+  </section>
+
+  <section class="wrap trailer" aria-label="宣传短片">
+    <figure class="matted">
+      <video controls preload="metadata" playsinline poster="/games/lost-light/village-dusk.webp">
+        <source src="/games/lost-light/trailer.mp4" type="video/mp4">
+        你的浏览器不支持视频播放。
+      </video>
+    </figure>
+    <p class="trailer-caption"><span>宣传短片 · 1 分 32 秒 · 游戏内实机渲染</span><span>天亮以前，你还能再走一步。</span></p>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Core idea</p><div><h2>思 · 言 · 行</h2><p>游戏不给玩家打善恶分。它分别记录你怎么想、怎么说、怎么做，再看三者是否一致。</p></div></div>
+      <div class="triad">
+        <article><b>思</b><h3>THOUGHT · 推论</h3><p>在火坛前按足迹的顺序压上印记。你的推论是否有据、是否属实，都会被记下。</p></article>
+        <article><b>言</b><h3>WORD · 说法</h3><p>对长老、村民和神明公开说出的判断。如实说可能失去补给，顺着村里的期待说能拿到灯油与水囊。</p></article>
+        <article><b>行</b><h3>DEED · 行动</h3><p>干粮给谁、证据藏不藏、圣火如何处置。干粮是道德困境，不是换情报的货币。</p></article>
+      </div>
+      <p class="triad-note">隐藏的天平只通过环境回应你：雾色、路灯与风铃。它与一致度是两个独立维度，诚实不会被简单折算成分数。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Structure</p><div><h2>两段路，一次称量</h2><p>每一个关键事实至少有两条获取路径。补给只影响便利，不影响任何结局能否达成。</p></div></div>
+
+      <div class="acts">
+        <article class="act">
+          <figure class="act-media matted"><img src="/games/lost-light/ui-altar.webp" alt="火坛拼印界面：足印、余烬、手印三枚印记按顺序压上坛心" loading="lazy"><figcaption>火坛拼印</figcaption></figure>
+          <div>
+            <span class="act-num">Act I</span><h3>村庄 · 三枚印记</h3>
+            <p>在铁匠铺、井台与破庙各取一枚印。三枚齐了，回到火坛，按那个人走过的顺序压上坛心。这是图像推理，不是文字论述。错误的顺序也会被火认下，只是把你引向假火。</p>
+            <div class="seals" aria-label="三枚印记"><span data-order="1">足</span><span data-order="2">烬</span><span data-order="3">手</span></div>
+          </div>
+        </article>
+
+        <article class="act">
+          <figure class="act-media matted"><img src="/games/lost-light/wilderness.webp" alt="夜晚荒地中，提灯只照亮脚下几步，远处有几簇火光" loading="lazy"><figcaption>荒地辨火</figcaption></figure>
+          <div>
+            <span class="act-num">Act II</span><h3>荒地 · 辨认真火</h3>
+            <p>真火有稳定的「短、短、长」节奏。假火的节奏紊乱，提灯会先亮起，再转成冷紫。提灯只复述节奏，不指示方向。游戏建议戴耳机，关掉声音时也能凭灯光完成。</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="listen" id="listen">
+        <div class="listen-head">
+          <div><p class="eyebrow">Try it · 试一试</p><h3>哪一簇是真火？</h3><p>观察每簇火的明灭节奏，真火是稳定的「短、短、长」。可以打开声音，把鼠标移到火上或用 Tab 聚焦，听它的节拍。</p></div>
+          <button class="sound-toggle" type="button" aria-pressed="false">♪ 声音：关</button>
+        </div>
+        <div class="flames" role="group" aria-label="三簇火，选出真火"></div>
+        <p class="listen-result" aria-live="polite"></p>
+        <div class="listen-actions"><button type="button" class="reshuffle">换一组火</button></div>
+      </div>
+
+      <article class="act">
+        <figure class="act-media matted"><img src="/games/lost-light/ui-god.webp" alt="终局：持秤的神祇拉什努在火光中显形" loading="lazy"><figcaption>终局 · 称量</figcaption></figure>
+        <div>
+          <span class="act-num">Finale</span><h3>兄妹与神祇</h3>
+          <p>终局分四幕：真正的兄妹出现，密特拉与拉什努显形，并明确否认伪造的苦难；随后由你处置圣火，最后决定回到村里怎么讲。称量时，游戏会回放你说过的话与做过的事之间具体的矛盾。</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap dialogue">
+      <figure class="matted"><img src="/games/lost-light/ui-dialogue.webp" alt="与铁匠对话的界面，玩家可以自由输入回应" loading="lazy"></figure>
+      <div>
+        <p class="eyebrow">AI × Narrative</p>
+        <h2>可以自由输入的村民</h2>
+        <p style="color:var(--muted);margin-top:8px">玩家可以用自己的话和 NPC 交谈。每位村民有独立的人格设定与备用台词。</p>
+        <ul>
+          <li><strong>离线优先</strong>默认使用本地对话，不需要密钥，断网也能完整通关。</li>
+          <li><strong>可选的语言模型</strong>接入代理服务后，NPC 由大语言模型生成回应；网络失败时自动回到本地对话。</li>
+          <li><strong>密钥不进客户端</strong>API 密钥只设置在服务端代理，不写进游戏包。</li>
+          <li><strong>对话不发放独家线索</strong>NPC 提供旁证与氛围，关键事实仍有两条以上的获取路径。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">World</p><div><h2>阶地上的村落</h2><p>民居、圣火亭、铁匠铺和遗迹参考伊朗 Chak-Chak（Pir-e-Sabz）的建筑：浅黄砖石、半圆拱洞、平顶露台、镂空砖栏与深绿铁栏。</p></div></div>
+      <div class="gallery">
+        <a class="matted" href="/games/lost-light/village-dusk.webp"><img src="/games/lost-light/village-dusk.webp" alt="黄昏中的阶地村落全景" loading="lazy"><span>黄昏的村落</span></a>
+        <a class="matted" href="/games/lost-light/terraces.webp"><img src="/games/lost-light/terraces.webp" alt="后山三层阶地与朝圣客舍" loading="lazy"><span>后山阶地</span></a>
+        <a class="matted" href="/games/lost-light/smithy.webp"><img src="/games/lost-light/smithy.webp" alt="铁匠铺前的石板广场" loading="lazy"><span>铁匠铺</span></a>
+        <a class="matted" href="/games/lost-light/shrine-night.webp"><img src="/games/lost-light/shrine-night.webp" alt="夜晚的圣火亭" loading="lazy"><span>夜晚的圣火亭</span></a>
+        <a class="matted" href="/games/lost-light/divine.webp"><img src="/games/lost-light/divine.webp" alt="荒地营火旁的神祇与兄妹" loading="lazy"><span>荒地营火</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Art &amp; Tech</p><div><h2>冷色的夜，暖色的光池</h2><p>环境光保持冷色，火与灯形成局部暖光，让「光」本身成为导航和叙事的语言。</p></div></div>
+      <div class="tech">
+        <article><h3>风化砖石</h3><p>自定义 Shader 用世界坐标生成砖缝、风化颗粒、岩层与表面凹凸，支持光照、阴影与接触阴影。</p></article>
+        <article><h3>流动火焰</h3><p>火焰 Shader 包含上升噪声、火舌摆动、透明消散与 HDR 发光。真假火的颜色仍由游戏逻辑控制。</p></article>
+        <article><h3>渲染管线</h3><p>URP Forward+、软阴影、ACES 调色、泛光与动态天空，配合日夜循环。</p></article>
+        <article><h3>可验证的叙事</h3><p>剧本与 NPC 人格以 JSON 维护。编辑模式测试覆盖规则对照、换灯与讨粮，并跑通开场到终局与重开的完整流程。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Endings</p><div><h2>光归何处</h2><p>结局由玩家最终的立场决定：推论是否有据、说法是否属实、言行是否一致，以及是否严重背离自己的证据。</p></div></div>
+      <ol class="endings">
+        <li><i>i</i><h3>完整归还</h3><p>圣火回到村里，你也被承认有资格立下新规。</p></li>
+        <li><i>ii</i><h3>火归村庄</h3><p>火回去了，但你不再是守火人。</p></li>
+        <li><i>iii</i><h3>只得余烬</h3><p>带回来的只有余烬，包括「承认自己说不清」的变体。</p></li>
+        <li><i>iv</i><h3>火归神明</h3><p>神明收回圣火，并点出你具体说过的谎言。</p></li>
+        <li class="hidden-ending"><i>v</i><h3>坛火与行火</h3><p>隐藏结局：见过双层焰、言行高度一致，并选择分火时，坛中之火与行路之火得以并存。</p></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="page-footer"><a href="/#lost-light">← 回到小星球的故事集市</a><div class="leaf-rule" aria-hidden="true"></div><a href="/tide-echo.html">下一页：上岸 ↗</a></footer>
+
+<script>
+(() => {
+  // Each pattern is [on, off] pairs in ms. The true fire keeps short-short-long.
+  const truePattern = [140, 160, 140, 160, 560, 520];
+  const falsePatterns = [
+    [140, 300, 520, 200, 140, 520],
+    [560, 160, 140, 160, 140, 520],
+    [140, 160, 140, 160, 140, 160, 360, 400],
+    [300, 260, 300, 260, 300, 400]
+  ];
+  const root = document.getElementById('listen');
+  const group = root.querySelector('.flames');
+  const result = root.querySelector('.listen-result');
+  const soundButton = root.querySelector('.sound-toggle');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timers = [], audio = null, soundOn = false, focused = null;
+
+  const beep = long => {
+    if (!soundOn) return;
+    audio ||= new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audio.createOscillator(), gain = audio.createGain();
+    osc.frequency.value = long ? 196 : 262;
+    gain.gain.setValueAtTime(.0001, audio.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.18, audio.currentTime + .02);
+    gain.gain.exponentialRampToValueAtTime(.0001, audio.currentTime + (long ? .5 : .14));
+    osc.connect(gain).connect(audio.destination);
+    osc.start(); osc.stop(audio.currentTime + .6);
+  };
+
+  const animate = (button, pattern) => {
+    const fire = button.querySelector('.fire');
+    let step = 0;
+    const tick = () => {
+      const on = step % 2 === 0, duration = pattern[step % pattern.length];
+      if (!reduced) fire.classList.toggle('on', on);
+      if (on && focused === button) beep(duration > 300);
+      step++;
+      timers.push(setTimeout(tick, duration));
+    };
+    timers.push(setTimeout(tick, Math.random() * 400));
+  };
+
+  const deal = () => {
+    timers.forEach(clearTimeout); timers = [];
+    group.innerHTML = ''; result.textContent = '';
+    const pool = falsePatterns.slice().sort(() => Math.random() - .5).slice(0, 2);
+    const answer = Math.floor(Math.random() * 3);
+    pool.splice(answer, 0, truePattern);
+    pool.forEach((pattern, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'flame-btn';
+      button.innerHTML = `<i class="fire" aria-hidden="true"></i><span>第 ${index + 1} 簇</span>`;
+      button.setAttribute('aria-label', `第 ${index + 1} 簇火`);
+      button.addEventListener('pointerenter', () => { focused = button; });
+      button.addEventListener('pointerleave', () => { if (focused === button) focused = null; });
+      button.addEventListener('focus', () => { focused = button; });
+      button.addEventListener('blur', () => { if (focused === button) focused = null; });
+      button.addEventListener('click', () => {
+        group.querySelectorAll('.flame-btn').forEach(item => item.classList.remove('picked-right', 'picked-wrong', 'cold'));
+        if (index === answer) {
+          button.classList.add('picked-right');
+          result.textContent = '短、短、长。提灯稳稳地亮着，这是真火。';
+        } else {
+          button.classList.add('picked-wrong', 'cold');
+          result.textContent = '提灯先亮了一下，又转成冷紫。再听一次。';
+        }
+      });
+      group.append(button);
+      if (reduced) button.querySelector('.fire').classList.add('on');
+      animate(button, pattern);
+    });
+    if (reduced) result.textContent = '已减少动态效果：打开声音并聚焦每簇火，可以只凭节拍辨认。';
+  };
+
+  soundButton.addEventListener('click', () => {
+    soundOn = !soundOn;
+    soundButton.setAttribute('aria-pressed', String(soundOn));
+    soundButton.textContent = soundOn ? '♪ 声音：开' : '♪ 声音：关';
+  });
+  root.querySelector('.reshuffle').addEventListener('click', deal);
+  deal();
+})();
+</script>
+</body>
+</html>

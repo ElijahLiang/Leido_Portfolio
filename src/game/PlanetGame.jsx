@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import avatar from '../assets/avatar.webp';
-import { Astronaut, ContactSheet, Decor, FarThing, PlanetBody, Profile, Sparkle, SpotArt } from './Art';
+import { ArtDefs, Astronaut, ContactSheet, Decor, FarThing, Icon, PlanetBody, Profile, Sparkle, SpotArt } from './Art';
 import StageCard from './StageCard';
 import { stages } from './stages';
 import useModal from './useModal';
@@ -27,6 +27,8 @@ function startingPoint() {
   const hash = window.location.hash.slice(1);
   const zone = hash === 'about' ? 3 : zones.findIndex(z => z.id === hash);
   if (zone >= 0) return { phase: 'play', theta: rad(zones[zone].angle), back: true };
+  const stall = hash && spots.find(spot => spot.project?.link === `/${hash}.html`);
+  if (stall) return { phase: 'play', theta: rad(stall.angle), back: true };
   const session = read('sessionStorage', SESSION);
   if (Number.isFinite(session?.theta)) return { phase: 'play', theta: session.theta, back: true };
   return { phase: 'title', theta: rad(-50), back: false };
@@ -68,7 +70,7 @@ export default function PlanetGame() {
   const freshStars = useRef(new Set());
   const stageRef = useRef(null), worldRef = useRef(null), farRef = useRef(null), playerRef = useRef(null), markerRef = useRef(null);
   const game = useRef(null);
-  if (!game.current) game.current = { theta: initial.theta, v: 0, h: initial.back ? 260 : 0, vy: 0, facing: 1, left: 0, right: 0, holdJump: false, target: null, arrive: null, min: initial.theta, max: initial.theta, walk: 0, pose: 'idle', lowGravity: false, keys: [], near: null, zone: initial.phase === 'title' ? 0 : zoneAt(initial.theta) };
+  if (!game.current) game.current = { theta: initial.theta, v: 0, h: initial.back ? 260 : 0, vy: 0, facing: 1, left: 0, right: 0, holdJump: false, target: null, arrive: null, min: initial.theta, max: initial.theta, pose: 'idle', lowGravity: false, keys: [], near: null, zone: initial.phase === 'title' ? 0 : zoneAt(initial.theta) };
 
   const overlay = Boolean(dialog || card || menu || inserting);
   const ui = useRef({});
@@ -131,13 +133,13 @@ export default function PlanetGame() {
   useEffect(() => { setMuted(progress.muted); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (level > levelRef.current) { toast({ kind: 'level', title: 'LEVEL UP!', text: `探索等级提升到 LV.${level}` }); play('level'); }
+    if (level > levelRef.current) { toast({ kind: 'level', title: '又读完一页！', text: `探索等级提升到 Lv.${level}` }); play('level'); }
     levelRef.current = level;
   }, [level]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ---------- world palette follows the zone the astronaut stands in ----------
   useEffect(() => {
-    document.documentElement.dataset.world = phase === 'title' ? 'cosmos' : zones[zone].world;
+    document.documentElement.dataset.world = phase === 'title' ? 'meadow' : zones[zone].world;
   }, [zone, phase]);
   useEffect(() => {
     const root = document.documentElement;
@@ -274,6 +276,9 @@ export default function PlanetGame() {
       stage.style.setProperty('--cy', `${ground + radius}px`);
       stage.style.setProperty('--k-title', fit);
       stage.style.setProperty('--cy-title', `${height * (narrow ? .64 : .67)}px`);
+      // How far round the planet can still be seen: a slot whose foot (plus its half-width) is past the
+      // screen edge is off camera, and anything beyond 90° has sunk below the horizon.
+      game.current.view = Math.asin(Math.min(1, (width / 2 + 220 * radius / R) / radius));
     };
     const observer = new ResizeObserver(layout);
     observer.observe(stage);
@@ -284,13 +289,27 @@ export default function PlanetGame() {
   // ---------- the game loop ----------
   useEffect(() => {
     const g = game.current;
-    let frame = 0, last = performance.now();
+    let frame = 0, last = performance.now(), drawnH = null;
+    // Only the side of the planet facing the camera is drawn; round the back, slots hide and their
+    // animations pause (see .slot[data-far]). The title screen shows the whole planet.
+    const slots = [...worldRef.current.querySelectorAll(':scope > .slot')].map(el => ({ el, angle: rad(parseFloat(el.style.getPropertyValue('--a'))), far: false }));
+    const cull = () => {
+      const whole = ui.current.phase !== 'play';
+      for (const slot of slots) {
+        const far = !whole && Math.abs(wrap(slot.angle - g.theta)) > g.view;
+        if (far !== slot.far) { slot.far = far; slot.el.toggleAttribute('data-far', far); }
+      }
+    };
     const render = () => {
       worldRef.current.style.transform = `rotate(${-g.theta}rad)`;
       farRef.current.style.transform = `rotate(${-g.theta * .35}rad)`;
-      playerRef.current.style.setProperty('--h', `${-g.h}px`);
-      playerRef.current.style.setProperty('--shadow', Math.max(.2, 1 - g.h / 420));
+      if (g.h !== drawnH) {
+        drawnH = g.h;
+        playerRef.current.style.setProperty('--h', `${-g.h}px`);
+        playerRef.current.style.setProperty('--shadow', Math.max(.2, 1 - g.h / 420));
+      }
       if (markerRef.current) markerRef.current.style.transform = `rotate(${g.theta}rad)`;
+      cull();
     };
     const tick = now => {
       frame = requestAnimationFrame(tick);
@@ -341,8 +360,7 @@ export default function PlanetGame() {
       const zoneIndex = zoneAt(g.theta);
       if (zoneIndex !== g.zone) { g.zone = zoneIndex; actions.current.zone(zoneIndex); }
 
-      g.walk += Math.abs(g.v) * dt;
-      const pose = g.h > 0 ? 'jump' : Math.abs(g.v) > 30 && Math.floor(g.walk / 70) % 2 ? 'walk' : 'idle';
+      const pose = g.h > 0 ? 'jump' : Math.abs(g.v) > 30 ? 'walk' : 'idle';
       if (pose !== g.pose) { g.pose = pose; playerRef.current.dataset.pose = pose; }
       render();
     };
@@ -427,7 +445,8 @@ export default function PlanetGame() {
   return <div className="planet-game" ref={stageRef} data-phase={phase} data-near={near ?? undefined} data-cutscene={cutscene ?? undefined} data-touch={touch || undefined} data-banner={banner ? '' : undefined} data-overlay={card || menu ? '' : undefined} data-starry={starCount === stars.length || undefined}>
     <a className="skip-link" href="/games">跳过游戏，直接浏览作品列表</a>
     <div className="game-scene" inert={overlay || phase !== 'play' || undefined}>
-      <div className="world-backdrop" aria-hidden="true"><span className="backdrop-cosmos" /><span className="backdrop-arcade" /><span className="backdrop-museum" /><span className="backdrop-orbit" /></div>
+      <ArtDefs />
+      <div className="world-backdrop" aria-hidden="true"><span className="backdrop-meadow" /><span className="backdrop-fair" /><span className="backdrop-museum" /><span className="backdrop-night" /></div>
       <div className="camera">
         <div className="far-layer" ref={farRef} aria-hidden="true">{farScenery.map(item => <FarThing key={item.angle} item={item} />)}</div>
         <div className="world-layer" ref={worldRef}>
@@ -464,7 +483,7 @@ export default function PlanetGame() {
     />}
 
     {banner && phase === 'play' && <div className="zone-banner" key={banner.id} aria-hidden="true">
-      <small>WORLD 0{banner.index + 1}</small><b>{zones[banner.index].name}</b><span>{zones[banner.index].label}</span>
+      <small>CHAPTER {zones[banner.index].chapter}</small><b>{zones[banner.index].name}</b><span>第 {banner.index + 1} 章 · {zones[banner.index].label}</span>
     </div>}
 
     {touch && phase === 'play' && <div className="touch-pad" aria-hidden="true" inert={overlay || undefined} onContextMenu={event => event.preventDefault()}>
@@ -479,7 +498,7 @@ export default function PlanetGame() {
     </div>}
 
     <div className="toasts" role="status" aria-live="polite">
-      {toasts.map(item => <div key={item.id} className={`toast toast-${item.kind}`}><i aria-hidden="true">{item.kind === 'trophy' ? '🏆' : item.kind === 'level' ? '⬆' : '✦'}</i><div><b>{item.kind === 'trophy' ? `成就解锁 · ${item.title}` : item.title}</b><span>{item.text}</span></div></div>)}
+      {toasts.map(item => <div key={item.id} className={`toast toast-${item.kind}`}><i aria-hidden="true"><Icon name={item.kind === 'trophy' ? 'rosette' : item.kind === 'level' ? 'up' : 'leaf'} /></i><div><b>{item.kind === 'trophy' ? `获得徽章 · ${item.title}` : item.title}</b><span>{item.text}</span></div></div>)}
     </div>
 
     {dialog && <DialogBox key={dialog.id ?? dialog.key} script={scripts[dialog.key]} touch={touch} reduced={reduced} onChoose={choose} onClose={closeDialog} />}
@@ -493,14 +512,14 @@ function TitleScreen({ onStart, leaving, touch }) {
   const startRef = useRef(null);
   useEffect(() => { startRef.current?.focus({ preventScroll: true }); }, []);
   return <div className={`title-screen${leaving ? ' leaving' : ''}`} inert={leaving || undefined}>
-    <div className="title-top"><span>✳ Leido.</span><span>1 PLAYER · © 2026</span></div>
-    <a className="title-skip" href="/games">只想快速看作品？<b>列表模式 ↗</b></a>
+    <div className="title-top"><span>Leido<em>.</em></span><span>A PICTURE BOOK · © 2026</span></div>
+    <a className="title-skip" href="/games">想直接看作品？<b>作品列表 ↗</b></a>
     <div className="title-logo">
       <p>GAME DESIGNER &amp; <em>creative developer</em></p>
-      <h1>LEIDO<span>.</span></h1>
-      <p className="title-tagline">把一个念头，变成可以玩的世界。</p>
+      <h1><span className="title-flourish" aria-hidden="true">❦</span><span>Leido<em>.</em></span><span className="title-flourish" aria-hidden="true">❦</span></h1>
+      <p className="title-tagline">把一个念头，变成可以走进去的绘本世界。</p>
     </div>
-    <button className="press-start" ref={startRef} onClick={onStart}><span>▶ PRESS START</span><small>{touch ? '轻点开始' : '按任意键 / 点击开始'}</small></button>
+    <button className="press-start" ref={startRef} onClick={onStart}><span>走进小星球</span><small>{touch ? '轻点开始' : '按任意键 · 或点击这里'}</small></button>
   </div>;
 }
 
@@ -509,14 +528,14 @@ function Hud({ progress, level, xp, zone, zoneIndex, touch, near, markerRef, ine
   return <div className="hud" inert={inert || undefined}>
     <div className="hud-player">
       <img src={avatar} alt="" />
-      <div><b>LEIDO <span>LV.{level}</span></b><span className="xp" role="meter" aria-label="探索经验" aria-valuemin={0} aria-valuemax={XP_PER_LEVEL} aria-valuenow={xp % XP_PER_LEVEL}><i style={{ width: `${inLevel * 100}%` }} /></span></div>
+      <div><b>Leido <span>Lv.{level}</span></b><span className="xp" role="meter" aria-label="探索经验" aria-valuemin={0} aria-valuemax={XP_PER_LEVEL} aria-valuenow={xp % XP_PER_LEVEL}><i style={{ width: `${inLevel * 100}%` }} /></span></div>
     </div>
-    <div className="hud-zone"><small>WORLD 0{zoneIndex + 1}</small><b>{zone.name}</b><span>{zone.label}</span></div>
+    <div className="hud-zone"><small>CHAPTER {zone.chapter}</small><b>{zone.name}</b><span>第 {zoneIndex + 1} 章 · {zone.label}</span></div>
     <div className="hud-right">
       <span className="hud-count" role="img" aria-label={`已收集星星 ${progress.stars.length} / ${stars.length}`}><Sparkle /><span className="bump" key={progress.stars.length}>{String(progress.stars.length).padStart(2, '0')}</span><small>/{stars.length}</small></span>
-      <button className="hud-count" onClick={onTrophies} aria-label={`成就 ${progress.achievements.length} / ${achievements.length}`}>🏆 <span className="bump" key={progress.achievements.length}>{progress.achievements.length}</span><small>/{achievements.length}</small></button>
-      <button className="hud-icon" onClick={onMute} aria-label={progress.muted ? '打开音效' : '关闭音效'} aria-pressed={!progress.muted}>{progress.muted ? '🔇' : '🔊'}</button>
-      <button className="hud-button" onClick={onMenu}>MENU</button>
+      <button className="hud-count" onClick={onTrophies} aria-label={`徽章 ${progress.achievements.length} / ${achievements.length}`}><Icon name="rosette" /><span className="bump" key={progress.achievements.length}>{progress.achievements.length}</span><small>/{achievements.length}</small></button>
+      <button className="hud-icon" onClick={onMute} aria-label={progress.muted ? '打开音效' : '关闭音效'} aria-pressed={!progress.muted}><Icon name={progress.muted ? 'mute' : 'sound'} /></button>
+      <button className="hud-button" onClick={onMenu}>目录</button>
       <a className="hud-link" href="/games">作品列表 ↗</a>
     </div>
     <p className="hud-hint" aria-live="polite">
@@ -579,10 +598,10 @@ function DialogBox({ script, touch, reduced, onChoose, onClose }) {
     <span className="dialog-name">{script.speaker}</span>
     <p aria-hidden="true">{line.slice(0, count)}<span className="dialog-ghost">{line.slice(count)}</span></p>
     <p className="sr-only" aria-live="polite">{line}</p>
-    {done && !showChoices && <span className="dialog-next" aria-hidden="true">▼</span>}
+    {done && !showChoices && <span className="dialog-next" aria-hidden="true">❧</span>}
     {showChoices && <div className="choices">{script.choices.map(choice => choice.href
-      ? <a key={choice.label} href={choice.href} onClick={() => play('select')}>▶ {choice.label} ↗</a>
-      : <button key={choice.label} onClick={() => onChoose(choice)}>▶ {choice.label}</button>)}</div>}
+      ? <a key={choice.label} href={choice.href} onClick={() => play('select')}>{choice.label} ↗</a>
+      : <button key={choice.label} onClick={() => onChoose(choice)}>{choice.label}</button>)}</div>}
     {!showChoices && <button className="sr-only" onClick={advance}>继续</button>}
   </div>;
 }
@@ -593,14 +612,14 @@ function Card({ card, onClose, onCopy }) {
   return <div className="modal-backdrop" onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
     <div className={`game-card card-${card.type}`} ref={ref} role="dialog" aria-modal="true" aria-label={heading}>
       {card.type === 'profile' && <>
-        <p className="card-kicker"><span>PLAYER</span>望远镜里，是一个熟悉的身影</p>
+        <p className="card-kicker"><span>PROFILE</span>望远镜里，是一个熟悉的身影</p>
         <h2>玩家档案</h2>
         <Profile />
         <div className="card-actions"><button className="game-button" onClick={onClose}>返回星球 <small>Esc</small></button></div>
       </>}
       {card.type === 'contact' && <>
-        <p className="card-kicker"><span>MAIL</span>WORLD 04 · ORBIT</p>
-        <h2>LET’S <em>PLAY.</em></h2>
+        <p className="card-kicker"><span>POST</span>第 4 章 · Night Post</p>
+        <h2>Let’s <em>play.</em></h2>
         <p className="card-text">我是 Leido，探索游戏机制、交互叙事与 AI 角色。下一个有趣的世界，也许从一次对话开始。</p>
         <ContactSheet onCopy={onCopy} />
         <div className="card-actions"><button className="game-button" onClick={onClose}>返回星球 <small>Esc</small></button></div>
@@ -616,11 +635,11 @@ function PauseMenu({ view, setView, progress, level, onClose, onMute, onReset, o
   return <div className="modal-backdrop pause" onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
     <div className="pause-menu" ref={ref} role="dialog" aria-modal="true" aria-label="暂停菜单" data-arrows="" key={view}>
       {view === 'main' && <>
-        <h2>PAUSED<small>LV.{level} · 探索度 {explored}%</small></h2>
+        <h2>目录<small>Lv.{level} · 已读 {explored}%</small></h2>
         <nav>
-          <button onClick={onClose}>继续游戏</button>
+          <button onClick={onClose}>继续阅读</button>
           <button onClick={() => setView('travel')}>快速传送</button>
-          <button onClick={() => setView('trophies')}>成就 <small>{progress.achievements.length}/{achievements.length}</small></button>
+          <button onClick={() => setView('trophies')}>徽章 <small>{progress.achievements.length}/{achievements.length}</small></button>
           <a href="/games">完整作品列表 ↗</a>
           <a href="/ai-agent-game.html">AI 叙事玩法研究 ↗</a>
           <button onClick={onMute}>音效：{progress.muted ? '关' : '开'}</button>
@@ -628,14 +647,14 @@ function PauseMenu({ view, setView, progress, level, onClose, onMute, onReset, o
         </nav>
       </>}
       {view === 'travel' && <>
-        <h2>快速传送<small>选择目的地，宇航员会走过去</small></h2>
-        <nav className="travel-list">{zones.map((zone, index) => <div key={zone.id}><p>WORLD 0{index + 1} · {zone.name} · {zone.label}</p>{spots.filter(spot => zoneAt(rad(spot.angle)) === index).map(spot => <button key={spot.id} onClick={() => onTravel(spot)}>{spot.label}{progress.seen.includes(spot.id) ? <small>✓</small> : <small>NEW</small>}</button>)}</div>)}<button onClick={() => setView('main')}>← 返回</button></nav>
+        <h2>快速传送<small>选一页，小宇航员会走过去</small></h2>
+        <nav className="travel-list">{zones.map((zone, index) => <div key={zone.id}><p>第 {index + 1} 章 · {zone.name} · {zone.label}</p>{spots.filter(spot => zoneAt(rad(spot.angle)) === index).map(spot => <button key={spot.id} onClick={() => onTravel(spot)}>{spot.label}{progress.seen.includes(spot.id) ? <small>✓</small> : <small>NEW</small>}</button>)}</div>)}<button onClick={() => setView('main')}>← 返回</button></nav>
       </>}
       {view === 'trophies' && <>
-        <h2>成就<small>{progress.achievements.length} / {achievements.length} 已解锁</small></h2>
+        <h2>徽章<small>{progress.achievements.length} / {achievements.length} 已收集</small></h2>
         <ul className="trophy-list">{achievements.map(item => {
           const got = progress.achievements.includes(item.id);
-          return <li key={item.id} className={got ? 'got' : ''}><i aria-hidden="true">{got ? '🏆' : '🔒'}</i><div><b>{got || !item.secret ? item.title : '？？？'}</b><span>{got || !item.secret ? item.text : '隐藏成就'}</span></div></li>;
+          return <li key={item.id} className={got ? 'got' : ''}><i aria-hidden="true"><Icon name={got ? 'rosette' : 'lock'} /></i><div><b>{got || !item.secret ? item.title : '？？？'}</b><span>{got || !item.secret ? item.text : '隐藏成就'}</span></div></li>;
         })}</ul>
         <nav><button onClick={() => setView('main')}>← 返回</button></nav>
       </>}

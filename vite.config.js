@@ -9,7 +9,7 @@ export default defineConfig({
     outDir: 'dist',
     target: 'es2020',
     rollupOptions: {
-      input: { main: resolve(process.cwd(), 'index.html'), research: resolve(process.cwd(), 'ai-agent-game.html') },
+      input: Object.fromEntries(['index', 'ai-agent-game', 'sky-studio', 'lost-light', 'tide-echo', 'rhythm-game-demo', 'embodied-intelligence'].map(name => [name, resolve(process.cwd(), `${name}.html`)])),
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],

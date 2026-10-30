@@ -4,7 +4,7 @@ import { stages } from './stages';
 import { play } from './sfx';
 import useModal from './useModal';
 
-// The briefing screen behind every arcade cabinet (and every cartridge on /games).
+// The two-page spread behind every story stall (and every page on /games).
 export default function StageCard({ project, cleared = false, onClose, onWin, startPlaying = false }) {
   const stage = stages[project.number];
   const [mode, setMode] = useState(startPlaying && stage.minigame ? 'play' : 'media');
@@ -38,11 +38,11 @@ export default function StageCard({ project, cleared = false, onClose, onWin, st
   const win = () => { setJustCleared(true); onWin?.(stage.minigame); };
   const isResearch = Boolean(stage.cases);
   return <div className="modal-backdrop stage-backdrop" onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
-    <div className="stage-card" ref={ref} role="dialog" aria-modal="true" aria-label={`STAGE ${project.number} ${project.title}`} style={{ '--stage': stage.color }}>
+    <div className="stage-card" ref={ref} role="dialog" aria-modal="true" aria-label={`No. ${project.number} ${project.title}`} style={{ '--stage': stage.color }}>
       <header className="stage-top">
-        <span className="stage-badge">STAGE {project.number}</span>
+        <span className="stage-badge">No. {project.number}</span>
         <span>{project.category}{project.caseCount ? ` · ${project.caseCount} 个子案例` : ''}</span>
-        {(cleared || justCleared) && <span className="stage-clear">★ CLEAR</span>}
+        {(cleared || justCleared) && <span className="stage-clear">✿ 已通关</span>}
         <button className="stage-close" onClick={onClose} aria-label="关闭，返回">✕<small>Esc</small></button>
       </header>
 
@@ -64,7 +64,7 @@ export default function StageCard({ project, cleared = false, onClose, onWin, st
               <img src={entry.thumb} alt="" loading="lazy" />{entry.type !== 'image' && <i>▶</i>}
             </button>)}</div>}
           </> : <div className="crt-bar"><p>Esc 返回画面 · 试玩只是机制切片，完整体验在关卡页里</p></div>}
-          {isResearch && <><h3>子关卡 · SUB-STAGES</h3><ol className="stage-cases">{stage.cases.map(entry => <li key={entry.id}><a href={entry.link}>
+          {isResearch && <><h3>子案例 · four cases</h3><ol className="stage-cases">{stage.cases.map(entry => <li key={entry.id}><a href={entry.link}>
             <img src={entry.thumb} alt="" loading="lazy" />
             <span><small>{entry.roman} · {entry.stage} · {entry.date}</small><b>{entry.title}</b><em>{entry.question}</em></span>
           </a></li>)}</ol></>}
@@ -75,12 +75,12 @@ export default function StageCard({ project, cleared = false, onClose, onWin, st
           <p className="stage-en">{stage.english}</p>
           <p className="stage-hook">{stage.hook}</p>
           <dl className="stage-stats">{stage.info.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-          {!isResearch && <><h3>核心玩法 · MOVES</h3><ul className="stage-moves">{stage.moves.map(([name, text]) => <li key={name}><b>{name}</b><span>{text}</span></li>)}</ul></>}
+          {!isResearch && <><h3>核心玩法 · how it plays</h3><ul className="stage-moves">{stage.moves.map(([name, text]) => <li key={name}><b>{name}</b><span>{text}</span></li>)}</ul></>}
           <div className="stage-actions">
             {stage.minigame && <button className="game-button stage-play" ref={playButton} data-autofocus="" onClick={() => { play(mode === 'play' ? 'close' : 'coin'); setMode(mode === 'play' ? 'media' : 'play'); }} aria-pressed={mode === 'play'}>
-              {mode === 'play' ? '■ 结束试玩' : `▶ 试玩 · ${stage.play}`}
+              {mode === 'play' ? '合上试玩' : `✦ 试玩 · ${stage.play}`}
             </button>}
-            <a className="game-button primary" href={project.link} data-autofocus={stage.minigame ? undefined : ''}>{isResearch ? '阅读研究 ↗' : '进入关卡 ↗'}</a>
+            <a className="game-button primary" href={project.link} data-autofocus={stage.minigame ? undefined : ''}>{isResearch ? '阅读研究 ↗' : '翻到完整页面 ↗'}</a>
             {stage.links?.map(link => <a key={link.href} className="game-button" href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}
           </div>
         </section>

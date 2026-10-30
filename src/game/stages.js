@@ -1,14 +1,41 @@
 import { caseUrl, researchCases } from '../research/data';
 
-// Briefing data for each arcade cabinet, keyed by project number. Copy is taken from
-// the project pages; `thumb` feeds the cabinet screens, `src` the briefing viewer.
+// Briefing data for each story stall, keyed by project number. Copy is taken from
+// the project pages; `thumb` feeds the stall windows, `src` the briefing viewer.
 const shot = (game, name, caption) => ({ type: 'image', thumb: `/games/thumbs/${game}-${name}-s.webp`, src: `/games/thumbs/${game}-${name}-m.webp`, caption });
 
 export const stages = {
   '01': {
+    english: 'SKY STUDIO',
+    color: '#d6a2c4',
+    hook: '外婆常唱的摇篮曲散在了风里，她只还哼得出一句。你是一束小小的光：在漂浮的天空岛之间跳跃、撑伞滑翔，收集乐句，在「织歌机」上编一首自己的歌。没有音乐就没有风——歌越完整，风越高，直到把你送回她的门廊。',
+    info: [['类型', '音乐创作 × 叙事探索'], ['引擎', 'Unity 6 · URP'], ['进度', '两章可玩 · 毕业设计原型'], ['主张', '以创作为回忆，没有唯一正确的编法']],
+    moves: [
+      ['没有音乐就没有风', '敲击的音每响一下吹一阵风，越响越高；持续的音吹出一根稳定的气柱。'],
+      ['织歌机', '四个声部各放一段 loop，改动落在下一小节；声部越多，中心岛的「呼吸」越高。'],
+      ['写一段旋律', '第二章在钢琴卷帘上写自己的旋律，风琴丝带沿着音高铺成飞行路线。'],
+    ],
+    media: [
+      shot('sky-studio', 'ribbon-ride', '撑着外婆的伞，乘旋律丝带飞行'),
+      shot('sky-studio', 'arrival', '第一章 Lullaby Isles：外婆的摇篮曲散在了风里'),
+      shot('sky-studio', 'song-and-breath', '歌越完整，中心岛的「呼吸」越高'),
+      shot('sky-studio', 'song-loom', '织歌机：四个声部，每个声部一段 loop'),
+      shot('sky-studio', 'dialogue', '门廊上的外婆，只还哼得出一句'),
+      shot('sky-studio', 'performance', '为外婆演奏你编的歌'),
+      shot('sky-studio', 'lantern-gate', '灯笼门，通往她的另一段记忆'),
+      shot('sky-studio', 'lantern-festival', '第二章 Lantern Weave：六十年前的灯会'),
+      shot('sky-studio', 'grandfather', '年轻的外公在舞池边等她'),
+      shot('sky-studio', 'piano-roll', '在钢琴卷帘上写一段自己的旋律'),
+      shot('sky-studio', 'to-pavilion', '乘着自己写的旋律飞向月亭'),
+      shot('sky-studio', 'dance', '两个人在月亭里跳起华尔兹'),
+    ],
+    minigame: 'wind',
+    play: '乘风',
+  },
+  '02': {
     english: 'LOST LIGHT',
-    color: '#ffa43a',
-    hook: '黄昏。村里的火坛灭了，圣火昨夜被人拿走。',
+    color: '#e08a4c',
+    hook: '这是一章以西亚文化为背景的故事：用 AI 对话作为玩法，解开整个谜题，拿到线索。黄昏，村里的火坛灭了，圣火昨夜被人拿走。',
     info: [['类型', '第一人称互动叙事'], ['引擎', 'Unity 6 · URP'], ['平台', 'Windows'], ['亮点', '自由输入的 NPC 对话 · 五种结局']],
     moves: [
       ['思 · 言 · 行', '不打善恶分，分别记录你怎么想、怎么说、怎么做，再看三者是否一致。'],
@@ -30,10 +57,10 @@ export const stages = {
     minigame: 'fire',
     play: '荒地辨火',
   },
-  '02': {
+  '03': {
     english: 'TIDE ECHO',
-    color: '#3fd0e0',
-    hook: '到桂山岛做七天义工。第七天，决定去留。',
+    color: '#7db3bd',
+    hook: '我想去吹个海风，做个义工。到桂山岛住七天，第七天，决定去留。',
     info: [['类型', '第一人称海岛生活'], ['引擎', 'Unity 6 · FFT 实时海面'], ['日常', '海钓 · 潜水 · 义工 · 骑行'], ['结局', '漂泊 · 留下 · 回去']],
     moves: [
       ['海钓', '按住收线，让张力留在绿区里：太紧会断线，太松会脱钩。'],
@@ -57,10 +84,10 @@ export const stages = {
     minigame: 'reel',
     play: '收一条鱼',
   },
-  '03': {
+  '04': {
     english: 'RHYTHM × COMBAT',
-    color: '#b48cff',
-    hook: '在节拍中蓄力，在副歌中爆发。让游戏被音乐叙述。',
+    color: '#a68bc8',
+    hook: '如果让 AI 作为敌人，会如何？如果把音游与战斗结合，又会怎样？在节拍中蓄力，在副歌中爆发。',
     info: [['类型', '音乐节奏 × 战斗输出'], ['形态', 'Game Demo'], ['题材', '科幻 · 叙事 × 音乐'], ['设定', '20XX 年，凯斯公司的智械开始“失律”']],
     moves: [
       ['节拍蓄力', '跟随节奏点按、长按，累积“调律能量”。'],
@@ -75,10 +102,10 @@ export const stages = {
     minigame: 'tune',
     play: '调律智械',
   },
-  '04': {
+  '05': {
     english: 'AI NARRATIVE RESEARCH',
-    color: '#4be3a0',
-    hook: '四个子案例，一条从技术验证到开放叙事的研究路径：LLM 如何成为游戏机制。',
+    color: '#86ad7a',
+    hook: '你发现了一本研究笔记。2025 年，我一直在研究 AI 如何参与游戏机制的设计——从网页原型到 3D 实现，四个子案例记录了这条路径。',
     info: [['案例', '4 个子案例'], ['周期', '2025.08 – 2025.12'], ['模型', 'GLM-4 · DeepSeek · Ollama'], ['方向', '对话、关系与开放叙事']],
     cases: researchCases.map((item, index) => ({ ...item, link: caseUrl(item.id), thumb: `/games/thumbs/research-${item.id}-s.webp`, index })),
     media: [
@@ -90,9 +117,9 @@ export const stages = {
       shot('research', 'boundary-3', 'IV · Boundary · 游戏画面'),
     ],
   },
-  '05': {
+  '06': {
     english: 'VIRTUAL HUMAN',
-    color: '#ff6b5a',
+    color: '#c9604c',
     hook: '让角色看见展品，理解问题，回应空间。',
     info: [['场景', '无锡鸿山博物馆虚拟展厅'], ['感知', 'VLM 场景感知'], ['对话', 'LLM 推理与自然讲解'], ['行动', '自主导航 · 情感交互']],
     moves: [
